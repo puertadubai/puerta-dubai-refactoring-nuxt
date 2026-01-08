@@ -1,0 +1,128 @@
+/* =========================================
+   PROJECT NAVIGATION (PREV/NEXT PROJECTS)
+   ========================================= */
+
+.project-nav {
+  padding: 120px 8%;
+  background: #fff;
+  position: relative;
+}
+
+.project-nav-title {
+  text-align: center;
+  font-family: "Playfair Display", serif;
+  font-size: clamp(32px, 4vw, 54px);
+  font-weight: 700;
+  margin-bottom: 60px;
+  color: #000;
+  letter-spacing: .5px;
+}
+
+.project-nav-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+}
+
+/* CARDS */
+.project-nav-card {
+  position: relative;
+  display: block;
+  height: 420px;
+  background: var(--bg) center / cover no-repeat;
+  background-size: auto 420px;
+  overflow: hidden;
+  cursor: pointer;
+  border-radius: 0;
+  transform: translateZ(0);
+  transition: all 0.3s;
+}
+.project-nav-card:hover {  background-size: auto 430px;
+}
+
+/* Overlay sombre premium */
+.project-nav-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,.75), rgba(0,0,0,.05));
+  transition: background .4s ease;
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: column;
+  padding: 40px;
+}
+
+/* Container texte */
+.project-nav-info {
+  color: #fff;
+  position: relative;
+  transition: transform .45s ease, opacity .45s ease;
+}
+
+/* Base (visible) */
+.project-base {
+  transition: transform .45s ease, opacity .45s ease;
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* Texte de base */
+.project-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem;
+  margin: 0 0 0.1em;
+  letter-spacing: .5px;
+}
+.project-location {
+  margin: 0;
+  font-size: .95rem;
+  letter-spacing: .1em;
+  opacity: .8;
+  text-transform: uppercase;
+}
+
+/* Hover (masqué au départ) */
+.project-hover {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: transform .45s ease, opacity .45s ease;
+}
+
+.project-price {
+  color: #cb805b;
+  margin: 6px 0 10px;
+  font-weight: 600;
+}
+.project-price span {
+  font-weight: 700;
+}
+.project-desc {
+  font-size: .95rem;
+  line-height: 1.5;
+  opacity: .9;
+}
+
+/* HOVER EFFECT LUXE */
+.project-nav-card:hover .project-nav-overlay {
+  background: linear-gradient(to top, rgba(0,0,0,.88), rgba(0,0,0,.2));
+}
+
+.project-nav-card:hover .project-base {
+  transform: translateY(-14px);
+  opacity: 0.2;
+}
+
+.project-nav-card:hover .project-hover {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .project-nav-grid {
+    grid-template-columns: 1fr;
+  }
+  .project-nav-card {
+    height: 360px;
+  }
+}

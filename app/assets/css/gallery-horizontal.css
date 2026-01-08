@@ -1,0 +1,78 @@
+.horiz-gal {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background: #000;
+  z-index: 2;
+}
+
+/* Wrap ne DOIT PLUS être flex */
+.hg-wrap {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%); /* centrage vertical sans flex */
+  height: 80vh;                /* hauteur fixe contrôlée */
+  width: max-content;
+}
+
+/* Track = simplement le défilement horizontal */
+.hg-track {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  width: max-content;
+  align-items: center;
+}
+
+
+/* =============================
+   IMAGES
+   ============================= */
+.hg-img {
+  height: 80vh;
+  width: auto;
+  flex-shrink: 0;
+  object-fit: cover;
+  margin-right: 2vw;
+
+  opacity: 0;
+  transform: scale(1.05);
+}
+
+/* =============================
+   DOTS
+   ============================= */
+.hg-dots {
+  position: absolute;
+  bottom: 25px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+}
+
+.hg-dots .dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: none;
+  background: #666;
+  cursor: pointer;
+}
+
+.hg-dots .dot.active {
+  background: #fff;
+}
+
+/* =============================
+   FIREFOX FIX (désactive APZ)
+   ============================= */
+@supports (-moz-appearance: none) {
+  .horiz-gal,
+  .hg-wrap,
+  .hg-track {
+    overscroll-behavior: contain;
+  }
+}

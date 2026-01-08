@@ -1,0 +1,219 @@
+/* ============================================
+   CONTACT STICKER
+   ============================================ */
+
+.contact-sticker {
+  position: fixed;
+  top: 50%;
+  right: 0; 
+  transform: translateY(-50%);
+  background: #bac3f1;
+  color: #fff;
+  writing-mode: vertical-rl;
+  padding: 12px 14px;
+  letter-spacing: 1px;
+  font-size: 12px;
+  text-transform: uppercase;
+  font-weight: 600;
+  border-radius: 6px 0 0 6px;
+  cursor: pointer;
+  z-index: 99999;
+
+  transition: all .3s ease;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+}
+
+.contact-sticker:hover {
+  background: #111;
+  right: 2px;
+  transform: translateY(-50%) scale(1.03);
+}
+
+
+/* ============================================
+   DRAWER PANEL
+   ============================================ */
+
+.contact-drawer {
+  position: fixed;
+  top: 0;
+  right: -340px;
+  width: 340px; 
+  height: 100vh;
+  background: #ffffff;
+  box-shadow: -12px 0 32px rgba(0,0,0,0.25);
+  z-index: 99999;
+  border-left: 3px solid #cb805b;
+
+  display: flex;
+  flex-direction: column;
+
+  /* fallback without JS */
+  transition: right .3s ease;
+  align-items:center;
+  justify-content:center;
+ 
+}
+
+.contact-drawer.open {
+  right: 0;
+}
+
+.cd-inner {
+  padding: 40px 28px;
+  text-align: center;
+}
+
+
+/* ============================================
+   AVATAR + HALO
+   ============================================ */
+
+.cd-avatar-wrapper {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 22px;
+}
+
+.cd-avatar-wrapper::before {
+  content: "";
+  position: absolute;
+  inset: -10px;
+  border-radius: 100%;
+  background: radial-gradient(
+    rgba(203,128,91,0.35),
+    transparent 70%
+  );
+  filter: blur(20px);
+}
+
+.cd-avatar {
+  width: 180px;
+  height: 180px;
+  border-radius: 100%;
+  object-fit: cover;
+  filter: grayscale(1);
+  box-shadow: 0 8px 22px rgba(0,0,0,0.25);
+}
+
+
+/* ============================================
+   TEXT
+   ============================================ */
+
+.cd-name {
+  font-family: "Playfair Display", serif;
+  font-size: 1.55rem;
+  font-weight: 700;
+  color: #000;
+  letter-spacing: .3px;
+  margin-bottom: 6px;
+}
+
+.cd-role {
+  font-size: 0.9rem;
+  opacity: .7;
+  margin-bottom: 26px;
+  letter-spacing: .5px;
+}
+
+
+/* ============================================
+   ACTIONS (links + button)
+   ============================================ */
+
+.cd-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.cd-actions a,
+.cd-bookcall {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+
+  font-size: .95rem;
+  font-weight: 500;
+  color: #000;
+  text-decoration: none;
+
+  border: 1px solid #ddd;
+  border-radius: 4px;
+
+  transition: all .25s ease;
+}
+
+.cd-actions a i,
+.cd-bookcall i {
+  width: 20px;
+  height: 20px;
+  stroke: #cb805b;
+}
+
+.cd-actions a:hover {
+  border-color: #cb805b;
+  color: #cb805b;
+}
+
+.cd-bookcall {
+  background: #cb805b;
+  color: #fff !important;
+  border: none;
+  cursor: pointer;
+}
+
+.cd-bookcall:hover {
+  background: #a36a49;
+}
+
+
+/* ============================================
+   MOBILE
+   ============================================ */
+
+@media (max-width: 480px) {
+  .contact-sticker {
+    writing-mode: horizontal-tb;
+    right: 20px;
+    top: auto;
+    bottom: 20px;
+    transform: none;
+    padding: 10px 18px;
+    border-radius: 6px;
+  }
+  #backToTop {
+	left: 18px;
+    right: auto;
+}
+
+  .contact-drawer {
+    width: 100%;
+    right: -100%;
+  }
+}
+
+.drawer-close-btn {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 32px;
+  height: 32px;
+  border: 1px solid #000;
+  background: #fff;
+  color: #000;
+  font-size: 17px;
+  line-height: 1;
+  border-radius: 50%; /* carré → remplacer par 0 si tu préfères */
+  cursor: pointer;
+  transition: all 0.25s ease;
+  z-index: 20;
+  font-weight: 100;
+}
+
+.drawer-close-btn:hover {
+  background: #000;
+  color: #fff;
+}

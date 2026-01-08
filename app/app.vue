@@ -1,6 +1,14 @@
+<script setup>
+if (import.meta.client) {
+  const script = document.createElement('script')
+  script.src = '/js/translations.js'
+  script.defer = true
+  document.body.appendChild(script)
+}
+</script>
+
 <template>
-  <div>
-    <NuxtRouteAnnouncer />
-    <NuxtWelcome />
-  </div>
+  <NuxtLayout>
+    <NuxtPage />
+  </NuxtLayout>
 </template>
