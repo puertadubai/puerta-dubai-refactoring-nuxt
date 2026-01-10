@@ -6,8 +6,8 @@
     <!-- Background image -->
     <img
       class="hero-bg-img"
-      :src="image"
-      :alt="title"
+      :src="project.hero.image"
+      :alt="project.hero.title"
     />
 
     <!-- Overlay -->
@@ -15,8 +15,9 @@
 
     <!-- Content -->
     <div class="hero-content">
-      <h1>{{ title }}</h1>
-      <p class="project-location">{{ location }}</p>
+<h1>{{ project.hero.title }}</h1>
+<p class="project-location">{{ project.hero.location }}</p>
+
     </div>
   </section>
 </template>
@@ -24,15 +25,18 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { initProjectHeroAnimation } from '~/composables/animations/projects/hero'
+import type { Project } from '~/composables/useProject'
 
-/**
- * ⚠️ TEMPORAIRE
- * Plus tard, ces props viendront de Supabase via le slug
- */
-const title = 'IR1DIAN PARK'
-const location = 'Jumeirah Village Circle • Dubai'
-const image = '/img/projects/ir1dian/2.webp'
+/* ======================
+   Props
+====================== */
+defineProps<{
+  project: Project
+}>()
 
+/* ======================
+   GSAP
+====================== */
 const root = ref<HTMLElement | null>(null)
 
 onMounted(() => {

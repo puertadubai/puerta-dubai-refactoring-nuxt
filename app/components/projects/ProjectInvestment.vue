@@ -4,18 +4,19 @@
     class="project-investment"
   >
     <div class="container">
-      <h2 class="investment-title">Investment Proposition</h2>
+      <h2 class="investment-title">
+        {{ project.investment.title }}
+      </h2>
 
       <p class="investment-text">
-        With a launch price from AED 772,000 and completion expected in Q2 2027,
-        IR1DIAN Park presents an attractive entry point into the JVC market.
-        The combination of strong location, modern design and family-oriented
-        amenities supports both rental demand and long-term value appreciation —
-        making this an excellent option for end-users and investors alike.
+        {{ project.investment.text }}
       </p>
 
-      <a href="#" class="btn investment-cta">
-        Book a call
+      <a
+        :href="project.investment.ctaLink || '#'"
+        class="btn investment-cta"
+      >
+        {{ project.investment.ctaLabel || 'Book a call' }}
       </a>
     </div>
   </section>
@@ -25,6 +26,23 @@
 import { ref, onMounted } from 'vue'
 import { initProjectInvestmentAnimation } from '~/composables/animations/projects/investment'
 
+/* ======================
+   Props
+====================== */
+defineProps<{
+  project: {
+    investment: {
+      title: string
+      text: string
+      ctaLabel?: string
+      ctaLink?: string
+    }
+  }
+}>()
+
+/* ======================
+   GSAP
+====================== */
 const root = ref<HTMLElement | null>(null)
 
 onMounted(() => {

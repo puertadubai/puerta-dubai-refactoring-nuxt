@@ -2,6 +2,7 @@
   <section
     ref="root"
     class="project-nav"
+    v-if="previous || next"
   >
     <h2 class="project-nav-title">
       Discover other projects…
@@ -9,56 +10,64 @@
 
     <div class="project-nav-grid">
       <!-- PREVIOUS PROJECT -->
-      <a
-        href="/projects/costa-mare"
+      <NuxtLink
+        v-if="previous"
+        :to="`/projects/${previous.slug}`"
         class="project-nav-card"
-        style="--bg: url('/img/projects/ellington/1.jpg')"
+        :style="`--bg: url('${previous.image}')`"
       >
         <div class="project-nav-overlay">
           <div class="project-nav-info">
             <div class="project-base">
-              <h3 class="project-title">Costa Mare</h3>
+              <h3 class="project-title">
+                {{ previous.title }}
+              </h3>
               <h4 class="project-location">
-                Al Marjan Island • Ras Al Khaimah
+                {{ previous.location }}
               </h4>
             </div>
 
             <div class="project-hover">
               <p class="project-price">
-                Starting from <span>USD 270,000</span>
+                Starting from <span>{{ previous.price }}</span>
               </p>
               <p class="project-desc">
-                Seaside sanctuary blending timeless architecture and serene coastal energy.
+                {{ previous.description }}
               </p>
             </div>
           </div>
         </div>
-      </a>
+      </NuxtLink>
 
       <!-- NEXT PROJECT -->
-      <a
-        href="/projects/saadiyat-grove"
+      <NuxtLink
+        v-if="next"
+        :to="`/projects/${next.slug}`"
         class="project-nav-card"
-        style="--bg: url('/img/projects/saadiyat/1.jpg')"
+        :style="`--bg: url('${next.image}')`"
       >
         <div class="project-nav-overlay">
           <div class="project-nav-info">
             <div class="project-base">
-              <h3 class="project-title">Saadiyat Grove</h3>
-              <h4 class="project-location">Abu Dhabi</h4>
+              <h3 class="project-title">
+                {{ next.title }}
+              </h3>
+              <h4 class="project-location">
+                {{ next.location }}
+              </h4>
             </div>
 
             <div class="project-hover">
               <p class="project-price">
-                Starting from <span>AED 1.29M</span>
+                Starting from <span>{{ next.price }}</span>
               </p>
               <p class="project-desc">
-                Aldar’s cultural hub on Saadiyat Island — where art, lifestyle and luxury intersect.
+                {{ next.description }}
               </p>
             </div>
           </div>
         </div>
-      </a>
+      </NuxtLink>
     </div>
   </section>
 </template>
@@ -67,6 +76,31 @@
 import { ref, onMounted } from 'vue'
 import { initProjectNavigationAnimation } from '~/composables/animations/projects/nav'
 
+/* ======================
+   Props
+====================== */
+defineProps<{
+  previous?: {
+    slug: string
+    title: string
+    location: string
+    price: string
+    description: string
+    image: string
+  }
+  next?: {
+    slug: string
+    title: string
+    location: string
+    price: string
+    description: string
+    image: string
+  }
+}>()
+
+/* ======================
+   GSAP
+====================== */
 const root = ref<HTMLElement | null>(null)
 
 onMounted(() => {

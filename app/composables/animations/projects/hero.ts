@@ -1,19 +1,61 @@
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { nextTick } from 'vue'
 
-export function initProjectHeroAnimation(root: HTMLElement) {
-  if (!import.meta.client) return
+export async function initProjectHeroAnimation(root: HTMLElement) {
+  if (!import.meta.client || !root) return
 
   gsap.registerPlugin(ScrollTrigger)
 
-  const img = root.querySelector('.hero-bg-img')
-  const content = root.querySelector('.hero-content')
+  await nextTick()
+  requestAnimationFrame(() => {
+    const img = root.querySelector<HTMLElement>('.hero-bg-img')
+    const content = root.querySelector<HTMLElement>('.hero-content')
 
-  if (!img || !content) return
+    if (!img || !content) return
 
-  // ÉTAT INITIAL (identique à l’ancienne page sans animation violente)
-  gsap.set(img, { scale: 1 })
-  gsap.set(content, { opacity: 1, y: 0 })
+    const ctx = gsap.context(() => {
+      /* ======================
+         ÉTAT INITIAL
+      ====================== */
+      gsap.set(img, {
+        scale: 1,
+        filter: 'blur(0px)',
+        willChange: 'transform'
+      })
 
-  // ⚠️ Effets scroll (zoom / blur) seront ajoutés PLUS TARD
+      gsap.set(content, {
+        opacity: 1,
+        y: 0,
+        willChange: 'transform, opacity'
+      })
+
+      /* ======================
+         SCROLL EFFECT
+      ====================== */
+      gsap.to(img, {
+        scale: 1.2,
+        filter: 'blur(14px)',
+        ease: 'none',
+        scrollTrigger: {
+          trigger: root,
+          start: 'top top',
+          end: 'bottom top',
+          scrub: true
+        }
+      })
+
+      ScrollTrigger.create({
+        trigger: root,
+        start: 'top top',
+        onEnterBack: () => {
+          gsap.to(img, { scale: 1, filter: 'blur(0px)', duration: 0.3 })
+        }
+      })
+    }, root)
+
+    ScrollTrigger.refresh()
+
+    return () => ctx.revert()
+  })
 }

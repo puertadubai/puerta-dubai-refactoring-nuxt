@@ -1,23 +1,45 @@
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { nextTick } from 'vue'
 
-export function initProjectIntroAnimation(root: HTMLElement) {
-  if (!import.meta.client) return
+export async function initProjectIntroAnimation(root: HTMLElement) {
+  if (!import.meta.client || !root) return
 
   gsap.registerPlugin(ScrollTrigger)
 
-  const text = root.querySelector('.intro-text')
-  if (!text) return
+  await nextTick()
+  requestAnimationFrame(() => {
+    const text = root.querySelector<HTMLElement>('.intro-text')
+    if (!text) return
 
-  gsap.from(text, {
-    opacity: 0,
-    y: 40,
-    duration: 1.1,
-    ease: 'power3.out',
-    scrollTrigger: {
-      trigger: root,
-      start: 'top 80%',
-      once: true
-    }
+    const ctx = gsap.context(() => {
+      /* ======================
+         ÉTAT INITIAL
+      ====================== */
+      gsap.set(text, {
+        opacity: 0,
+        y: 40,
+        willChange: 'transform, opacity'
+      })
+
+      /* ======================
+         ANIMATION
+      ====================== */
+      gsap.to(text, {
+        opacity: 1,
+        y: 0,
+        duration: 1.1,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: root,
+          start: 'top 80%',
+          toggleActions: 'play none none none'
+        }
+      })
+    }, root)
+
+    ScrollTrigger.refresh()
+
+    return () => ctx.revert()
   })
 }

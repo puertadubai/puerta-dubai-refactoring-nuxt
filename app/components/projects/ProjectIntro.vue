@@ -5,12 +5,7 @@
   >
     <div class="container">
       <p class="intro-text">
-        IR1DIAN Park is a contemporary residential development in the heart of
-        Jumeirah Village Circle, Dubai, offering modern living with an urban design
-        and family-friendly amenities. Nestled within a tree-lined and dynamic
-        community, the project blends thoughtful architecture, high-quality finishes
-        and accessible lifestyle to deliver a home that supports both everyday comfort
-        and investment appeal.
+        {{ project.intro }}
       </p>
     </div>
   </section>
@@ -19,7 +14,18 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { initProjectIntroAnimation } from '~/composables/animations/projects/intro'
+import type { Project } from '~/composables/useProject'
 
+/* ======================
+   Props
+====================== */
+defineProps<{
+  project: Project
+}>()
+
+/* ======================
+   GSAP
+====================== */
 const root = ref<HTMLElement | null>(null)
 
 onMounted(() => {

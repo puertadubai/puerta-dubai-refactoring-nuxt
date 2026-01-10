@@ -1,0 +1,197 @@
+[
+  {
+    "slug": "ir1dian-park",
+    "hero": {
+      "title": "IR1DIAN PARK",
+      "location": "Jumeirah Village Circle • Dubai",
+      "image": "/img/projects/ir1dian/1.webp"
+    },
+    "intro": "IR1DIAN Park is a contemporary residential development in the heart of Jumeirah Village Circle, Dubai, offering modern living with an urban design and family-friendly amenities. Nestled within a tree-lined and dynamic community, the project blends thoughtful architecture, high-quality finishes and accessible lifestyle to deliver a home that supports both everyday comfort and investment appeal.",
+    "amenities": [
+      [
+        { "icon": "dumbbell", "label": "Gym" },
+        { "icon": "waves", "label": "Swimming Pool & Kids Pool" },
+        { "icon": "gamepad-2", "label": "Kids Play Area" },
+        { "icon": "car", "label": "Indoor Parking" }
+      ],
+      [
+        { "icon": "leaf", "label": "Landscaped Gardens" },
+        { "icon": "flame", "label": "BBQ & Outdoor Lounge" },
+        { "icon": "shield", "label": "24/7 Security" },
+        { "icon": "wifi", "label": "Smart Home Features" }
+      ]
+    ],
+    "highlights": [
+      { "label": "Developer", "value": "Object 1 Real Estate Development" },
+      { "label": "Type", "value": "Low-rise Apartments" },
+      { "label": "Units", "value": "Studios – 2BR" },
+      { "label": "Starting Price", "value": "AED 772,000" },
+      { "label": "Delivery", "value": "Q2 2027" },
+      { "label": "Location", "value": "Jumeirah Village Circle, Dubai" },
+      { "label": "Unique", "value": "Urban design • Family-friendly amenities • Strong connectivity" }
+    ],
+    "gallery": [
+    "/img/projects/ir1dian/1.webp",
+    "/img/projects/ir1dian/2.webp",
+    "/img/projects/ir1dian/3.webp",
+    "/img/projects/ir1dian/4.webp",
+    "/img/projects/ir1dian/5.webp",
+    "/img/projects/ir1dian/6.jpg",
+    "/img/projects/ir1dian/7.jpg"  
+    ],
+    "location": {
+      "title": "Location & Lifestyle",
+      "text": "Ideally situated in the vibrant JVC community, IR1DIAN Park benefits from excellent connectivity via Al Khalil Road and Sheikh Mohammed Bin Zayed Road. Residents enjoy proximity to parks, schools, retail hubs, and leisure destinations — making the development appealing for families, professionals and investors alike.",
+      "mapImage": "/img/projects/ir1dian/map.png"
+    },
+    "investment": {
+      "title": "Investment Proposition",
+      "text": "With a launch price from AED 772,000 and completion expected in Q2 2027, IR1DIAN Park presents an attractive entry point into the JVC market. The combination of strong location, modern design and family-oriented amenities supports both rental demand and long-term value appreciation.",
+      "ctaLabel": "Book a call"
+    },
+    "previous": "costa-mare",
+    "next": "saadiyat-grove"
+  },
+
+  {
+    "slug": "costa-mare",
+    "hero": {
+      "title": "Costa Mare",
+      "location": "Al Marjan Island • Ras Al Khaimah",
+      "image": "/img/projects/ellington/10.jpg"
+    },
+    "intro": "Costa Mare is a seaside residential project by Ellington Properties, located on the pristine Al Marjan Island. Designed with timeless architecture and refined interiors, it offers a serene coastal lifestyle with direct access to the sea.",
+    "amenities": [
+      [
+        { "icon": "waves", "label": "Private Beach Access" },
+        { "icon": "droplets", "label": "Infinity Pool" },
+        { "icon": "dumbbell", "label": "Fitness Studio" }
+      ],
+      [
+        { "icon": "sparkles", "label": "Spa & Wellness Areas" },
+        { "icon": "bell", "label": "Concierge Services" },
+        { "icon": "leaf", "label": "Landscaped Gardens" }
+      ]
+    ],
+    "highlights": [
+      { "label": "Developer", "value": "Ellington Properties" },
+      { "label": "Type", "value": "Beachfront Residences" },
+      { "label": "Units", "value": "Studios – 3BR" },
+      { "label": "Starting Price", "value": "USD 270,000" },
+      { "label": "Location", "value": "Al Marjan Island, Ras Al Khaimah" },
+      { "label": "Unique", "value": "Seafront living • Premium finishes • Resort lifestyle" }
+    ],
+    "gallery": [
+    "/img/projects/ellington/10.jpg",
+    "/img/projects/ellington/2.jpg",
+    "/img/projects/ellington/3.webp",
+    "/img/projects/ellington/4.webp",
+    "/img/projects/ellington/5.webp"
+    ],
+    "location": {
+      "title": "Location & Lifestyle",
+      "text": "Located on Al Marjan Island, Costa Mare offers a refined coastal lifestyle with direct beach access and proximity to Ras Al Khaimah’s growing hospitality and leisure attractions.",
+      "mapImage": "/img/projects/ellington/map.png"
+    },
+    "investment": {
+      "title": "Investment Proposition",
+      "text": "With strong tourism growth and limited beachfront supply, Costa Mare offers excellent potential for capital appreciation and rental yields in Ras Al Khaimah’s rising luxury market.",
+      "ctaLabel": "Book a call"
+    },
+    "previous": "binghatti-house",
+    "next": "ir1dian-park"
+  },
+
+  {
+    "slug": "binghatti-house",
+    "hero": {
+      "title": "Binghatti House",
+      "location": "Jumeirah Village Circle • Dubai",
+      "image": "/img/projects/binghatti/1.webp"
+    },
+    "intro": "Binghatti House is a contemporary residential development featuring the brand’s iconic architectural identity. Located in JVC, it combines modern aesthetics with functional layouts for urban living.",
+    "amenities": [
+      [
+        { "icon": "droplets", "label": "Swimming Pool" },
+        { "icon": "dumbbell", "label": "Gym" }
+      ],
+      [
+        { "icon": "car", "label": "Covered Parking" },
+        { "icon": "shield", "label": "24/7 Security" }
+      ]
+    ],
+    "highlights": [
+      { "label": "Developer", "value": "Binghatti Developers" },
+      { "label": "Type", "value": "Apartments" },
+      { "label": "Units", "value": "Studios – 1BR" },
+      { "label": "Starting Price", "value": "AED 570,000" },
+      { "label": "Location", "value": "JVC, Dubai" },
+      { "label": "Unique", "value": "Signature architecture • High ROI • Central location" }
+    ],
+    "gallery": [
+    "/img/projects/binghatti/1.webp",
+    "/img/projects/binghatti/2.jpg",
+    "/img/projects/binghatti/3.webp",
+    "/img/projects/binghatti/4.webp",
+    "/img/projects/binghatti/5.jpg"
+    ],
+    "location": {
+      "title": "Location & Lifestyle",
+      "text": "Situated in Jumeirah Village Circle, Binghatti House benefits from strong rental demand, community infrastructure and easy access to Dubai’s main arteries.",
+      "mapImage": "/img/projects/binghatti/map.png"
+    },
+    "investment": {
+      "title": "Investment Proposition",
+      "text": "Positioned in one of Dubai’s strongest rental zones, Binghatti House is ideal for investors seeking steady yields and accessible entry pricing.",
+      "ctaLabel": "Book a call"
+    },
+    "previous": "saadiyat-grove",
+    "next": "costa-mare"
+  },
+
+  {
+    "slug": "saadiyat-grove",
+    "hero": {
+      "title": "Saadiyat Grove",
+      "location": "Abu Dhabi",
+      "image": "/img/projects/saadiyat/1.jpg"
+    },
+    "intro": "Saadiyat Grove is Aldar’s cultural and lifestyle destination located on Saadiyat Island, blending residential, retail and cultural landmarks in one of Abu Dhabi’s most prestigious districts.",
+    "amenities": [
+      [
+        { "icon": "shopping-bag", "label": "Retail Boulevard" },
+        { "icon": "ticket", "label": "Cultural Venues" }
+      ],
+      [
+        { "icon": "waves", "label": "Beach Access" },
+        { "icon": "tree-pine", "label": "Parks & Public Spaces" }
+      ]
+    ],
+    "highlights": [
+      { "label": "Developer", "value": "Aldar Properties" },
+      { "label": "Type", "value": "Mixed-use Residences" },
+      { "label": "Units", "value": "1 – 3BR" },
+      { "label": "Starting Price", "value": "AED 1.29M" },
+      { "label": "Location", "value": "Saadiyat Island, Abu Dhabi" },
+      { "label": "Unique", "value": "Cultural district • Beach proximity • Premium lifestyle" }
+    ],
+    "gallery": [
+    "/img/projects/saadiyat/1.jpg",
+    "/img/projects/saadiyat/2.jpg",
+    "/img/projects/saadiyat/3.jpg",
+    "/img/projects/saadiyat/4.jpg" 
+    ],
+    "location": {
+      "title": "Location & Lifestyle",
+      "text": "Located in Abu Dhabi’s cultural heart, Saadiyat Grove connects residents to world-class museums, pristine beaches and a refined urban environment.",
+      "mapImage": "/img/projects/saadiyat/map.png"
+    },
+    "investment": {
+      "title": "Investment Proposition",
+      "text": "Saadiyat Grove offers long-term value supported by government-backed development, international demand and limited prime supply.",
+      "ctaLabel": "Book a call"
+    },
+    "previous": "ir1dian-park",
+    "next": "binghatti-house"
+  }
+]

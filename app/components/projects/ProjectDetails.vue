@@ -4,21 +4,29 @@
     class="project-details"
   >
     <div class="container details-grid">
+
       <!-- LEFT : Amenities -->
       <div class="details-left">
         <div class="amenities-block">
-          <div class="amenities-column">
-            <div class="amenity"><span>🏋️</span><span>Gym</span></div>
-            <div class="amenity"><span>🏊</span><span>Swimming Pool & Kids Pool</span></div>
-            <div class="amenity"><span>🧸</span><span>Kids Play Area</span></div>
-            <div class="amenity"><span>🚗</span><span>Indoor Parking</span></div>
-          </div>
-
-          <div class="amenities-column">
-            <div class="amenity"><span>🌿</span><span>Landscaped Gardens</span></div>
-            <div class="amenity"><span>🔥</span><span>BBQ & Outdoor Lounge</span></div>
-            <div class="amenity"><span>🛡️</span><span>24/7 Security</span></div>
-            <div class="amenity"><span>📶</span><span>Smart Home Features</span></div>
+          <div
+            v-for="(column, colIndex) in project.amenities"
+            :key="colIndex"
+            class="amenities-column"
+          >
+            <div
+              v-for="(amenity, index) in column"
+              :key="index"
+              class="amenity"
+            >
+              <i
+                class="amenity-icon"
+                :data-lucide="amenity.icon"
+                aria-hidden="true"
+              ></i>
+              <span class="amenity-label">
+                {{ amenity.label }}
+              </span>
+            </div>
           </div>
         </div>
       </div>
@@ -28,29 +36,59 @@
         <h2>Highlights</h2>
 
         <ul class="project-specs">
-          <li><strong>Developer:</strong> Object 1 Real Estate Development</li>
-          <li><strong>Type:</strong> Low-rise Apartments</li>
-          <li><strong>Units:</strong> Studios – 2BR</li>
-          <li><strong>Starting Price:</strong> AED 772,000</li>
-          <li><strong>Delivery:</strong> Q2 2027</li>
-          <li><strong>Location:</strong> Jumeirah Village Circle, Dubai</li>
-          <li><strong>Unique:</strong> Urban design • Family-friendly amenities • Strong connectivity</li>
+          <li
+            v-for="(item, index) in project.highlights"
+            :key="index"
+          >
+            <strong>{{ item.label }}:</strong>
+            {{ item.value }}
+          </li>
         </ul>
 
-        <a href="#" class="btn">Book a call</a>
+        <a href="#" class="btn">
+          Book a call
+        </a>
       </div>
+
     </div>
   </section>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, nextTick, watch } from 'vue'
 import { initProjectDetailsAnimation } from '~/composables/animations/projects/details'
+import type { Project } from '~/composables/useProject'
 
+/* ======================
+   Props
+====================== */
+const props = defineProps<{
+  project: Project
+}>()
+
+/* ======================
+   Animations
+====================== */
 const root = ref<HTMLElement | null>(null)
+
+const refreshLucide = async () => {
+  if (!import.meta.client) return
+  await nextTick()
+  requestAnimationFrame(() => {
+    const lucide = (window as Window & {
+      lucide?: { createIcons: () => void }
+    }).lucide
+    lucide?.createIcons()
+  })
+}
 
 onMounted(() => {
   if (!root.value) return
   initProjectDetailsAnimation(root.value)
+  refreshLucide()
+})
+
+watch(() => props.project.slug, () => {
+  refreshLucide()
 })
 </script>

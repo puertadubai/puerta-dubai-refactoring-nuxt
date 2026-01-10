@@ -40,7 +40,7 @@
     </a>
 
     <p class="footer-note">
-      © Puerta Dubai 2025. All rights reserved.
+      © Puerta Dubai {{ currentYear }}. All rights reserved.
     </p>
   </footer>
 </template>
@@ -50,6 +50,7 @@ import { ref, onMounted } from 'vue'
 import { initFooterAnimation } from '~/composables/animations/layout/footer'
 
 const root = ref<HTMLElement | null>(null)
+const currentYear = new Date().getFullYear()
 
 onMounted(() => {
   if (!import.meta.client) return

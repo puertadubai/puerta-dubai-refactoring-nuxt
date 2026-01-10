@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, watch, onMounted } from 'vue'
+import { gsap } from 'gsap'
 import { useSideMenu } from '~/composables/useSideMenu'
 import { useMenuAnimation } from '~/composables/useMenuAnimation'
 
@@ -13,9 +14,22 @@ let animation: ReturnType<typeof useMenuAnimation> | null = null
 onMounted(() => {
   if (!menuRef.value || !overlayRef.value) return
   animation = useMenuAnimation(menuRef.value, overlayRef.value)
+  if (isOpen.value) animation.open()
+  else animation.close()
 })
 
 watch(isOpen, (open) => {
+  menuRef.value?.classList.toggle('open', open)
+  overlayRef.value?.classList.toggle('active', open)
+  if (menuRef.value) {
+    gsap.killTweensOf(menuRef.value)
+    menuRef.value.style.transform = open ? 'translate(0px)' : 'translateX(-100%)'
+  }
+  if (overlayRef.value) {
+    gsap.killTweensOf(overlayRef.value)
+    overlayRef.value.style.opacity = open ? '1' : '0'
+    overlayRef.value.style.pointerEvents = open ? 'auto' : 'none'
+  }
   if (!animation) return
   open ? animation.open() : animation.close()
 })

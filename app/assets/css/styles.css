@@ -30,7 +30,9 @@
 
 /* ========== Base ========== */
 * { box-sizing: border-box; }
-html, body { height: 100%; margin: 0; scroll-behavior: smooth; }
+html, body { height: 100%; margin: 0; 
+  /* scroll-behavior: smooth;  */
+}
 body {
   font-family: "Inter", sans-serif; 
   font-optical-sizing: auto;
@@ -39,6 +41,12 @@ body {
   background: #ffffff;
   color: #000000; 
   line-height: 1.5;
+}
+html, body, #__nuxt, #app-layout {
+  transform: none !important;
+  will-change: auto !important;
+  position: static !important;
+  top: auto !important;
 }
 nav {
   position: fixed;
