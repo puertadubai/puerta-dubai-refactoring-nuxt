@@ -29,8 +29,6 @@
 <script setup lang="ts">
 import { ref, onMounted, onBeforeUnmount } from 'vue'
 import 'leaflet/dist/leaflet.css'
-import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png'
-import markerIcon from 'leaflet/dist/images/marker-icon.png'
 import markerShadow from 'leaflet/dist/images/marker-shadow.png'
 import { initProjectLocationAnimation } from '~/composables/animations/projects/location'
 import type { Project } from '~/composables/useProject'
@@ -68,10 +66,12 @@ const initMap = async (project: Project) => {
   if (!mapEl.value || map) return
 
   const L = await import('leaflet')
-  L.Icon.Default.mergeOptions({
-    iconRetinaUrl: markerIcon2x,
-    iconUrl: markerIcon,
-    shadowUrl: markerShadow
+  const projectMarkerIcon = L.icon({
+    iconUrl: '/img/marker-icon-2x.png',
+    iconRetinaUrl: '/img/marker-icon-2x.png',
+    shadowUrl: markerShadow,
+    iconSize: [32, 52],
+    iconAnchor: [16, 52]
   })
 
   map = L.map(mapEl.value, {
@@ -94,7 +94,9 @@ const initMap = async (project: Project) => {
 
   if (target.coords) {
     map.setView([target.coords.lat, target.coords.lng], target.coords.zoom ?? 13)
-    L.marker([target.coords.lat, target.coords.lng]).addTo(map)
+    L.marker([target.coords.lat, target.coords.lng], {
+      icon: projectMarkerIcon
+    }).addTo(map)
     mapReady.value = true
     return
   }
@@ -109,7 +111,7 @@ const initMap = async (project: Project) => {
       const lat = Number.parseFloat(data[0].lat)
       const lng = Number.parseFloat(data[0].lon)
       map.setView([lat, lng], 13)
-      L.marker([lat, lng]).addTo(map)
+      L.marker([lat, lng], { icon: projectMarkerIcon }).addTo(map)
       mapReady.value = true
       return
     }
@@ -118,7 +120,7 @@ const initMap = async (project: Project) => {
   }
 
   map.setView([fallback.lat, fallback.lng], fallback.zoom)
-  L.marker([fallback.lat, fallback.lng]).addTo(map)
+  L.marker([fallback.lat, fallback.lng], { icon: projectMarkerIcon }).addTo(map)
   mapReady.value = true
 }
 

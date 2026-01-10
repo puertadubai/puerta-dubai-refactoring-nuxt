@@ -26,7 +26,7 @@
     url("https://db.onlinewebfonts.com/t/b48afe0a33276b725125bd5754fcfb7b.svg#Geogrotesque-Thin")format("svg");
 }
 
-@font-face { font-family: "Serrif Condensed Regular"; src: url("css/serrif-dayan.woff2"); font-display: swap }
+@font-face { font-family: "Serrif Condensed Regular"; src: url("/fonts/serrif-dayan.woff2"); font-display: swap }
 
 /* ========== Base ========== */
 * { box-sizing: border-box; }

@@ -1,10 +1,13 @@
 <script setup lang="ts">
-import { ref, watch, onMounted } from 'vue'
+import { ref, watch, onMounted, computed } from 'vue'
 import { gsap } from 'gsap'
+import { useRoute, useRouter } from '#imports'
 import { useSideMenu } from '~/composables/useSideMenu'
 import { useMenuAnimation } from '~/composables/useMenuAnimation'
 
 const { isOpen, close } = useSideMenu()
+const route = useRoute()
+const router = useRouter()
 
 const menuRef = ref<HTMLElement | null>(null)
 const overlayRef = ref<HTMLElement | null>(null)
@@ -33,6 +36,31 @@ watch(isOpen, (open) => {
   if (!animation) return
   open ? animation.open() : animation.close()
 })
+
+const isHome = computed(() => route.path === '/' || route.path === '')
+
+const linkHref = (id: string) => (isHome.value ? `#${id}` : `/#${id}`)
+
+const goTo = (id: string) => {
+  close()
+  if (!import.meta.client) return
+
+  if (isHome.value) {
+    const target = document.getElementById(id)
+    if (target) {
+      const header = document.querySelector('.main-header') as HTMLElement | null
+      const headerOffset = (header?.offsetHeight || 0) + 20
+      const top = target.getBoundingClientRect().top + window.scrollY - headerOffset
+      window.history.replaceState(null, '', `#${id}`)
+      window.scrollTo({ top, behavior: 'smooth' })
+      return
+    }
+    window.location.hash = id
+    return
+  }
+
+  router.push({ path: '/', hash: `#${id}` })
+}
 </script>
 
 <template>
@@ -58,26 +86,56 @@ watch(isOpen, (open) => {
       </button>
 
       <nav class="side-nav">
-        <a href="#hero" class="menu-link" @click="close">Home</a>
-        <a href="#about-puerta" class="menu-link" @click="close">
+        <a :href="linkHref('hero')" class="menu-link" @click.prevent="goTo('hero')">
+          Home
+        </a>
+        <a
+          :href="linkHref('about-puerta')"
+          class="menu-link"
+          @click.prevent="goTo('about-puerta')"
+        >
           What is Puerta Dubai?
         </a>
-        <a href="#featured-projects" class="menu-link" @click="close">
+        <a
+          :href="linkHref('featured-projects')"
+          class="menu-link"
+          @click.prevent="goTo('featured-projects')"
+        >
           Projects
         </a>
-        <a href="#dayan" class="menu-link" @click="close">
+        <a
+          :href="linkHref('dayan')"
+          class="menu-link"
+          @click.prevent="goTo('dayan')"
+        >
           Founder
         </a>
-        <a href="#services" class="menu-link" @click="close">
+        <a
+          :href="linkHref('services')"
+          class="menu-link"
+          @click.prevent="goTo('services')"
+        >
           Services
         </a>
-        <a href="#golden-visa" class="menu-link" @click="close">
+        <a
+          :href="linkHref('golden-visa')"
+          class="menu-link"
+          @click.prevent="goTo('golden-visa')"
+        >
           Golden Visa
         </a>
-        <a href="#partners-section" class="menu-link" @click="close">
+        <a
+          :href="linkHref('partners-section')"
+          class="menu-link"
+          @click.prevent="goTo('partners-section')"
+        >
           Partners
         </a>
-        <a href="#contact" class="menu-link" @click="close">
+        <a
+          :href="linkHref('contact')"
+          class="menu-link"
+          @click.prevent="goTo('contact')"
+        >
           Contact
         </a>
       </nav>

@@ -1,10 +1,9 @@
-body {
+.services-body {
   background-color: #000;
-  background-image: url(../img/pattern-lines-night.svg)
+  background-image: none;
 }
 .services-page {
   color: #fff;
-  color: #000;
   padding: 160px 10%;
   min-height: 100vh;
 }
@@ -113,7 +112,7 @@ body {
 
 #bandeau {
   height: 400px;
-  background-image: url(../img/bandeau-services.png);
+  background-image: none;
   background-repeat:no-repeat;
   background-size:cover;
   display: flex;
@@ -121,7 +120,5 @@ body {
   justify-content: end;
   background-attachment: fixed;
 }
-
-
 
 

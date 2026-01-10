@@ -15,7 +15,7 @@
           Discover our <strong>free, interactive guide</strong> to the UAE Golden Visa.
         </p>
 
-        <button class="btn">Get Free Access</button>
+        <button class="btn leadForm">Get Free Access</button>
       </div>
 
       <div class="gv-image">

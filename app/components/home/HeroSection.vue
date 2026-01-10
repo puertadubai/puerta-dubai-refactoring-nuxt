@@ -25,7 +25,7 @@
         Invest in the <strong>vision</strong> of UAE
       </h1>
 
-      <button class="btn">
+      <button class="btn leadForm">
         Get Early Access
       </button>
 

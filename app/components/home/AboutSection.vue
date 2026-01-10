@@ -22,7 +22,7 @@
         <div class="about-divider"></div>
 
         <div class="about-cta">
-          <button class="btn">Join the Founding Circle</button>
+          <button class="btn leadForm">Join the Founding Circle</button>
         </div>
       </div>
     </div>
