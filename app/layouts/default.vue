@@ -6,7 +6,7 @@
     <!-- HEADER / NAV -->
     <MainHeader />
     <SideMenu />
-    <Breadcrumbs />
+    <Breadcrumbs v-if="showBreadcrumbs" />
 
     <!-- CLIENT ONLY FEATURES -->
     <ClientOnly>
@@ -38,7 +38,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onBeforeUnmount } from 'vue'
+import { ref, onMounted, onBeforeUnmount, computed } from 'vue'
+import { useRoute } from '#imports'
 import Preloader from '~/components/layout/Preloader.vue'
 import MainHeader from '~/components/layout/MainHeader.vue'
 import SideMenu from '~/components/layout/SideMenu.vue'
@@ -50,6 +51,8 @@ import LeadForm from '~/components/LeadForm.vue'
 import Breadcrumbs from '~/components/layout/Breadcrumbs.vue'
 
 const isLeadOpen = ref(false)
+const route = useRoute()
+const showBreadcrumbs = computed(() => !route.path.startsWith('/admin'))
 
 const openLead = () => {
   isLeadOpen.value = true

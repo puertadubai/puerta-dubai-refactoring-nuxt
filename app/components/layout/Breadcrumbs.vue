@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { computed, onMounted, onBeforeUnmount, ref } from 'vue'
 import { useRoute } from '#imports'
-import projectsData from '~/data/projects.json'
 import type { Project } from '~/composables/useProject'
 
 type Crumb = {
@@ -12,10 +11,11 @@ type Crumb = {
 const route = useRoute()
 const isHidden = ref(false)
 
-const projects = projectsData as Project[]
-const projectTitleBySlug = new Map(
-  projects.map((project) => [project.slug, project.hero.title])
-)
+const { data: projectsData } = await useFetch<Project[]>('/api/projects')
+const projectTitleBySlug = computed(() => {
+  const projects = projectsData.value ?? []
+  return new Map(projects.map((project) => [project.slug, project.hero.title]))
+})
 
 const labelFromSegment = (segment: string) => {
   if (!segment) return ''
@@ -36,7 +36,7 @@ const crumbs = computed<Crumb[]>(() => {
     let label = labelFromSegment(segment)
 
     if (segments[0] === 'projects' && index === 1) {
-      label = projectTitleBySlug.get(segment) || label
+      label = projectTitleBySlug.value.get(segment) || label
     }
 
     base.push({
@@ -82,7 +82,7 @@ onBeforeUnmount(() => {
 
 <style scoped>
 .breadcrumb-bar {
-  position: sticky;
+  position: absolute;
   top: 190px;
   z-index: 10;
   background: transparent;

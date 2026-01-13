@@ -10,11 +10,17 @@ pages legales. La base de contenu des projets est dans un JSON local.
   fondateur, services, Golden Visa, partenaires).
 - Page projet dynamique `/projects/:slug` avec hero, intro, details, galerie,
   localisation, investissement et navigation vers le projet precedent/suivant.
+- Page liste des projets `/projects` avec carte Leaflet plein largeur, marqueurs
+  geolocalises, tooltip et lien vers les fiches (scroll vers la tuile au clic).
+- Page services en accordéon (refactoring du code historique), accessible via `/#services`
+  sur la home et `/services`.
 - Preloader global, curseur personnalise, progression de scroll, bouton retour en haut.
 - Animations GSAP pour les sections et composants.
 - Cartes Leaflet avec tuiles OpenStreetMap/CARTO et geocodage Nominatim si coords absentes.
 - Traduction via Google Translate (langues supportees : en, fr, es, pt).
 - Pages legales et base d'administration (placeholders).
+- Popup LeadForm globale declenchee par les elements avec classe `.leadForm`.
+- Fil d'ariane premium sous le header, disparaissant au scroll.
 
 ## Stack technique
 
@@ -71,6 +77,8 @@ notamment :
 
 Les images sont referencees dans `public/img/projects/...`.
 
+Conseil : ajouter `location.coords` pour eviter le geocodage.
+
 ## Traduction
 
 Le projet charge un script Google Translate et un selecteur de langue.
@@ -86,12 +94,15 @@ Les cartes projet utilisent Leaflet avec tuiles CARTO.
 Si aucune coordonnee n'est fournie, un geocodage Nominatim est declenche
 via requete HTTP (necessite l'acces reseau cote client).
 
+La page `/projects` met en cache les coordonnees geocodees dans `localStorage`
+pour reduire les appels.
+
 ## Routes principales
 
 - `/` : page d'accueil
 - `/projects/:slug` : detail d'un projet
-- `/projects` : placeholder
-- `/services` : placeholder
+- `/projects` : liste des projets + carte
+- `/services` : accordéon des services
 - `/legal-notice` : page mentions legales
 - `/admin`, `/admin/login`, `/admin/projects/new`, `/admin/projects/:id` : placeholders
 
@@ -99,3 +110,4 @@ via requete HTTP (necessite l'acces reseau cote client).
 
 - `app/app.vue` charge `public/js/translations.js` au runtime.
 - Les styles globaux sont listes dans `nuxt.config.ts`.
+- Les marqueurs Leaflet utilisent `/public/img/marker-icon-2x.png`.

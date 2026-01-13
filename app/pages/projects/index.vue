@@ -57,9 +57,8 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, onBeforeUnmount, ref, computed } from 'vue'
+import { onMounted, onBeforeUnmount, ref, computed, watch } from 'vue'
 import { useHead } from '#imports'
-import projectsData from '~/data/projects.json'
 import type { Project } from '~/composables/useProject'
 import markerShadow from 'leaflet/dist/images/marker-shadow.png'
 import 'leaflet/dist/leaflet.css'
@@ -68,23 +67,26 @@ useHead({
   title: 'Projects | Puerta Dubai'
 })
 
-const projects = projectsData as Project[]
+const { data: projectsData } = await useFetch<Project[]>('/api/projects')
+const projects = computed(() => projectsData.value ?? [])
 
-const heroSlides = projects
-  .map((project) => project.hero.image)
-  .filter((image, index, list) => list.indexOf(image) === index)
+const heroSlides = computed(() => {
+  const images = projects.value.map((project) => project.hero.image).filter(Boolean)
+  return images.filter((image, index, list) => list.indexOf(image) === index)
+})
 
 const activeSlide = ref(0)
 const isTransitioning = ref(false)
 const nextSlide = computed(() =>
-  heroSlides.length ? (activeSlide.value + 1) % heroSlides.length : 0
+  heroSlides.value.length ? (activeSlide.value + 1) % heroSlides.value.length : 0
 )
 let slideTimer: number | null = null
 
 const transitionDuration = 1400
 
 const startHeroCarousel = () => {
-  if (!heroSlides.length) return
+  if (!heroSlides.value.length) return
+  if (slideTimer) return
   slideTimer = window.setInterval(() => {
     if (isTransitioning.value) return
     isTransitioning.value = true
@@ -95,21 +97,23 @@ const startHeroCarousel = () => {
   }, 5200)
 }
 
-const projectCards = projects.map((project) => {
-  const price =
-    project.highlights.find(
-      (item) => item.label.toLowerCase() === 'starting price'
-    )?.value ?? 'On request'
+const projectCards = computed(() =>
+  projects.value.map((project) => {
+    const price =
+      project.highlights.find(
+        (item) => item.label.toLowerCase() === 'starting price'
+      )?.value ?? 'On request'
 
-  return {
-    slug: project.slug,
-    title: project.hero.title,
-    location: project.hero.location,
-    image: project.hero.image,
-    description: project.intro,
-    price
-  }
-})
+    return {
+      slug: project.slug,
+      title: project.hero.title,
+      location: project.hero.location,
+      image: project.hero.image,
+      description: project.intro,
+      price
+    }
+  })
+)
 
 const mapEl = ref<HTMLElement | null>(null)
 let map: import('leaflet').Map | null = null
@@ -191,7 +195,7 @@ const getCoords = async (project: Project) => {
 }
 
 const initMap = async () => {
-  if (!mapEl.value || map) return
+  if (!mapEl.value || map || !projects.value.length) return
   const L = await import('leaflet')
   const projectMarkerIcon = L.icon({
     iconUrl: '/img/marker-icon-2x.png',
@@ -219,7 +223,7 @@ const initMap = async () => {
   markersLayer = L.layerGroup().addTo(map)
   const bounds = L.latLngBounds([])
 
-  for (const project of projects) {
+  for (const project of projects.value) {
     const resolved = await getCoords(project)
     if (!resolved) continue
     const marker = L.marker([resolved.lat, resolved.lng], {
@@ -243,6 +247,16 @@ onMounted(() => {
   initMap()
   startHeroCarousel()
 })
+
+watch(
+  () => projects.value.length,
+  (count) => {
+    if (!import.meta.client || !count) return
+    initMap()
+    startHeroCarousel()
+  },
+  { immediate: true }
+)
 
 onBeforeUnmount(() => {
   markersLayer?.clearLayers()

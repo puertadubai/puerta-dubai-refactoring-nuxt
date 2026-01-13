@@ -138,6 +138,9 @@ const goTo = (id: string) => {
         >
           Contact
         </a>
+        <NuxtLink to="/admin/login" class="menu-link" @click="close">
+          Connexion
+        </NuxtLink>
       </nav>
     </div>
   </Teleport>

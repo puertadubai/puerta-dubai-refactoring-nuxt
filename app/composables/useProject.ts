@@ -1,5 +1,4 @@
-import { computed } from 'vue'
-import projects from '~/data/projects.json'
+import { computed, unref } from 'vue'
 
 /* ======================
    Types
@@ -54,12 +53,16 @@ export interface Project {
 /* ======================
    Composable
 ====================== */
-export const useProject = (slug: string) => {
-  const project = computed<Project | null>(() => {
-    return projects.find((p: Project) => p.slug === slug) ?? null
-  })
+export const useProject = (slug: string | Ref<string>) => {
+  const resolvedSlug = computed(() => unref(slug))
+  const { data: project, pending, error, refresh } = useFetch<Project | null>(() =>
+    resolvedSlug.value ? `/api/projects/${resolvedSlug.value}` : null
+  )
 
   return {
-    project
+    project,
+    pending,
+    error,
+    refresh
   }
 }

@@ -20,7 +20,6 @@
 import { computed, onMounted, watch, nextTick } from 'vue'
 import { useRoute, useHead } from '#imports'
 import { useProject, type Project } from '~/composables/useProject'
-import projectsData from '~/data/projects.json'
 
 import ProjectHero from '~/components/projects/ProjectHero.vue'
 import ProjectIntro from '~/components/projects/ProjectIntro.vue'
@@ -36,9 +35,9 @@ import ProjectNavigation from '~/components/projects/ProjectNav.vue'
 const route = useRoute()
 const slug = computed(() => route.params.slug as string)
 
-const { project } = useProject(slug.value)
-
-const projects = projectsData as Project[]
+const { project } = useProject(slug)
+const { data: projectsData } = await useFetch<Project[]>('/api/projects')
+const projects = computed(() => projectsData.value ?? [])
 
 const getProjectNavData = (p: Project | null) => {
   if (!p) return undefined
@@ -59,13 +58,13 @@ const getProjectNavData = (p: Project | null) => {
 
 const previous = computed(() => {
   if (!project.value?.previous) return undefined
-  const prev = projects.find((p) => p.slug === project.value?.previous) ?? null
+  const prev = projects.value.find((p) => p.slug === project.value?.previous) ?? null
   return getProjectNavData(prev)
 })
 
 const next = computed(() => {
   if (!project.value?.next) return undefined
-  const nxt = projects.find((p) => p.slug === project.value?.next) ?? null
+  const nxt = projects.value.find((p) => p.slug === project.value?.next) ?? null
   return getProjectNavData(nxt)
 })
 
