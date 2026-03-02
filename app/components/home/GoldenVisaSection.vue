@@ -19,7 +19,7 @@
       </div>
 
       <div class="gv-image">
-        <img src="/img/mockup-guide.jpg" alt="Golden Visa Guide Preview" />
+        <img src="/img/mockup-guide.png" alt="Golden Visa Guide Preview" />
       </div>
     </div>
   </section>

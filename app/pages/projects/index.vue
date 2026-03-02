@@ -201,8 +201,8 @@ const initMap = async () => {
     iconUrl: '/img/marker-icon-2x.png',
     iconRetinaUrl: '/img/marker-icon-2x.png',
     shadowUrl: markerShadow,
-    iconSize: [32, 52],
-    iconAnchor: [16, 52]
+    iconSize: [32, 32],
+    iconAnchor: [16, 32]
   })
 
   map = L.map(mapEl.value, {
@@ -274,7 +274,7 @@ onBeforeUnmount(() => {
 }
 
 .projects-hero-banner {
-  background: #000;
+  background: #302d2d;
   color: #fff;
   padding: clamp(56px, 10vh, 120px) 6vw;
   text-align: center;
@@ -318,9 +318,9 @@ onBeforeUnmount(() => {
   inset: 0;
   background: linear-gradient(
     180deg,
-    rgba(0, 0, 0, 0.65) 0%,
-    rgba(0, 0, 0, 0.5) 55%,
-    rgba(0, 0, 0, 0.7) 100%
+    rgba(48, 45, 45, 0.65) 0%,
+    rgba(48, 45, 45, 0.5) 55%,
+    rgba(48, 45, 45, 0.7) 100%
   );
 }
 
@@ -385,8 +385,8 @@ onBeforeUnmount(() => {
 }
 
 .project-card.is-highlighted {
-  outline: 2px solid #000;
-  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.2);
+  outline: 2px solid #302d2d;
+  box-shadow: 0 18px 40px rgba(48, 45, 45, 0.2);
   transform: translateY(-4px);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }

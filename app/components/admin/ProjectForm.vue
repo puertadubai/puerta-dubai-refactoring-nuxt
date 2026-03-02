@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { reactive, watch } from 'vue'
+import { reactive, watch, nextTick, onMounted } from 'vue'
 
 type ProjectFormData = {
   id?: string
@@ -124,6 +124,27 @@ const onGalleryUpload = async (event: Event, index: number) => {
 const submitForm = () => {
   emit('submit', cloneProject(form))
 }
+
+const refreshLucide = async () => {
+  if (!import.meta.client) return
+  await nextTick()
+  // @ts-ignore
+  if (window.lucide) {
+    // @ts-ignore
+    window.lucide.createIcons()
+  }
+}
+
+onMounted(() => {
+  refreshLucide()
+})
+
+watch(
+  () => form.amenities.map((item) => item.icon).join('|'),
+  () => {
+    refreshLucide()
+  }
+)
 </script>
 
 <template>
@@ -172,8 +193,21 @@ const submitForm = () => {
     </div>
 
     <div class="section">
-      <h2>Amenities</h2>
+      <div class="section-header">
+        <h2>Amenities</h2>
+        <a
+          class="external-link"
+          href="https://lucide.dev/icons/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Browse icon library
+        </a>
+      </div>
       <div v-for="(amenity, index) in form.amenities" :key="index" class="list-row">
+        <div class="icon-preview" aria-hidden="true">
+          <i :data-lucide="amenity.icon || 'sparkles'"></i>
+        </div>
         <input v-model.trim="amenity.icon" placeholder="Icon name" />
         <input v-model.trim="amenity.label" placeholder="Label" />
         <select v-model.number="amenity.groupIndex">
@@ -297,12 +331,32 @@ const submitForm = () => {
   padding: 24px;
   border-radius: 16px;
   background: #ffffff;
-  border: 1px solid rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(48, 45, 45, 0.08);
 }
 
 .section h2 {
   margin: 0 0 8px;
   font-size: 20px;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.external-link {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: #111;
+  text-decoration: none;
+  border-bottom: 1px solid currentColor;
+}
+
+.external-link:hover {
+  opacity: 0.7;
 }
 
 label {
@@ -317,14 +371,14 @@ textarea,
 select {
   padding: 10px 12px;
   border-radius: 10px;
-  border: 1px solid rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(48, 45, 45, 0.15);
   background: #fff;
   font-size: 14px;
 }
 
 .list-row {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  grid-template-columns: auto repeat(auto-fit, minmax(140px, 1fr));
   gap: 10px;
   align-items: center;
 }
@@ -345,7 +399,7 @@ select {
 .preview {
   width: min(280px, 100%);
   border-radius: 12px;
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(48, 45, 45, 0.1);
 }
 
 .gallery-preview {
@@ -359,7 +413,7 @@ select {
   height: 90px;
   object-fit: cover;
   border-radius: 10px;
-  border: 1px solid rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(48, 45, 45, 0.08);
 }
 
 .actions {
@@ -384,7 +438,30 @@ button:disabled {
 
 .ghost {
   background: transparent;
-  border: 1px solid rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(48, 45, 45, 0.2);
   color: #111;
+}
+
+.icon-preview {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  border: 1px solid rgba(48, 45, 45, 0.12);
+  display: grid;
+  place-items: center;
+  background: #f7f5f2;
+}
+
+.icon-preview :deep(svg) {
+  width: 22px;
+  height: 22px;
+  stroke: #111;
+}
+
+@media (max-width: 640px) {
+  .section-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }
 </style>

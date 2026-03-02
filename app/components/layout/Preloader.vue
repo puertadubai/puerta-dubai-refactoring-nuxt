@@ -77,7 +77,7 @@ onMounted(() => {
 #preloader {
   position: fixed;
   inset: 0;
-  background: #000;
+  background: #302d2d;
   z-index: 10000;
   display: flex;
   align-items: center;
@@ -132,7 +132,7 @@ onMounted(() => {
   left: 0;
   right: 0;
   height: 50%;
-  background: #000;
+  background: #302d2d;
   z-index: 1;
 }
 

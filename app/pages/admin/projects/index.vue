@@ -51,13 +51,17 @@ const deleteProject = async (id: string) => {
           <small>{{ project.slug }}</small>
         </div>
         <div class="card-actions">
-          <NuxtLink :to="`/admin/projects/${project.id}`" class="ghost-btn">Edit</NuxtLink>
+          <NuxtLink :to="`/admin/projects/${project.id}`" class="ghost-btn">
+            <i data-lucide="pencil"></i>
+            Edit
+          </NuxtLink>
           <button
             class="ghost-btn danger"
             type="button"
             :disabled="deletingId === project.id"
             @click="deleteProject(project.id)"
           >
+            <i data-lucide="trash-2"></i>
             Delete
           </button>
         </div>
@@ -68,7 +72,7 @@ const deleteProject = async (id: string) => {
 
 <style scoped>
 .admin-projects {
-  padding: 140px 8vw 90px;
+  padding: 70px 8vw 90px;
   min-height: 70vh;
   background: #f7f3ee;
 }
@@ -121,7 +125,7 @@ h1 {
 .project-card {
   background: #ffffff;
   border-radius: 20px;
-  border: 1px solid rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(48, 45, 45, 0.08);
   overflow: hidden;
   display: grid;
 }
@@ -154,24 +158,47 @@ h1 {
 
 .card-actions {
   display: flex;
-  gap: 10px;
+  gap: 12px;
   padding: 0 18px 18px;
 }
 
 .ghost-btn {
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  background: transparent;
-  color: #111;
-  padding: 8px 14px;
-  border-radius: 999px;
+  border: 1px solid transparent;
+  background: #111;
+  color: #fff;
+  padding: 9px 16px;
+  border-radius: 12px;
   cursor: pointer;
   text-decoration: none;
-  font-size: 14px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ghost-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 18px rgba(48, 45, 45, 0.15);
 }
 
 .ghost-btn.danger {
+  background: transparent;
   color: #a23434;
-  border-color: rgba(162, 52, 52, 0.4);
+  border-color: rgba(162, 52, 52, 0.5);
+}
+
+.ghost-btn.danger:hover {
+  background: rgba(162, 52, 52, 0.1);
+  box-shadow: none;
+}
+
+.ghost-btn :deep(svg) {
+  width: 16px;
+  height: 16px;
+  stroke: currentColor;
 }
 
 @media (max-width: 720px) {

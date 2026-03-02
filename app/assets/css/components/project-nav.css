@@ -10,12 +10,13 @@
 
 .project-nav-title {
   text-align: center;
-  font-family: "Playfair Display", serif;
+  font-family: "Serrif Condensed Regular", serif;
   font-size: clamp(32px, 4vw, 54px);
-  font-weight: 700;
+  font-weight: 400;
   margin-bottom: 60px;
-  color: #000;
+  color: #302d2d;
   letter-spacing: .5px;
+  text-transform: uppercase;
 }
 
 .project-nav-grid {
@@ -44,7 +45,7 @@
 .project-nav-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(0,0,0,.75), rgba(0,0,0,.05));
+  background: linear-gradient(to top, rgba(48, 45, 45, .75), rgba(48, 45, 45, .05));
   transition: background .4s ease;
   display: flex;
   justify-content: flex-end;
@@ -68,10 +69,11 @@
 
 /* Texte de base */
 .project-title {
-  font-family: 'Playfair Display', serif;
+  font-family: "Serrif Condensed Regular", serif;
   font-size: 1.8rem;
   margin: 0 0 0.1em;
   letter-spacing: .5px;
+  text-transform: uppercase;
 }
 .project-location {
   margin: 0;
@@ -89,7 +91,7 @@
 }
 
 .project-price {
-  color: #cb805b;
+  color: #e7e6e1;
   margin: 6px 0 10px;
   font-weight: 600;
 }
@@ -104,7 +106,7 @@
 
 /* HOVER EFFECT LUXE */
 .project-nav-card:hover .project-nav-overlay {
-  background: linear-gradient(to top, rgba(0,0,0,.88), rgba(0,0,0,.2));
+  background: linear-gradient(to top, rgba(48, 45, 45, .88), rgba(48, 45, 45, .2));
 }
 
 .project-nav-card:hover .project-base {

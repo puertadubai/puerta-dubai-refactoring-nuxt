@@ -90,7 +90,7 @@ useHead({
   background: #fff;
   padding: 40px 30px;
   border-radius: 12px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 8px 20px rgba(48, 45, 45, 0.08);
 }
 
 .logo {
@@ -116,7 +116,7 @@ strong {
 }
 
 a {
-  color: #000;
+  color: #302d2d;
   text-decoration: underline;
 }
 

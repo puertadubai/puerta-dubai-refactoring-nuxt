@@ -12,6 +12,13 @@ definePageMeta({
       <p class="subtitle">Choose a workspace to continue.</p>
     </header>
     <div class="tile-grid">
+      <NuxtLink to="/admin/leads" class="tile tile-link">
+        <div class="tile-icon" aria-hidden="true">
+          <i data-lucide="inbox"></i>
+        </div>
+        <h2>Leads Inbox</h2>
+        <p>Review incoming leads and contact details.</p>
+      </NuxtLink>
       <NuxtLink to="/admin/projects" class="tile tile-link">
         <div class="tile-icon" aria-hidden="true">
           <i data-lucide="building-2"></i>
@@ -19,28 +26,21 @@ definePageMeta({
         <h2>Real Estate Project Management</h2>
         <p>Track projects, statuses, documents, and teams.</p>
       </NuxtLink>
-      <article class="tile">
-        <div class="tile-icon" aria-hidden="true">
-          <i data-lucide="megaphone"></i>
-        </div>
-        <h2>Communication Strategy</h2>
-        <p>Plan content, campaigns, and channels.</p>
-      </article>
-      <article class="tile">
+      <NuxtLink to="/admin/visual-identity" class="tile tile-link">
         <div class="tile-icon" aria-hidden="true">
           <i data-lucide="palette"></i>
         </div>
         <h2>Visual Identity</h2>
         <p>Creative assets, guidelines, and brand systems.</p>
-      </article>
+      </NuxtLink>
     </div>
   </section>
 </template>
 
 <style scoped>
 .backoffice {
-  padding: 140px 8vw 90px;
-  background: linear-gradient(180deg, #fbf7f1 0%, #ffffff 55%, #f1f1f1 100%);
+  padding: 70px 8vw 90px;
+  background: linear-gradient(180deg, #fbf7f1 0%, #ffffff 55%, #e7e6e1 100%);
   min-height: 70vh;
   overflow: hidden;
 }
@@ -74,7 +74,19 @@ h1 {
 .tile-grid {
   display: grid;
   gap: 24px;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+@media (max-width: 980px) {
+  .tile-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .tile-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .tile {
@@ -91,9 +103,8 @@ h1 {
 }
 
 .tile-icon {
-  width: 72px;
-  height: 72px;
-  border-radius: 18px;
+  width: 100%;
+  height: 102px;
   background: #ffffff;
   border: 1px solid rgba(15, 15, 15, 0.15);
   display: grid;

@@ -7,8 +7,8 @@
   top: 50%;
   right: 0; 
   transform: translateY(-50%);
-  background: #bac3f1;
-  color: #fff;
+  background: #dcc6b8;
+  color: #302d2d;
   writing-mode: vertical-rl;
   padding: 12px 14px;
   letter-spacing: 1px;
@@ -20,11 +20,12 @@
   z-index: 99999;
 
   transition: all .3s ease;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+  box-shadow: 0 8px 24px rgba(48, 45, 45, 0.25);
 }
 
 .contact-sticker:hover {
-  background: #111;
+  background: #302d2d;
+  color: #fff;
   right: 2px;
   transform: translateY(-50%) scale(1.03);
 }
@@ -41,9 +42,9 @@
   width: 340px; 
   height: 100vh;
   background: #ffffff;
-  box-shadow: -12px 0 32px rgba(0,0,0,0.25);
+  box-shadow: -12px 0 32px rgba(48, 45, 45, 0.25);
   z-index: 99999;
-  border-left: 3px solid #cb805b;
+  border-left: 3px solid #e7e6e1;
 
   display: flex;
   flex-direction: column;
@@ -81,7 +82,7 @@
   inset: -10px;
   border-radius: 100%;
   background: radial-gradient(
-    rgba(203,128,91,0.35),
+    rgba(231,230,225,0.35),
     transparent 70%
   );
   filter: blur(20px);
@@ -93,7 +94,7 @@
   border-radius: 100%;
   object-fit: cover;
   filter: grayscale(1);
-  box-shadow: 0 8px 22px rgba(0,0,0,0.25);
+  box-shadow: 0 8px 22px rgba(48, 45, 45, 0.25);
 }
 
 
@@ -102,10 +103,10 @@
    ============================================ */
 
 .cd-name {
-  font-family: "Playfair Display", serif;
+  font-family: "Inter", sans-serif;
   font-size: 1.55rem;
   font-weight: 700;
-  color: #000;
+  color: #302d2d;
   letter-spacing: .3px;
   margin-bottom: 6px;
 }
@@ -137,7 +138,7 @@
 
   font-size: .95rem;
   font-weight: 500;
-  color: #000;
+  color: #302d2d;
   text-decoration: none;
 
   border: 1px solid #ddd;
@@ -150,23 +151,25 @@
 .cd-bookcall i {
   width: 20px;
   height: 20px;
-  stroke: #cb805b;
+  stroke: #e7e6e1;
 }
 
 .cd-actions a:hover {
-  border-color: #cb805b;
-  color: #cb805b;
+  border-color: #302d2d;
+  color: #302d2d;
+  background: #f8f7f4;
 }
 
 .cd-bookcall {
-  background: #cb805b;
-  color: #fff !important;
+  background: #e7e6e1;
+  color: #302d2d !important;
   border: none;
   cursor: pointer;
 }
 
 .cd-bookcall:hover {
-  background: #a36a49;
+  background: #302d2d;
+  color: #fff !important;
 }
 
 
@@ -201,9 +204,9 @@
   right: 18px;
   width: 32px;
   height: 32px;
-  border: 1px solid #000;
+  border: 1px solid #302d2d;
   background: #fff;
-  color: #000;
+  color: #302d2d;
   font-size: 17px;
   line-height: 1;
   border-radius: 50%; /* carré → remplacer par 0 si tu préfères */
@@ -214,6 +217,6 @@
 }
 
 .drawer-close-btn:hover {
-  background: #000;
+  background: #302d2d;
   color: #fff;
 }

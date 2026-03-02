@@ -45,8 +45,8 @@ html, body {
   inset: 0;
   background: linear-gradient(
     to bottom,
-    rgba(0, 0, 0, 0.3),
-    rgba(0, 0, 0, 0.85)
+    rgba(48, 45, 45, 0.3),
+    rgba(48, 45, 45, 0.85)
   );
 }
 
@@ -59,18 +59,21 @@ html, body {
 }
 
 .project-hero h1 {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(52px, 7vw, 120px);
-  font-weight: 900;
-  letter-spacing: 2px;
+  font-family: "Serrif Condensed Regular", serif;
+  font-size: clamp(46px, 6.3vw, 108px);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 0.92;
   text-transform: uppercase;
 }
 
 .project-hero .project-location {
   margin-top: 12px;
-  font-size: 1.1rem;
+  font-size: clamp(0.95rem, 1vw, 1.08rem);
+  letter-spacing: 0.08em;
+  line-height: 1.35;
   opacity: 0.85;
-  color: #cb805b;
+  color: #e7e6e1;
 }
 
 /* ===========================================================
@@ -84,9 +87,10 @@ html, body {
 .project-intro p {
   max-width: 900px;
   margin: 0 auto;
-  font-size: 1.2rem;
+  font-size: clamp(1rem, 1.2vw, 1.14rem);
   color: #444;
-  line-height: 1.8;
+  line-height: 1.72;
+  letter-spacing: -0.004em;
   text-align: center;
 }
 
@@ -106,7 +110,7 @@ html, body {
 
 .details-left {
   display: flex;
-  background: #f6f6f6;
+  background: #e7e6e1;
   justify-content: center;
   align-items: center;
   padding: 40px;
@@ -135,21 +139,23 @@ html, body {
   width: 22px;
   height: 22px;
   stroke-width: 1.8;
-  stroke: #000;
+  stroke: #302d2d;
 }
 
 .amenity span {
   font-size: 14px;
   letter-spacing: 0.6px;
   text-transform: uppercase;
-  color: #000;
+  color: #302d2d;
 }
 
 .details-right h2 {
-  font-family: 'Playfair Display', serif;
-  font-size: 2.4rem;
+  font-family: "Serrif Condensed Regular", serif;
+  font-size: clamp(2rem, 3vw, 2.8rem);
   margin-bottom: 20px;
   text-align: left;
+  line-height: 0.96;
+  letter-spacing: -0.018em;
 }
 
 .project-specs {
@@ -159,8 +165,9 @@ html, body {
 }
 
 .project-specs li {
-  font-size: 1.1rem;
+  font-size: clamp(0.98rem, 1.1vw, 1.08rem);
   margin: 12px 0;
+  line-height: 1.58;
 }
 
 /* ===========================================================
@@ -204,16 +211,19 @@ html, body {
 }
 
 .project-investment h2 {
-  font-family: 'Playfair Display', serif;
-  font-size: 3rem;
+  font-family: "Serrif Condensed Regular", serif;
+  font-size: clamp(2.2rem, 4vw, 3.2rem);
   margin-bottom: 20px;
+  line-height: 0.94;
+  letter-spacing: -0.02em;
 }
 
 .project-investment p {
   max-width: 750px;
   margin: 0 auto 40px;
-  font-size: 1.2rem;
-  line-height: 1.8;
+  font-size: clamp(1rem, 1.2vw, 1.12rem);
+  line-height: 1.72;
+  letter-spacing: -0.004em;
   opacity: 0.85;
 }
 
@@ -226,8 +236,8 @@ html, body {
   top: 50%;
   right: 0;
   transform: translateY(-50%);
-  background: #bac3f1;
-  color: #000;
+  background: #dcc6b8;
+  color: #302d2d;
   padding: 12px 16px;
   writing-mode: vertical-rl;
   text-orientation: mixed;
@@ -239,7 +249,7 @@ html, body {
   cursor: pointer;
   z-index: 9999;
   transition: all 0.25s ease;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  box-shadow: 0 8px 20px rgba(48, 45, 45, 0.15);
 }
 
 .sticky-cta:hover {
@@ -258,7 +268,7 @@ html, body {
   overflow: hidden;
   padding: 0;
   margin: 0;
-  background: #000;
+  background: #302d2d;
 }
 
 .gallery-title {
@@ -266,12 +276,14 @@ html, body {
   top: 40px;
   left: 40px;
   z-index: 20;
-  font-family: "Playfair Display", serif;
-  font-size: clamp(32px, 4vw, 64px);
-  font-weight: 700;
+  font-family: "Serrif Condensed Regular", serif;
+  font-size: clamp(28px, 3.6vw, 56px);
+  font-weight: 400;
   color: #fff;
   pointer-events: none;
-  text-shadow: 0 2px 10px rgba(0,0,0,0.4);
+  text-shadow: 0 2px 10px rgba(48, 45, 45, 0.4);
+  line-height: 0.94;
+  letter-spacing: -0.018em;
 }
 
 .gallery-wrapper {

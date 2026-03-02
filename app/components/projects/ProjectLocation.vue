@@ -70,8 +70,8 @@ const initMap = async (project: Project) => {
     iconUrl: '/img/marker-icon-2x.png',
     iconRetinaUrl: '/img/marker-icon-2x.png',
     shadowUrl: markerShadow,
-    iconSize: [32, 52],
-    iconAnchor: [16, 52]
+    iconSize: [32, 32],
+    iconAnchor: [16, 32]
   })
 
   map = L.map(mapEl.value, {

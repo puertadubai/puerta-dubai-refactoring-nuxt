@@ -2,6 +2,9 @@
 import { ref, onMounted, onBeforeUnmount } from 'vue'
 
 const cursor = ref<HTMLElement | null>(null)
+const lineVertical = ref<HTMLElement | null>(null)
+const lineHorizontal = ref<HTMLElement | null>(null)
+const circle = ref<HTMLElement | null>(null)
 
 /* ======================
    Config
@@ -87,8 +90,11 @@ const animate = () => {
   currentX += (targetX - currentX) * LERP
   currentY += (targetY - currentY) * LERP
 
-  if (cursor.value) {
-    cursor.value.style.transform = `translate(${currentX}px, ${currentY}px)`
+  if (lineVertical.value) lineVertical.value.style.left = `${currentX}px`
+  if (lineHorizontal.value) lineHorizontal.value.style.top = `${currentY}px`
+  if (circle.value) {
+    circle.value.style.left = `${currentX}px`
+    circle.value.style.top = `${currentY}px`
   }
 
   rafId = requestAnimationFrame(animate)
@@ -130,11 +136,11 @@ onBeforeUnmount(() => {
     class="custom-cursor"
   >
     <!-- CROSS -->
-    <div class="cursor-line vertical"></div>
-    <div class="cursor-line horizontal"></div>
+    <div ref="lineVertical" class="cursor-line vertical"></div>
+    <div ref="lineHorizontal" class="cursor-line horizontal"></div>
 
     <!-- CIRCLE -->
-    <div class="cursor-circle"></div>
+    <div ref="circle" class="cursor-circle"></div>
   </div>
 </template>
 
@@ -147,14 +153,13 @@ onBeforeUnmount(() => {
   inset: 0;
   pointer-events: none;
   z-index: 9999;
-  transform: translate(-50%, -50%);
 }
 
 /* ======================
    Cross lines
 ====================== */
 .cursor-line {
-  position: fixed;
+  position: absolute;
   background: rgba(255, 255, 255, 0.55);
   transition: opacity 0.25s ease, transform 0.25s ease;
 }
@@ -175,7 +180,7 @@ onBeforeUnmount(() => {
    Circle
 ====================== */
 .cursor-circle {
-  position: fixed;
+  position: absolute;
   width: 44px;
   height: 44px;
   border-radius: 50%;

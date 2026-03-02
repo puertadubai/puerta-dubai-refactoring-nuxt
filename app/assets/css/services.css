@@ -1,5 +1,5 @@
 .services-body {
-  background-color: #000;
+  background-color: #302d2d;
   background-image: none;
 }
 .services-page {
@@ -47,7 +47,7 @@
 }
 .accordion-header span { text-align: left;}
 .accordion-header:hover {
-  color: #ccc;
+  color: #e7e6e1;
 }
 
 .accordion-icon {
@@ -76,9 +76,9 @@
 .accordion-body p:last-of-type {
   font-size: 1rem;
   font-weight: 100;
-  color: #eee;
+  color: #e7e6e1;
   /*! border: 0.5px solid; */
-  background-color: black;
+  background-color: #302d2d;
   padding: 1em;
 }
 
@@ -86,7 +86,7 @@
   display: inline-block;
   margin-top: 1.2rem;
   background: #fff;
-  color: #000;
+  color: #302d2d;
   border: 2px solid #fff;
   text-transform: uppercase;
   font-weight: 600;
@@ -96,8 +96,9 @@
 }
 
 .accordion-body .btn:hover {
-  background: #fff;
+  background: #302d2d;
   color: #fff;
+  border-color: #302d2d;
 }
 
 @media (max-width: 700px) {
@@ -120,5 +121,4 @@
   justify-content: end;
   background-attachment: fixed;
 }
-
 
