@@ -40,5 +40,9 @@ export default defineNuxtConfig({
 
     leadMailTo: process.env.LEAD_MAIL_TO,
     leadMailFrom: process.env.LEAD_MAIL_FROM,
+
+    public: {
+      supabaseUrl: process.env.SUPABASE_URL
+    }
   },
 });

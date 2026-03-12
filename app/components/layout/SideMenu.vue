@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch, onMounted, computed } from 'vue'
+import { ref, watch, onMounted, onBeforeUnmount, computed, nextTick, reactive } from 'vue'
 import { gsap } from 'gsap'
 import { useRoute, useRouter } from '#imports'
 import { useSideMenu } from '~/composables/useSideMenu'
@@ -11,8 +11,16 @@ const router = useRouter()
 
 const menuRef = ref<HTMLElement | null>(null)
 const overlayRef = ref<HTMLElement | null>(null)
+const navRef = ref<HTMLElement | null>(null)
+
+const indicator = reactive({
+  top: 0,
+  height: 0,
+  opacity: 0
+})
 
 let animation: ReturnType<typeof useMenuAnimation> | null = null
+let hoverLeaveTimeout: ReturnType<typeof setTimeout> | null = null
 
 onMounted(() => {
   if (!menuRef.value || !overlayRef.value) return
@@ -41,9 +49,75 @@ const isHome = computed(() => route.path === '/' || route.path === '')
 
 const linkHref = (id: string) => (isHome.value ? `#${id}` : `/#${id}`)
 
+const getActiveMenuKey = () => {
+  if (route.path.startsWith('/admin')) return 'admin-login'
+  if (route.path.startsWith('/services')) return 'services'
+  if (route.path.startsWith('/projects')) return 'featured-projects'
+  if (route.path === '/' || route.path === '') {
+    const hash = route.hash?.replace('#', '')
+    if (hash) return hash
+    return 'hero'
+  }
+  return 'hero'
+}
+
+const moveIndicatorTo = (el: HTMLElement | null) => {
+  if (!navRef.value || !el) {
+    indicator.opacity = 0
+    return
+  }
+
+  const navRect = navRef.value.getBoundingClientRect()
+  const itemRect = el.getBoundingClientRect()
+
+  indicator.top = itemRect.top - navRect.top
+  indicator.height = itemRect.height
+  indicator.opacity = 1
+}
+
+const syncIndicator = async () => {
+  await nextTick()
+  if (!navRef.value || !isOpen.value) return
+
+  const key = getActiveMenuKey()
+  const active = navRef.value.querySelector<HTMLElement>(`[data-menu-key="${key}"]`)
+  moveIndicatorTo(active)
+}
+
+const onLinkEnter = (event: MouseEvent | FocusEvent) => {
+  if (hoverLeaveTimeout) {
+    clearTimeout(hoverLeaveTimeout)
+    hoverLeaveTimeout = null
+  }
+  const target = event.currentTarget as HTMLElement | null
+  moveIndicatorTo(target)
+}
+
+const onNavLeave = () => {
+  if (hoverLeaveTimeout) clearTimeout(hoverLeaveTimeout)
+  hoverLeaveTimeout = setTimeout(() => {
+    void syncIndicator()
+  }, 180)
+}
+
+const onWindowResize = () => {
+  if (!isOpen.value) return
+  void syncIndicator()
+}
+
+const openLeadPopup = () => {
+  if (!import.meta.client) return
+  window.dispatchEvent(new Event('open-lead-form'))
+}
+
 const goTo = (id: string) => {
   close()
   if (!import.meta.client) return
+
+  if (id === 'contact' && route.path.startsWith('/projects/')) {
+    openLeadPopup()
+    return
+  }
 
   if (isHome.value) {
     const target = document.getElementById(id)
@@ -61,6 +135,23 @@ const goTo = (id: string) => {
 
   router.push({ path: '/', hash: `#${id}` })
 }
+
+watch(
+  () => [isOpen.value, route.path, route.hash],
+  () => {
+    void syncIndicator()
+  }
+)
+
+onMounted(() => {
+  if (!import.meta.client) return
+  window.addEventListener('resize', onWindowResize, { passive: true })
+})
+
+onBeforeUnmount(() => {
+  if (hoverLeaveTimeout) clearTimeout(hoverLeaveTimeout)
+  window.removeEventListener('resize', onWindowResize)
+})
 </script>
 
 <template>
@@ -85,63 +176,110 @@ const goTo = (id: string) => {
         ×
       </button>
 
-      <nav class="side-nav">
-        <a :href="linkHref('hero')" class="menu-link" @click.prevent="goTo('hero')">
+      <div class="side-nav-wrap">
+        <nav ref="navRef" class="side-nav" @mouseleave="onNavLeave">
+          <span
+            class="menu-indicator"
+            :style="{
+              transform: `translateY(${indicator.top}px)`,
+              height: `${indicator.height}px`,
+              opacity: indicator.opacity
+            }"
+            aria-hidden="true"
+          />
+
+          <a
+            :href="linkHref('hero')"
+            class="menu-link"
+            data-menu-key="hero"
+            @click.prevent="goTo('hero')"
+            @mouseenter="onLinkEnter"
+            @focus="onLinkEnter"
+          >
           Home
-        </a>
+          </a>
         <a
           :href="linkHref('about-puerta')"
           class="menu-link"
+          data-menu-key="about-puerta"
           @click.prevent="goTo('about-puerta')"
+          @mouseenter="onLinkEnter"
+          @focus="onLinkEnter"
         >
           What is Puerta Dubai?
         </a>
         <a
           :href="linkHref('featured-projects')"
           class="menu-link"
+          data-menu-key="featured-projects"
           @click.prevent="goTo('featured-projects')"
+          @mouseenter="onLinkEnter"
+          @focus="onLinkEnter"
         >
           Projects
         </a>
         <a
           :href="linkHref('dayan')"
           class="menu-link"
+          data-menu-key="dayan"
           @click.prevent="goTo('dayan')"
+          @mouseenter="onLinkEnter"
+          @focus="onLinkEnter"
         >
           Founder
         </a>
         <a
           :href="linkHref('services')"
           class="menu-link"
+          data-menu-key="services"
           @click.prevent="goTo('services')"
+          @mouseenter="onLinkEnter"
+          @focus="onLinkEnter"
         >
           Services
         </a>
         <a
           :href="linkHref('golden-visa')"
           class="menu-link"
+          data-menu-key="golden-visa"
           @click.prevent="goTo('golden-visa')"
+          @mouseenter="onLinkEnter"
+          @focus="onLinkEnter"
         >
           Golden Visa
         </a>
         <a
           :href="linkHref('partners-section')"
           class="menu-link"
+          data-menu-key="partners-section"
           @click.prevent="goTo('partners-section')"
+          @mouseenter="onLinkEnter"
+          @focus="onLinkEnter"
         >
           Partners
         </a>
         <a
           :href="linkHref('contact')"
           class="menu-link"
+          data-menu-key="contact"
           @click.prevent="goTo('contact')"
+          @mouseenter="onLinkEnter"
+          @focus="onLinkEnter"
         >
           Contact
         </a>
-        <NuxtLink to="/admin/login" class="menu-link" @click="close">
+        <NuxtLink
+          to="/admin/login"
+          class="menu-link"
+          data-menu-key="admin-login"
+          @click="close"
+          @mouseenter="onLinkEnter"
+          @focus="onLinkEnter"
+        >
           Connexion
         </NuxtLink>
-      </nav>
+        </nav>
+      </div>
     </div>
   </Teleport>
 </template>

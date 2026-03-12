@@ -94,7 +94,7 @@ const services = [
   }
 ]
 
-const openIndex = ref(0)
+const openIndex = ref(-1)
 
 const toggle = (index: number) => {
   openIndex.value = openIndex.value === index ? -1 : index
@@ -128,7 +128,7 @@ const toggle = (index: number) => {
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
-  background-attachment: fixed;
+  background-attachment: scroll;
 }
 
 #services .services-gradient {

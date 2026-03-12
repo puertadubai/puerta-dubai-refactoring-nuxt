@@ -33,6 +33,13 @@ definePageMeta({
         <h2>Visual Identity</h2>
         <p>Creative assets, guidelines, and brand systems.</p>
       </NuxtLink>
+      <NuxtLink to="/admin/press-releases" class="tile tile-link">
+        <div class="tile-icon" aria-hidden="true">
+          <i data-lucide="newspaper"></i>
+        </div>
+        <h2>Press Releases</h2>
+        <p>Write, publish, and maintain blog and press articles.</p>
+      </NuxtLink>
     </div>
   </section>
 </template>
@@ -74,7 +81,7 @@ h1 {
 .tile-grid {
   display: grid;
   gap: 24px;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
 @media (max-width: 980px) {

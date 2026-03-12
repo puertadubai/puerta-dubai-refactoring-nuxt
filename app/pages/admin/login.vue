@@ -39,6 +39,9 @@ onMounted(() => {
 
 <template>
   <section class="backoffice-login">
+    <NuxtLink to="/" class="login-logo" aria-label="Puerta Dubai home">
+      <img src="/img/logo-black.png" alt="Puerta Dubai" />
+    </NuxtLink>
     <div class="login-card">
       <p class="eyebrow">Back Office</p>
       <h1>Connexion</h1>
@@ -61,38 +64,67 @@ onMounted(() => {
 
 <style scoped>
 .backoffice-login {
-  min-height: 70vh;
+  min-height: 100vh;
   display: grid;
   place-items: center;
-  padding: 140px 24px 80px;
-  background: radial-gradient(circle at top, #f6efe6 0%, #ffffff 45%, #f7f7f7 100%);
+  gap: 8px;
+  padding: 48px 24px;
+  background-color: #000;
+  background-image:
+    linear-gradient(120deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0) 48%),
+    repeating-linear-gradient(
+      45deg,
+      rgba(255, 255, 255, 0.025) 0,
+      rgba(255, 255, 255, 0.025) 2px,
+      transparent 2px,
+      transparent 8px
+    ),
+    radial-gradient(circle at 16% 18%, rgba(191, 148, 89, 0.18) 0, rgba(191, 148, 89, 0) 42%);
+}
+
+.login-logo {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 140px;
+  margin-bottom: -2px;
+}
+
+.login-logo img {
+  width: 100%;
+  height: auto;
+  display: block;
+  filter: invert(1) contrast(0.92) brightness(1.08);
 }
 
 .login-card {
   width: min(440px, 100%);
   padding: 40px;
-  border-radius: 24px;
-  background: #ffffff;
-  box-shadow: 0 20px 45px rgba(31, 26, 22, 0.12);
+  border-radius: 22px;
+  background: linear-gradient(150deg, rgba(20, 20, 20, 0.95) 0%, rgba(8, 8, 8, 0.96) 100%);
+  border: 1px solid rgba(220, 198, 184, 0.18);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.52);
   text-align: left;
+  color: #f3ede5;
 }
 
 .eyebrow {
   text-transform: uppercase;
   letter-spacing: 0.2em;
   font-size: 12px;
-  color: #a38b68;
+  color: #c7a476;
   margin-bottom: 12px;
 }
 
 h1 {
   font-size: 32px;
   margin: 0 0 8px;
+  color: #fff;
 }
 
 .subtitle {
   margin: 0 0 28px;
-  color: #6c6156;
+  color: rgba(255, 255, 255, 0.76);
 }
 
 .login-form {
@@ -104,46 +136,57 @@ h1 {
   display: grid;
   gap: 8px;
   font-size: 14px;
-  color: #3f3328;
+  color: rgba(255, 255, 255, 0.88);
 }
 
 .field input {
   width: 100%;
   padding: 12px 14px;
-  border-radius: 12px;
-  border: 1px solid #d9cfc4;
-  background: #fffaf4;
+  border-radius: 10px;
+  border: 1px solid rgba(220, 198, 184, 0.32);
+  background: rgba(255, 255, 255, 0.04);
+  color: #fff;
   font-size: 15px;
 }
 
 .field input:focus {
-  outline: 2px solid #b58a52;
+  outline: 2px solid #bf9459;
   border-color: transparent;
 }
 
 .error {
-  color: #b23a3a;
+  color: #f49696;
   font-size: 13px;
   margin: 0;
 }
 
 button {
-  border: none;
+  border: 1px solid rgba(191, 148, 89, 0.7);
   padding: 12px 18px;
   border-radius: 999px;
-  background: #b58a52;
-  color: #fffaf4;
-  font-weight: 600;
+  background: linear-gradient(135deg, #bf9459 0%, #9f7742 100%);
+  color: #13100d;
+  font-weight: 700;
+  letter-spacing: 0.02em;
   cursor: pointer;
 }
 
 button:hover {
-  background: #9b733f;
+  background: linear-gradient(135deg, #cfaa74 0%, #b98b51 100%);
 }
 
 @media (max-width: 600px) {
+  .backoffice-login {
+    padding: 28px 16px;
+    gap: 6px;
+  }
+
+  .login-logo {
+    width: 120px;
+  }
+
   .login-card {
-    padding: 28px;
+    padding: 26px;
   }
 }
 </style>

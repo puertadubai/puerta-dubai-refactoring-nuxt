@@ -31,11 +31,6 @@ const chapters: Chapter[] = [
     subtitle: 'Front and back layout'
   },
   {
-    id: 'social',
-    title: 'Social Media Templates',
-    subtitle: 'Instagram + Facebook formats'
-  },
-  {
     id: 'email',
     title: 'Email Signature',
     subtitle: 'Professional client signature block'
@@ -77,167 +72,8 @@ const isOpen = (id: string) => openSections.value.has(id)
         </button>
         <transition name="drawer">
           <div v-show="isOpen(chapter.id)" class="drawer-content">
-            <div v-if="chapter.id === 'logo'" class="content-grid">
-              <div class="content-card">
-                <h3>Primary Logo</h3>
-                <div class="logo-sample">
-                  <img src="/img/logo-black.png" alt="Puerta Dubai logo" />
-                </div>
-                <p>Use the #302d2d logo on light backgrounds for maximum clarity.</p>
-              </div>
-              <div class="content-card">
-                <h3>Variants</h3>
-                <div class="logo-row">
-                  <img src="/img/logo-black.png" alt="Logo black" />
-                  <img src="/img/logo.svg" alt="Logo symbol" />
-                  <img src="/img/logo-txt-blanc.svg" alt="Logo white text" />
-                </div>
-                <p>Keep clear space equal to the height of the "P" around the mark.</p>
-              </div>
-              <div class="content-card highlight">
-                <h3>Do & Don't</h3>
-                <ul>
-                  <li>Do keep contrast high and preserve aspect ratio.</li>
-                  <li>Do not stretch, rotate, or add drop shadows.</li>
-                </ul>
-              </div>
-            </div>
-
-            <div v-else-if="chapter.id === 'colors'" class="content-grid">
-              <div class="content-card">
-                <h3>Core Palette</h3>
-                <div class="color-grid">
-                  <div class="color-swatch">
-                    <span style="background:#111111;"></span>
-                    <div>
-                      <strong>#302d2d</strong>
-                      <small>#111111</small>
-                      <small>RGB 17 17 17</small>
-                    </div>
-                  </div>
-                  <div class="color-swatch">
-                    <span style="background:#ffffff;"></span>
-                    <div>
-                      <strong>Ivory</strong>
-                      <small>#FFFFFF</small>
-                      <small>RGB 255 255 255</small>
-                    </div>
-                  </div>
-                  <div class="color-swatch">
-                    <span style="background:#b58a52;"></span>
-                    <div>
-                      <strong>Gold Sand</strong>
-                      <small>#B58A52</small>
-                      <small>RGB 181 138 82</small>
-                    </div>
-                  </div>
-                  <div class="color-swatch">
-                    <span style="background:#f6efe6;"></span>
-                    <div>
-                      <strong>Soft Linen</strong>
-                      <small>#F6EFE6</small>
-                      <small>RGB 246 239 230</small>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="content-card highlight">
-                <h3>Usage</h3>
-                <p>Primary backgrounds should remain light and elegant, with gold accents for premium cues.</p>
-              </div>
-            </div>
-
-            <div v-else-if="chapter.id === 'type'" class="content-grid">
-              <div class="content-card">
-                <h3>Headlines</h3>
-                <div class="type-sample headline">
-                  Puerta Dubai - Investment in Dubai
-                </div>
-                <p>Elegant serif for hero moments and premium storytelling.</p>
-              </div>
-              <div class="content-card">
-                <h3>Body Copy</h3>
-                <div class="type-sample body">
-                  Puerta Dubai guides Latin American investors with clarity, trust, and full-service support.
-                </div>
-                <p>Readable, balanced, and neutral for multilingual clarity.</p>
-              </div>
-              <div class="content-card">
-                <h3>Accent</h3>
-                <div class="type-sample accent">LATIN GATEWAY TO DUBAI</div>
-                <p>Uppercase accent used for section labels or metrics.</p>
-              </div>
-            </div>
-
-            <div v-else-if="chapter.id === 'business-card'" class="content-grid">
-              <div class="content-card">
-                <h3>Front</h3>
-                <div class="card-mock card-front">
-                  <img src="/img/logo-black.png" alt="Puerta Dubai" />
-                  <span>Investment Advisory</span>
-                </div>
-              </div>
-              <div class="content-card">
-                <h3>Back</h3>
-                <div class="card-mock card-back">
-                  <strong>Dayan Candamil</strong>
-                  <span>Managing Partner</span>
-                  <span>+971 50 000 0000</span>
-                  <span>contact@puertadubai.com</span>
-                  <span>Dubai, UAE</span>
-                </div>
-              </div>
-            </div>
-
-            <div v-else-if="chapter.id === 'social'" class="content-grid">
-              <div class="content-card">
-                <h3>Instagram Template</h3>
-                <div class="social-mock">
-                  <div class="social-header">
-                    <img src="/img/logo-black.png" alt="Puerta Dubai" />
-                    <span>Latin Gateway Series</span>
-                  </div>
-                  <div class="social-body">
-                    <strong>Dubai Investment Update</strong>
-                    <p>Key insights for Latin American investors.</p>
-                  </div>
-                </div>
-              </div>
-              <div class="content-card">
-                <h3>Facebook Template</h3>
-                <div class="social-mock wide">
-                  <div class="social-body">
-                    <strong>From Latin America to Dubai</strong>
-                    <p>Weekly market briefings and opportunities.</p>
-                  </div>
-                  <div class="social-footer">
-                    <span>puertadubai.com</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div v-else-if="chapter.id === 'email'" class="content-grid">
-              <div class="content-card">
-                <h3>Email Signature</h3>
-                <div class="email-signature">
-                  <img src="/img/logo-black.png" alt="Puerta Dubai" />
-                  <div>
-                    <strong>Dayan Candamil</strong>
-                    <span>Managing Partner</span>
-                    <span>+971 50 000 0000</span>
-                    <span>dayancandamil@gmail.com</span>
-                    <span>puertadubai.com</span>
-                  </div>
-                </div>
-              </div>
-              <div class="content-card highlight">
-                <h3>Guidelines</h3>
-                <ul>
-                  <li>Keep signatures concise: name, title, phone, email, website.</li>
-                  <li>Logo aligned left with 24px padding.</li>
-                </ul>
-              </div>
+            <div class="construction-note">
+              under construction
             </div>
           </div>
         </transition>
@@ -340,6 +176,19 @@ h1 {
 
 .drawer-content {
   padding: 0 28px 28px;
+}
+
+.construction-note {
+  min-height: 120px;
+  border-radius: 14px;
+  border: 1px dashed rgba(48, 45, 45, 0.2);
+  background: rgba(246, 239, 230, 0.45);
+  color: #6d6257;
+  font-size: 14px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  display: grid;
+  place-items: center;
 }
 
 .content-grid {

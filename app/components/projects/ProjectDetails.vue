@@ -45,7 +45,7 @@
           </li>
         </ul>
 
-        <a href="#" class="btn">
+        <a href="#" class="btn leadForm">
           Book a call
         </a>
       </div>

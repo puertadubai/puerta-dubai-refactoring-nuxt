@@ -2,8 +2,6 @@
 import { ref, onMounted, onBeforeUnmount } from 'vue'
 
 const cursor = ref<HTMLElement | null>(null)
-const lineVertical = ref<HTMLElement | null>(null)
-const lineHorizontal = ref<HTMLElement | null>(null)
 const circle = ref<HTMLElement | null>(null)
 
 /* ======================
@@ -90,8 +88,6 @@ const animate = () => {
   currentX += (targetX - currentX) * LERP
   currentY += (targetY - currentY) * LERP
 
-  if (lineVertical.value) lineVertical.value.style.left = `${currentX}px`
-  if (lineHorizontal.value) lineHorizontal.value.style.top = `${currentY}px`
   if (circle.value) {
     circle.value.style.left = `${currentX}px`
     circle.value.style.top = `${currentY}px`
@@ -135,10 +131,6 @@ onBeforeUnmount(() => {
     ref="cursor"
     class="custom-cursor"
   >
-    <!-- CROSS -->
-    <div ref="lineVertical" class="cursor-line vertical"></div>
-    <div ref="lineHorizontal" class="cursor-line horizontal"></div>
-
     <!-- CIRCLE -->
     <div ref="circle" class="cursor-circle"></div>
   </div>
@@ -153,27 +145,6 @@ onBeforeUnmount(() => {
   inset: 0;
   pointer-events: none;
   z-index: 9999;
-}
-
-/* ======================
-   Cross lines
-====================== */
-.cursor-line {
-  position: absolute;
-  background: rgba(255, 255, 255, 0.55);
-  transition: opacity 0.25s ease, transform 0.25s ease;
-}
-
-.cursor-line.vertical {
-  top: 0;
-  bottom: 0;
-  width: 1px;
-}
-
-.cursor-line.horizontal {
-  left: 0;
-  right: 0;
-  height: 1px;
 }
 
 /* ======================
@@ -199,11 +170,6 @@ onBeforeUnmount(() => {
 /* ======================
    Hover state
 ====================== */
-.custom-cursor.is-hover .cursor-line {
-  opacity: 0;
-  transform: scale(0.6);
-}
-
 .custom-cursor.is-hover .cursor-circle {
   opacity: 1;
   transform: translate(-50%, -50%) scale(1);

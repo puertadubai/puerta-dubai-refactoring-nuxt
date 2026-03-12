@@ -39,3 +39,29 @@ export const buildPublicImageUrl = (path?: string | null) => {
   if (!baseUrl) return ""
   return `${baseUrl}/storage/v1/object/public/project-images/${path}`
 }
+
+export const buildPublicBucketImageUrl = (bucket: string, path?: string | null) => {
+  if (!path) return ""
+  const config = useRuntimeConfig()
+  const baseUrl = config.supabaseUrl?.replace(/\/$/, "")
+  if (!baseUrl) return ""
+  return `${baseUrl}/storage/v1/object/public/${bucket}/${path}`
+}
+
+export const buildPublicRenderImageUrl = (
+  bucket: string,
+  path?: string | null,
+  width?: number
+) => {
+  if (!path) return ""
+  const config = useRuntimeConfig()
+  const baseUrl = config.supabaseUrl?.replace(/\/$/, "")
+  if (!baseUrl) return ""
+
+  const url = new URL(`${baseUrl}/storage/v1/render/image/public/${bucket}/${path}`)
+  if (width) {
+    url.searchParams.set("width", String(width))
+  }
+
+  return url.toString()
+}

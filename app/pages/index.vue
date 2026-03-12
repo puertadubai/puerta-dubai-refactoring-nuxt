@@ -5,6 +5,7 @@
     <ServicesCarousel />
     <BenefitsSection />
     <FeaturedProjects />
+    <HomePressReleases />
     <FounderSection />
     <GoldenVisaSection />
     <PartnersSection />
@@ -20,4 +21,5 @@ import FounderSection from '~/components/home/FounderSection.vue'
 import ServicesCarousel from '~/components/home/ServicesCarousel.vue'
 import GoldenVisaSection from '~/components/home/GoldenVisaSection.vue'
 import PartnersSection from '~/components/home/PartnersSection.vue'
+import HomePressReleases from '~/components/home/HomePressReleases.vue'
 </script>

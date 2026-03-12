@@ -34,7 +34,7 @@ const onLogoClick = (e: MouseEvent) => {
 
 onMounted(() => {
   if (!import.meta.client) return
-  window.addEventListener('scroll', onScroll)
+  window.addEventListener('scroll', onScroll, { passive: true })
 })
 
 onBeforeUnmount(() => {

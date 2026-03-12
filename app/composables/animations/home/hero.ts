@@ -43,14 +43,5 @@ export const initHeroAnimation = (el: HTMLElement) => {
     duration: 0.8
   }, '-=0.6')
 
-  // 📜 SCROLL PARALLAX (léger)
-  gsap.to(video, {
-    scale: 1.08,
-    scrollTrigger: {
-      trigger: el,
-      start: 'top top',
-      end: 'bottom top',
-      scrub: true
-    }
-  })
+  // Keep hero animation deterministic to avoid direction-change jank.
 }

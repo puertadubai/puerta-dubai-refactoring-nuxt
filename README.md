@@ -1,113 +1,168 @@
 # Puerta Dubai (Nuxt 4)
 
-Projet Nuxt 4 pour le site Puerta Dubai, oriente immobilier haut de gamme a Dubai.
-Le site met en avant des projets, une page d'accueil riche en sections, et des
-pages legales. La base de contenu des projets est dans un JSON local.
+Application Nuxt 4 pour le site Puerta Dubai.
+Le projet combine un site vitrine immobilier premium (home, services, catalogue projets, fiches detaillees)
+et un back-office simple pour consulter les leads et administrer les projets.
 
-## Fonctionnalites principales
+La partie publique consomme des donnees projet via des endpoints server Nuxt relies a Supabase
+(tables `projects`, `project_highlights`, `project_amenities`, `project_gallery`), tandis que
+les leads sont enregistres dans Supabase puis envoyes par email via `nodemailer`.
 
-- Page d'accueil composee de sections (hero, a propos, benefices, projets mis en avant,
-  fondateur, services, Golden Visa, partenaires).
-- Page projet dynamique `/projects/:slug` avec hero, intro, details, galerie,
-  localisation, investissement et navigation vers le projet precedent/suivant.
-- Page liste des projets `/projects` avec carte Leaflet plein largeur, marqueurs
-  geolocalises, tooltip et lien vers les fiches (scroll vers la tuile au clic).
-- Page services en accordéon (refactoring du code historique), accessible via `/#services`
-  sur la home et `/services`.
-- Preloader global, curseur personnalise, progression de scroll, bouton retour en haut.
-- Animations GSAP pour les sections et composants.
-- Cartes Leaflet avec tuiles OpenStreetMap/CARTO et geocodage Nominatim si coords absentes.
-- Traduction via Google Translate (langues supportees : en, fr, es, pt).
-- Pages legales et base d'administration (placeholders).
-- Popup LeadForm globale declenchee par les elements avec classe `.leadForm`.
-- Fil d'ariane premium sous le header, disparaissant au scroll.
+## Description du projet
 
-## Stack technique
+- Site vitrine immobilier axe sur des programmes a Dubai.
+- Catalogue de projets avec listing, detail par slug et medias associes.
+- Back-office avec pages d'administration pour les projets et la boite de reception des leads.
+- Architecture full-stack Nuxt: pages frontend dans `app/` et API server dans `server/api/`.
+- Stockage des medias projet via le bucket Supabase `project-images`.
 
-- Nuxt 4, Vue 3, Vue Router
-- GSAP pour les animations
-- Leaflet pour les cartes
-- CSS global et CSS par composant
+## Features
 
-## Installation
+- Page d'accueil composee de sections editoriales animees: hero, about, benefits, projets mis en avant, founder, services, Golden Visa et partners.
+- Catalogue de projets avec liste, navigation detaillee et page dynamique `/projects/:slug`.
+- Mapping des donnees projet depuis Supabase vers un format public et un format admin.
+- Carte Leaflet sur la liste des projets.
+- Animations GSAP sur la home, le layout et les pages projet.
+- Preloader, menu lateral, curseur personnalise, scroll progress et bouton back-to-top.
+- Formulaire de lead avec validation `zod`, insertion en base et notification email.
+- API CRUD admin pour creer, lire, modifier, supprimer des projets.
+- Upload d'images vers Supabase Storage pour les assets de projets.
+- Middleware d'acces au back-office cote client (`sessionStorage`).
+- Selecteur de langue et integration Google Translate cote client.
+
+## Arborescence
+
+```text
+.
+|-- app/
+|   |-- app.vue
+|   |-- assets/
+|   |   `-- css/
+|   |-- components/
+|   |   |-- admin/
+|   |   |-- home/
+|   |   |-- layout/
+|   |   `-- projects/
+|   |-- composables/
+|   |   `-- animations/
+|   |-- data/
+|   |-- layouts/
+|   |-- middleware/
+|   |-- pages/
+|   |   |-- index.vue
+|   |   |-- legal-notice.vue
+|   |   |-- services/
+|   |   |-- projects/
+|   |   `-- admin/
+|   `-- plugins/
+|-- server/
+|   |-- api/
+|   |   |-- lead.post.ts
+|   |   |-- projects/
+|   |   `-- admin/
+|   `-- utils/
+|-- public/
+|-- nuxt.config.ts
+`-- package.json
+```
+
+Points de repere:
+
+- `app/pages` contient les routes frontend generees par Nuxt.
+- `app/components` regroupe les composants par domaine fonctionnel.
+- `app/composables` centralise la logique partagee et les animations GSAP.
+- `server/api` expose les endpoints backend utilises par le site et le back-office.
+- `server/utils` contient l'acces Supabase et les fonctions de transformation de donnees.
+- `app/data/projects.json` est encore present dans le repo, mais le flux principal actuel passe par Supabase.
+
+## Routes
+
+Routes frontend:
+
+- `/` : page d'accueil.
+- `/services` : page services.
+- `/projects` : listing des projets.
+- `/projects/:slug` : detail d'un projet.
+- `/legal-notice` : mentions legales.
+- `/admin/login` : ecran de connexion back-office.
+- `/admin` : hub back-office.
+- `/admin/leads` : liste des leads.
+- `/admin/projects` : liste des projets.
+- `/admin/projects/new` : creation d'un projet.
+- `/admin/projects/:id` : edition d'un projet.
+- `/admin/communication` : page back-office de communication.
+- `/admin/visual-identity` : page back-office identite visuelle.
+
+Routes API:
+
+- `GET /api/projects` : retourne les projets publics.
+- `GET /api/projects/:slug` : retourne un projet public par slug.
+- `POST /api/lead` : cree un lead et envoie un email.
+- `GET /api/admin/leads` : retourne les leads recents.
+- `GET /api/admin/projects` : retourne les projets au format admin.
+- `POST /api/admin/projects` : cree un projet.
+- `GET /api/admin/projects/:id` : retourne un projet pour edition.
+- `PUT /api/admin/projects/:id` : met a jour un projet.
+- `DELETE /api/admin/projects/:id` : supprime un projet.
+- `POST /api/admin/projects/upload` : upload un fichier dans Supabase Storage.
+
+## Technos et dependances
+
+Base:
+
+- `nuxt` `^4.2.2`
+- `vue` `^3.5.26`
+- `vue-router` `^4.6.4`
+
+Frontend:
+
+- `gsap` `^3.14.2` pour les animations.
+- `leaflet` `^1.9.4` pour les cartes.
+- `@types/leaflet` `^1.9.21` pour le typage TypeScript.
+
+Backend / validation:
+
+- `zod` `^4.3.5` pour la validation du formulaire de lead.
+- `nodemailer` `^7.0.12` pour l'envoi d'emails.
+
+Configuration notable:
+
+- `nuxt.config.ts` active `devtools`, enregistre les CSS globaux et configure `runtimeConfig`.
+- Les variables actuellement declarees dans `runtimeConfig` sont `SUPABASE_URL`, `SUPABASE_SERVICE_KEY`, `RESEND_API_KEY`, `LEAD_MAIL_TO` et `LEAD_MAIL_FROM`.
+- L'endpoint [`server/api/lead.post.ts`](/Users/rod/Desktop/Puerta Dubai/Puerta Dubai Refactoring NUXT/server/api/lead.post.ts) utilise aussi des cles SMTP/mail supplementaires via `useRuntimeConfig()`. Avant un deployement production, il faut aligner ces cles avec `nuxt.config.ts`.
+
+## Install
+
+Prerequis:
+
+- Node.js 20+ recommande.
+- npm (fourni avec Node.js).
+- Un projet Supabase configure si vous utilisez les APIs projets / leads.
+
+Installation:
 
 ```bash
 npm install
 ```
 
-## Lancer en developpement
+Configuration minimale:
+
+```bash
+SUPABASE_URL=...
+SUPABASE_SERVICE_KEY=...
+```
+
+Lancement en developpement:
 
 ```bash
 npm run dev
 ```
 
-Serveur local : `http://localhost:3000`
+Scripts utiles:
 
-## Scripts disponibles
+- `npm run dev` : demarre le serveur de developpement.
+- `npm run build` : build de production.
+- `npm run preview` : previsualise le build.
+- `npm run generate` : genere une version statique.
 
-- `npm run dev` : serveur de developpement Nuxt
-- `npm run build` : build production
-- `npm run preview` : previsualisation du build
-- `npm run generate` : generation statique (Nuxt generate)
-
-## Structure du projet
-
-- `app/pages` : pages Nuxt (home, projets, services, admin, legal notice)
-- `app/components` : composants UI (home, projets, layout)
-- `app/composables` : logique partagee (ex: `useProject`)
-- `app/plugins` : plugins client (GSAP, cursor, menu, translate, etc.)
-- `app/assets/css` : styles globaux et par section
-- `app/data/projects.json` : contenu des projets
-- `public` : assets statiques (images, fonts, scripts)
-
-## Donnees des projets
-
-Le fichier `app/data/projects.json` centralise le contenu. Chaque entree contient
-notamment :
-
-- `slug` : utilise pour la route `/projects/:slug`
-- `hero` : titre, localisation, image
-- `intro` : texte d'introduction
-- `amenities` : liste d'icones/labels (par colonnes)
-- `highlights` : infos cles (developer, prix, livraison, etc.)
-- `gallery` : images du projet
-- `location` : texte, map, coordonnees (ou query)
-- `investment` : texte et CTA
-- `previous` / `next` : navigation entre projets
-
-Les images sont referencees dans `public/img/projects/...`.
-
-Conseil : ajouter `location.coords` pour eviter le geocodage.
-
-## Traduction
-
-Le projet charge un script Google Translate et un selecteur de langue.
-Les langues supportees sont `en`, `fr`, `es`, `pt`.
-
-Fichiers associes :
-- `app/plugins/google-translate.client.ts`
-- `public/js/translations.js`
-
-## Cartes et geocodage
-
-Les cartes projet utilisent Leaflet avec tuiles CARTO.
-Si aucune coordonnee n'est fournie, un geocodage Nominatim est declenche
-via requete HTTP (necessite l'acces reseau cote client).
-
-La page `/projects` met en cache les coordonnees geocodees dans `localStorage`
-pour reduire les appels.
-
-## Routes principales
-
-- `/` : page d'accueil
-- `/projects/:slug` : detail d'un projet
-- `/projects` : liste des projets + carte
-- `/services` : accordéon des services
-- `/legal-notice` : page mentions legales
-- `/admin`, `/admin/login`, `/admin/projects/new`, `/admin/projects/:id` : placeholders
-
-## Notes
-
-- `app/app.vue` charge `public/js/translations.js` au runtime.
-- Les styles globaux sont listes dans `nuxt.config.ts`.
-- Les marqueurs Leaflet utilisent `/public/img/marker-icon-2x.png`.
+URL locale par defaut: `http://localhost:3000`

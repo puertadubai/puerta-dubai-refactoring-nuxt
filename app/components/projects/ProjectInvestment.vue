@@ -14,7 +14,7 @@
 
       <a
         :href="project.investment.ctaLink || '#'"
-        class="btn investment-cta"
+        class="btn investment-cta leadForm"
       >
         {{ project.investment.ctaLabel || 'Book a call' }}
       </a>

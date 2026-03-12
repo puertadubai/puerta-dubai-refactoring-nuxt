@@ -21,7 +21,7 @@ export const initFounderAnimation = (root: HTMLElement) => {
       scrollTrigger: {
         trigger: content,
         start: 'top 85%',
-        toggleActions: 'play none none reverse'
+        once: true
       }
     }
   )
@@ -30,7 +30,7 @@ export const initFounderAnimation = (root: HTMLElement) => {
   ScrollTrigger.create({
     trigger: root,
     start: 'top 90%',
-    onEnter: () => root.classList.add('visible'),
-    onLeaveBack: () => root.classList.remove('visible')
+    once: true,
+    onEnter: () => root.classList.add('visible')
   })
 }

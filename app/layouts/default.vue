@@ -7,7 +7,7 @@
     <MainHeader v-if="!isAdmin" />
     <SideMenu v-if="!isAdmin" />
     <Breadcrumbs v-if="showBreadcrumbs" />
-    <div v-if="isAdmin" class="admin-header">
+    <div v-if="isAdmin && !isAdminLogin" class="admin-header">
       <NuxtLink to="/" class="admin-logo-link" aria-label="Puerta Dubai home">
         <img src="/img/logo-black.png" alt="Puerta Dubai" />
       </NuxtLink>
@@ -26,7 +26,7 @@
 
     <!-- FOOTER -->
     <MainFooter v-if="!isAdmin" />
-    <footer v-else class="admin-footer">
+    <footer v-else-if="!isAdminLogin" class="admin-footer">
       <span>Puerta Dubai Back Office</span>
       <NuxtLink to="/" class="admin-footer-link">Public site</NuxtLink>
     </footer>
@@ -64,6 +64,7 @@ import AdminBreadcrumbs from '~/components/admin/AdminBreadcrumbs.vue'
 const isLeadOpen = ref(false)
 const route = useRoute()
 const isAdmin = computed(() => route.path.startsWith('/admin'))
+const isAdminLogin = computed(() => route.path === '/admin/login')
 const showBreadcrumbs = computed(() => !route.path.startsWith('/admin'))
 
 const openLead = () => {
@@ -87,14 +88,20 @@ const onKeyDown = (event: KeyboardEvent) => {
   if (event.key === 'Escape') closeLead()
 }
 
+const onOpenLeadForm = () => {
+  openLead()
+}
+
 onMounted(() => {
   document.addEventListener('click', onDocumentClick)
   document.addEventListener('keydown', onKeyDown)
+  window.addEventListener('open-lead-form', onOpenLeadForm as EventListener)
 })
 
 onBeforeUnmount(() => {
   document.removeEventListener('click', onDocumentClick)
   document.removeEventListener('keydown', onKeyDown)
+  window.removeEventListener('open-lead-form', onOpenLeadForm as EventListener)
 })
 </script>
 
