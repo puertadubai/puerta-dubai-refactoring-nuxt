@@ -52,7 +52,7 @@ const linkHref = (id: string) => (isHome.value ? `#${id}` : `/#${id}`)
 const getActiveMenuKey = () => {
   if (route.path.startsWith('/admin')) return 'admin-login'
   if (route.path.startsWith('/services')) return 'services'
-  if (route.path.startsWith('/projects')) return 'featured-projects'
+  if (route.path.startsWith('/projects')) return 'projects'
   if (route.path === '/' || route.path === '') {
     const hash = route.hash?.replace('#', '')
     if (hash) return hash
@@ -114,8 +114,27 @@ const goTo = (id: string) => {
   close()
   if (!import.meta.client) return
 
-  if (id === 'contact' && route.path.startsWith('/projects/')) {
-    openLeadPopup()
+  if (id === 'projects') {
+    router.push('/projects')
+    return
+  }
+
+  if (id === 'contact') {
+    const footer = document.querySelector('.main-footer, .admin-footer') as HTMLElement | null
+
+    if (footer) {
+      const header = document.querySelector('.main-header') as HTMLElement | null
+      const headerOffset = (header?.offsetHeight || 0) + 20
+      const top = footer.getBoundingClientRect().top + window.scrollY - headerOffset
+      window.scrollTo({ top, behavior: 'smooth' })
+      return
+    }
+
+    const bottom = Math.max(
+      document.body.scrollHeight,
+      document.documentElement.scrollHeight
+    )
+    window.scrollTo({ top: bottom, behavior: 'smooth' })
     return
   }
 
@@ -209,10 +228,10 @@ onBeforeUnmount(() => {
           What is Puerta Dubai?
         </a>
         <a
-          :href="linkHref('featured-projects')"
+          href="/projects"
           class="menu-link"
-          data-menu-key="featured-projects"
-          @click.prevent="goTo('featured-projects')"
+          data-menu-key="projects"
+          @click.prevent="goTo('projects')"
           @mouseenter="onLinkEnter"
           @focus="onLinkEnter"
         >
