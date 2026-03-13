@@ -209,10 +209,18 @@ const initMap = async () => {
     scrollWheelZoom: false,
     doubleClickZoom: false,
     touchZoom: false,
+    dragging: !window.matchMedia('(max-width: 900px)').matches,
     keyboard: false,
-    boxZoom: false
+    boxZoom: false,
+    tap: !window.matchMedia('(max-width: 900px)').matches
   })
   map.scrollWheelZoom.disable()
+  if (window.matchMedia('(max-width: 900px)').matches) {
+    map.dragging.disable()
+    map.touchZoom.disable()
+    map.doubleClickZoom.disable()
+    map.tap?.disable()
+  }
 
   L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
     attribution: '&copy; OpenStreetMap &copy; CARTO',
@@ -340,7 +348,7 @@ onBeforeUnmount(() => {
 .projects-hero-content {
   position: relative;
   z-index: 1;
-  padding-top: clamp(88px, 14vh, 160px);
+  padding-top: clamp(112px, 17vh, 190px);
 }
 
 .projects-list-page .luxury-project .project-info,
@@ -384,6 +392,95 @@ onBeforeUnmount(() => {
   padding: 80px 6vw 120px;
 }
 
+.projects-list-page .projects-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 28px;
+  align-items: start;
+}
+
+.projects-list-page .project-card {
+  position: relative;
+  min-height: 420px;
+  aspect-ratio: 4 / 5;
+  margin-top: 0 !important;
+  background: #1f1c1c;
+  overflow: hidden;
+}
+
+.projects-list-page .project-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  opacity: 0.92;
+}
+
+.projects-list-page .project-info {
+  inset: auto 0 0 0;
+  min-height: 42%;
+  padding: 22px 20px 20px;
+  background: linear-gradient(to top, rgba(20, 18, 18, 0.92) 0%, rgba(20, 18, 18, 0.68) 52%, rgba(20, 18, 18, 0.1) 100%);
+  transform: none;
+}
+
+.projects-list-page .project-base {
+  display: grid;
+  gap: 6px;
+}
+
+.projects-list-page .project-title {
+  font-size: clamp(1.35rem, 2vw, 1.7rem);
+  margin: 0;
+}
+
+.projects-list-page .project-location {
+  margin: 0;
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+}
+
+.projects-list-page .project-hover {
+  display: grid;
+  gap: 12px;
+  padding-bottom: 0;
+}
+
+.projects-list-page .project-price {
+  margin: 10px 0 0;
+}
+
+.projects-list-page .project-hover .btn {
+  align-self: start;
+  margin-top: 0;
+}
+
+@media (min-width: 901px) {
+  .projects-list-page .project-hover {
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity 0.35s ease, transform 0.35s ease;
+  }
+
+  .projects-list-page .project-base {
+    transition: opacity 0.35s ease, transform 0.35s ease;
+  }
+
+  .projects-list-page .project-card:hover {
+    transform: translateY(-4px);
+  }
+
+  .projects-list-page .project-card:hover .project-hover {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .projects-list-page .project-card:hover .project-base {
+    opacity: 0.28;
+    transform: translateY(-8px);
+  }
+}
+
 .project-card.is-highlighted {
   outline: 2px solid #302d2d;
   box-shadow: 0 18px 40px rgba(48, 45, 45, 0.2);
@@ -392,8 +489,38 @@ onBeforeUnmount(() => {
 }
 
 @media (max-width: 900px) {
+  .projects-hero-content {
+    padding-top: 172px;
+  }
+
+  .projects-list-page .projects-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  .projects-list-page .project-card {
+    min-height: 0;
+    aspect-ratio: 5 / 7;
+  }
+
+  .projects-list-page .project-info {
+    min-height: auto;
+    padding: 18px 16px 16px;
+    background: linear-gradient(to top, rgba(20, 18, 18, 0.9) 0%, rgba(20, 18, 18, 0.62) 58%, rgba(20, 18, 18, 0.12) 100%);
+  }
+
   .projects-list-section {
     padding: 60px 5vw 96px;
+  }
+}
+
+@media (max-width: 640px) {
+  .projects-list-page .projects-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .projects-list-page .project-card {
+    aspect-ratio: 5 / 6;
   }
 }
 </style>

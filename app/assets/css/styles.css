@@ -176,6 +176,16 @@ h1.hero-title {
 h1.hero-title strong {
   /*! font-family: "Geogrotesque-bold"; */  font-weight: 500;
 }
+.hero-word,
+.hero-letter {
+  display: inline-block;
+}
+
+.hero-space {
+  display: inline-block;
+  width: 0.28em;
+}
+
 .hero-subtitle { 
   color: #e7e6e1;  
   /*! font-size: 2rem; */  

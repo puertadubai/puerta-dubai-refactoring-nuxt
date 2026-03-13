@@ -58,10 +58,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onBeforeUnmount, onMounted } from 'vue'
 import { initHeroAnimation } from '~/composables/animations/home/hero'
 
 const root = ref<HTMLElement | null>(null)
+let cleanupAnimation: (() => void) | undefined
 const heroTokens = [
   { type: 'word', text: 'Invest' },
   { type: 'space', text: ' ' },
@@ -78,6 +79,10 @@ const heroTokens = [
 
 onMounted(() => {
   if (!root.value) return
-  initHeroAnimation(root.value)
+  cleanupAnimation = initHeroAnimation(root.value)
+})
+
+onBeforeUnmount(() => {
+  cleanupAnimation?.()
 })
 </script>

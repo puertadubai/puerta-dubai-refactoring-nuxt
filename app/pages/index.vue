@@ -2,10 +2,10 @@
   <div>
     <HeroSection />
     <AboutSection />
-    <ServicesCarousel />
     <BenefitsSection />
     <FeaturedProjects />
     <HomePressReleases />
+    <ServicesCarousel />
     <FounderSection />
     <GoldenVisaSection />
     <PartnersSection />

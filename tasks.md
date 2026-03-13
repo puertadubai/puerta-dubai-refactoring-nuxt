@@ -171,7 +171,7 @@ validation attendue:
 ---
 ## Task 11
 
-status: in_progress
+status: approved
 instructions:
 - au chargement de la page d'accueil, peut-on faire un effet "textilate", très léger et doux d'apparition de chaque lettres sur le titre "invest the vision of UAE"
 
@@ -184,7 +184,7 @@ validation attendue:
 ---
 ## Task 12
 
-status: pending
+status: approved
 instructions:
 Je veux que la section "OUR SERVICES" de l'accueil vienne se loger juste avant "Dayan Candamil"
 
@@ -198,7 +198,7 @@ validation attendue:
 
 ## Task 13
 
-status: pending
+status: approved
 instructions:
 -je veux plusieurs optimisations sur la page liste de projets : j'aimerais que le titre principal ne chevauche pas la ligne du fil d'ariane, une petite marge en haut peut-être
 - sur la version mobile, je veux, pour éviter de perturber le scroll utilisateur dans la page, désactiver le ballayage sur la carte openstreet map
