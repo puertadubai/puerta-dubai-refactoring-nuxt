@@ -15,7 +15,7 @@
         </p>
 
         <p class="about-text">
-          It’s more than listings — it’s a curated hub connecting you with verified developers, exclusive off-plan opportunities,
+          It’s more than listings, it’s a curated hub connecting you with verified developers, exclusive off-plan opportunities,
           and tailored legal and financial services.
         </p>
 
