@@ -2,6 +2,7 @@
 import { ref, onMounted, onBeforeUnmount } from 'vue'
 
 const progressRef = ref<HTMLElement | null>(null)
+let rafId = 0
 
 const updateProgress = () => {
   if (!progressRef.value) return
@@ -17,19 +18,28 @@ const updateProgress = () => {
     ? (scrollTop / docHeight) * 100
     : 0
 
-  progressRef.value.style.width = `${progress}%`
+  progressRef.value.style.transform = `scaleX(${progress / 100})`
+}
+
+const scheduleUpdate = () => {
+  if (rafId) return
+  rafId = window.requestAnimationFrame(() => {
+    rafId = 0
+    updateProgress()
+  })
 }
 
 onMounted(() => {
   if (!import.meta.client) return
   updateProgress()
-  window.addEventListener('scroll', updateProgress, { passive: true })
-  window.addEventListener('resize', updateProgress)
+  window.addEventListener('scroll', scheduleUpdate, { passive: true })
+  window.addEventListener('resize', scheduleUpdate)
 })
 
 onBeforeUnmount(() => {
-  window.removeEventListener('scroll', updateProgress)
-  window.removeEventListener('resize', updateProgress)
+  window.removeEventListener('scroll', scheduleUpdate)
+  window.removeEventListener('resize', scheduleUpdate)
+  if (rafId) window.cancelAnimationFrame(rafId)
 })
 </script>
 

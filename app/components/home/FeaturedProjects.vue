@@ -51,7 +51,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onBeforeUnmount, onMounted } from 'vue'
 import { initFeaturedProjectsAnimation } from '~/composables/animations/home/featured-projects'
 
 /* ======================
@@ -100,9 +100,14 @@ const projects = [
    Animations
 ====================== */
 const root = ref<HTMLElement | null>(null)
+let cleanupAnimation: (() => void) | undefined
 
 onMounted(() => {
   if (!root.value) return
-  initFeaturedProjectsAnimation(root.value)
+  cleanupAnimation = initFeaturedProjectsAnimation(root.value)
+})
+
+onBeforeUnmount(() => {
+  cleanupAnimation?.()
 })
 </script>

@@ -20,6 +20,7 @@ let currentY = 0
 let rafId = 0
 let magneticTarget: HTMLElement | null = null
 let isTouchDevice = false
+let isAnimating = false
 
 /* ======================
    Helpers
@@ -36,6 +37,10 @@ const isMagnetic = (el: Element | null) =>
 const onMouseMove = (e: MouseEvent) => {
   mouseX = e.clientX
   mouseY = e.clientY
+  if (!isAnimating) {
+    isAnimating = true
+    animate()
+  }
 }
 
 /* ======================
@@ -88,9 +93,19 @@ const animate = () => {
   currentX += (targetX - currentX) * LERP
   currentY += (targetY - currentY) * LERP
 
+  const deltaX = Math.abs(targetX - currentX)
+  const deltaY = Math.abs(targetY - currentY)
+
   if (circle.value) {
-    circle.value.style.left = `${currentX}px`
-    circle.value.style.top = `${currentY}px`
+    circle.value.style.setProperty('--cursor-x', `${currentX}px`)
+    circle.value.style.setProperty('--cursor-y', `${currentY}px`)
+    circle.value.style.transform = `translate3d(${currentX}px, ${currentY}px, 0) translate(-50%, -50%) scale(var(--cursor-scale, 0.2))`
+  }
+
+  if (deltaX < 0.1 && deltaY < 0.1 && !magneticTarget) {
+    isAnimating = false
+    rafId = 0
+    return
   }
 
   rafId = requestAnimationFrame(animate)
@@ -113,6 +128,7 @@ onMounted(() => {
   document.addEventListener('pointerout', onPointerOut)
   document.addEventListener('mousedown', onClick)
 
+  isAnimating = true
   animate()
 })
 
@@ -155,12 +171,12 @@ onBeforeUnmount(() => {
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  transform: translate(-50%, -50%) scale(0.2);
+  transform: translate3d(0, 0, 0) translate(-50%, -50%) scale(var(--cursor-scale, 0.2));
   opacity: 0;
 
-  background: rgba(255, 255, 255, 0.9);
-  backdrop-filter: invert(1) blur(2px);
-  -webkit-backdrop-filter: invert(1) blur(2px);
+  background: rgba(255, 255, 255, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.48);
+  will-change: transform, opacity;
 
   transition:
     opacity 0.25s ease,
@@ -171,8 +187,8 @@ onBeforeUnmount(() => {
    Hover state
 ====================== */
 .custom-cursor.is-hover .cursor-circle {
+  --cursor-scale: 1;
   opacity: 1;
-  transform: translate(-50%, -50%) scale(1);
 }
 
 /* ======================
@@ -184,11 +200,11 @@ onBeforeUnmount(() => {
 
 @keyframes pulse {
   0% {
-    transform: translate(-50%, -50%) scale(1);
+    transform: translate3d(var(--cursor-x, 0), var(--cursor-y, 0), 0) translate(-50%, -50%) scale(1);
     opacity: 1;
   }
   100% {
-    transform: translate(-50%, -50%) scale(1.6);
+    transform: translate3d(var(--cursor-x, 0), var(--cursor-y, 0), 0) translate(-50%, -50%) scale(1.6);
     opacity: 0;
   }
 }

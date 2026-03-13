@@ -33,13 +33,18 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onBeforeUnmount, onMounted } from 'vue'
 import { initGoldenVisaAnimation } from '~/composables/animations/home/golden-visa'
 
 const root = ref<HTMLElement | null>(null)
+let cleanupAnimation: (() => void) | undefined
 
 onMounted(() => {
   if (!root.value) return
-  initGoldenVisaAnimation(root.value)
+  cleanupAnimation = initGoldenVisaAnimation(root.value)
+})
+
+onBeforeUnmount(() => {
+  cleanupAnimation?.()
 })
 </script>

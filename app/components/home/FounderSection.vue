@@ -22,13 +22,18 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onBeforeUnmount, onMounted } from 'vue'
 import { initFounderAnimation } from '~/composables/animations/home/founder'
 
 const root = ref<HTMLElement | null>(null)
+let cleanupAnimation: (() => void) | undefined
 
 onMounted(() => {
   if (!root.value) return
-  initFounderAnimation(root.value)
+  cleanupAnimation = initFounderAnimation(root.value)
+})
+
+onBeforeUnmount(() => {
+  cleanupAnimation?.()
 })
 </script>

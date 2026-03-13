@@ -45,14 +45,19 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onBeforeUnmount, onMounted } from 'vue'
 import { initBenefitsAnimation } from '~/composables/animations/home/benefits'
 
 const root = ref<HTMLElement | null>(null)
+let cleanupAnimation: (() => void) | undefined
 
 onMounted(() => {
   if (!root.value) return
-  initBenefitsAnimation(root.value)
+  cleanupAnimation = initBenefitsAnimation(root.value)
+})
+
+onBeforeUnmount(() => {
+  cleanupAnimation?.()
 })
 </script>
 

@@ -30,13 +30,18 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onBeforeUnmount, onMounted } from 'vue'
 import { initAboutAnimation } from '~/composables/animations/home/about'
 
 const root = ref<HTMLElement | null>(null)
+let cleanupAnimation: (() => void) | undefined
 
 onMounted(() => {
   if (!root.value) return
-  initAboutAnimation(root.value)
+  cleanupAnimation = initAboutAnimation(root.value)
+})
+
+onBeforeUnmount(() => {
+  cleanupAnimation?.()
 })
 </script>

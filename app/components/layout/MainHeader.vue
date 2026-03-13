@@ -5,13 +5,22 @@ import { useSideMenu } from '~/composables/useSideMenu'
 const { toggle, close } = useSideMenu()
 
 const headerRef = ref<HTMLElement | null>(null)
+let scrollRafId = 0
 
 /* ======================
    Scroll effect navbar
 ====================== */
-const onScroll = () => {
+const syncHeaderState = () => {
   if (!headerRef.value) return
   headerRef.value.classList.toggle('scrolled', window.scrollY > 20)
+}
+
+const onScroll = () => {
+  if (scrollRafId) return
+  scrollRafId = window.requestAnimationFrame(() => {
+    scrollRafId = 0
+    syncHeaderState()
+  })
 }
 
 /* ======================
@@ -34,11 +43,13 @@ const onLogoClick = (e: MouseEvent) => {
 
 onMounted(() => {
   if (!import.meta.client) return
+  syncHeaderState()
   window.addEventListener('scroll', onScroll, { passive: true })
 })
 
 onBeforeUnmount(() => {
   window.removeEventListener('scroll', onScroll)
+  if (scrollRafId) window.cancelAnimationFrame(scrollRafId)
 })
 </script>
 
