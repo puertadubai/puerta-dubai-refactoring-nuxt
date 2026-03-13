@@ -1,6 +1,3 @@
-book now dans les pages projets
-login back office fond noir sans header
-partie blog / press release administrable
+
 loader indexé sur les chargements supabase
-enlever les traits qui suivent le curseur
 identité visuelle dans le back office

@@ -12,7 +12,14 @@
         </h2>
 
         <p>
-          Discover our <strong>free, interactive guide</strong> to the UAE Golden Visa.
+          Discover our <strong>free, interactive guide</strong> to the UAE Golden Visa, your
+          step-by-step resource to secure long-term residence, understand eligibility, and explore
+          investment opportunities in the Emirates.
+        </p>
+
+        <p class="golden-visa-highlight">
+          Special offer: Receive complimentary Golden Visa processing when purchasing a property above
+          <strong>USD 550,000</strong> or depositing <strong>10%</strong> of that value.
         </p>
 
         <button class="btn leadForm">Get Free Access</button>

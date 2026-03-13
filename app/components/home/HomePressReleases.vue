@@ -20,7 +20,7 @@ const articles = computed(() => (pressData.value ?? []).slice(0, 3))
       <header class="home-press-header">
         <div>
           <p class="eyebrow">Editorial</p>
-          <h2>Latest News</h2>
+          <h2>Press Releases</h2>
         </div>
         <NuxtLink to="/press-releases" class="btn">View All</NuxtLink>
       </header>

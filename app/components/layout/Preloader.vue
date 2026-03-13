@@ -1,54 +1,129 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { nextTick, onMounted, ref } from 'vue'
 import { useNuxtApp } from '#app'
 
 const progress = ref(0)
 const visible = ref(true)
 
 const nuxtApp = useNuxtApp()
+let cycleId = 0
 
-/* ======================
-   Helpers
-====================== */
 const setProgress = (value: number) => {
   progress.value = Math.min(100, Math.max(0, value))
 }
 
-const finish = () => {
-  setProgress(100)
-  setTimeout(() => {
-    visible.value = false
-    document.body.classList.add('loaded')
-  }, 600)
+const wait = (ms: number) => new Promise((resolve) => window.setTimeout(resolve, ms))
+
+const getTrackableImages = () => {
+  const images = Array.from(document.querySelectorAll('img'))
+
+  return images.filter((img) => {
+    if (img.closest('#preloader')) return false
+    if (img.loading === 'lazy') return false
+    return Boolean(img.currentSrc || img.getAttribute('src'))
+  })
 }
 
-/* ======================
-   Lifecycle
-====================== */
-onMounted(() => {
-  // 👉 1. Fake progress for initial load
-  let fake = 0
-  const fakeInterval = setInterval(() => {
-    fake += Math.random() * 10
-    setProgress(fake)
-    if (fake >= 90) clearInterval(fakeInterval)
-  }, 120)
+const trackPageAssets = (activeCycleId: number) => new Promise<void>((resolve) => {
+  const images = getTrackableImages()
+  const total = images.length
 
-  // 👉 2. FORCE finish on first load
-  window.requestAnimationFrame(() => {
-    setTimeout(() => {
-      finish()
-    }, 800)
+  if (!total) {
+    setProgress(92)
+    resolve()
+    return
+  }
+
+  let loaded = 0
+  let didResolve = false
+
+  const finishTracking = () => {
+    if (didResolve) return
+    didResolve = true
+    resolve()
+  }
+
+  const updateProgress = () => {
+    if (activeCycleId !== cycleId) return
+    const ratio = loaded / total
+    setProgress(18 + ratio * 78)
+  }
+
+  const markLoaded = () => {
+    if (didResolve) return
+    loaded += 1
+    updateProgress()
+    if (loaded >= total) finishTracking()
+  }
+
+  updateProgress()
+
+  // Failsafe: never block forever on a stalled image request.
+  const timeoutId = window.setTimeout(() => {
+    setProgress(96)
+    finishTracking()
+  }, 5000)
+
+  images.forEach((img) => {
+    if (img.complete) {
+      markLoaded()
+      return
+    }
+
+    const handleDone = () => {
+      if (loaded + 1 >= total) {
+        window.clearTimeout(timeoutId)
+      }
+      markLoaded()
+    }
+
+    img.addEventListener('load', handleDone, { once: true })
+    img.addEventListener('error', handleDone, { once: true })
   })
 
-  // 👉 3. Nuxt navigation hooks (SPA)
+  if (loaded >= total) {
+    window.clearTimeout(timeoutId)
+    finishTracking()
+  }
+})
+
+const finish = async (activeCycleId: number) => {
+  if (activeCycleId !== cycleId) return
+  setProgress(100)
+  await wait(350)
+  if (activeCycleId !== cycleId) return
+  visible.value = false
+  document.body.classList.add('loaded')
+}
+
+const startTrackingCycle = async () => {
+  const activeCycleId = ++cycleId
+
+  visible.value = true
+  document.body.classList.remove('loaded')
+  setProgress(6)
+
+  await nextTick()
+  await new Promise<void>((resolve) => window.requestAnimationFrame(() => resolve()))
+
+  if (activeCycleId !== cycleId) return
+
+  setProgress(14)
+  await trackPageAssets(activeCycleId)
+  await finish(activeCycleId)
+}
+
+onMounted(() => {
+  startTrackingCycle()
+
   nuxtApp.hook('page:start', () => {
     visible.value = true
-    setProgress(0)
+    document.body.classList.remove('loaded')
+    setProgress(6)
   })
 
   nuxtApp.hook('page:finish', () => {
-    finish()
+    startTrackingCycle()
   })
 })
 </script>
@@ -78,7 +153,7 @@ onMounted(() => {
   position: fixed;
   inset: 0;
   background: #302d2d;
-  z-index: 10000;
+  z-index: 20000;
   display: flex;
   align-items: center;
   justify-content: center;

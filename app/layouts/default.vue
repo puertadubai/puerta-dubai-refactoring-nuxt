@@ -65,7 +65,10 @@ const isLeadOpen = ref(false)
 const route = useRoute()
 const isAdmin = computed(() => route.path.startsWith('/admin'))
 const isAdminLogin = computed(() => route.path === '/admin/login')
-const showBreadcrumbs = computed(() => !route.path.startsWith('/admin'))
+const showBreadcrumbs = computed(() => {
+  if (route.path === '/') return false
+  return !route.path.startsWith('/admin')
+})
 
 const openLead = () => {
   isLeadOpen.value = true

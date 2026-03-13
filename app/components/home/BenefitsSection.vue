@@ -1,6 +1,6 @@
 <template>
   <section
-    class="benefits zone dark-bg"
+    class="benefits zone"
     ref="root"
   >
     <article class="wrap">
@@ -55,3 +55,52 @@ onMounted(() => {
   initBenefitsAnimation(root.value)
 })
 </script>
+
+<style scoped>
+.benefits {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  color: #fff;
+  background: #000;
+}
+
+.benefits::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-color: #000;
+  background-image:
+    linear-gradient(120deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0) 48%),
+    repeating-linear-gradient(
+      45deg,
+      rgba(255, 255, 255, 0.03) 0,
+      rgba(255, 255, 255, 0.03) 2px,
+      transparent 2px,
+      transparent 8px
+    ),
+    radial-gradient(circle at 16% 18%, rgba(191, 148, 89, 0.18) 0, rgba(191, 148, 89, 0) 42%);
+}
+
+.benefits :is(h2, h3, p, svg) {
+  color: inherit;
+}
+
+.benefits svg {
+  stroke: currentColor;
+}
+
+.wrap {
+  position: relative;
+  z-index: 1;
+}
+
+.card {
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  padding: 30px 18px;
+}
+</style>

@@ -97,7 +97,7 @@
 
 .accordion-body .btn:hover {
   background: #302d2d;
-  color: #fff;
+  color: #dcc6b8;
   border-color: #302d2d;
 }
 
@@ -121,4 +121,3 @@
   justify-content: end;
   background-attachment: fixed;
 }
-

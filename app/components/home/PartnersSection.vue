@@ -21,30 +21,31 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { computed, ref, onMounted, onBeforeUnmount } from 'vue'
 import { initPartnersAnimation } from '~/composables/animations/home/partners'
 
 const root = ref<HTMLElement | null>(null)
 const track = ref<HTMLElement | null>(null)
+let cleanupAnimation: (() => void) | undefined
 
-const logos = [
+const baseLogos = [
   { src: '/img/partners/meraas.png', alt: 'Meraas' },
   { src: '/img/partners/ALDAR.png', alt: 'Aldar' },
   { src: '/img/partners/binghatti-logo-white-new1.png', alt: 'Binghatti' },
   { src: '/img/partners/Dubai-Properties.png', alt: 'Dubai Properties' },
   { src: '/img/partners/ellington.png', alt: 'Ellington' },
   { src: '/img/partners/emaar.png', alt: 'Emaar' },
-  { src: '/img/partners/sohba.png', alt: 'Sohba' },
-
-  // 🔁 DUPLICATES FOR INFINITE LOOP
-  { src: '/img/partners/meraas.png', alt: 'Meraas duplicate' },
-  { src: '/img/partners/ALDAR.png', alt: 'Aldar duplicate' },
-  { src: '/img/partners/badr-logo2.png', alt: 'Badr duplicate' },
-  { src: '/img/partners/binghatti-logo-white-new1.png', alt: 'Binghatti duplicate' }
+  { src: '/img/partners/sohba.png', alt: 'Sohba' }
 ]
+
+const logos = computed(() => [...baseLogos, ...baseLogos])
 
 onMounted(() => {
   if (!track.value) return
-  initPartnersAnimation(track.value)
+  cleanupAnimation = initPartnersAnimation(track.value)
+})
+
+onBeforeUnmount(() => {
+  cleanupAnimation?.()
 })
 </script>

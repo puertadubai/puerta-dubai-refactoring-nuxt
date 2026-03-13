@@ -29,7 +29,7 @@ const handleSubmit = () => {
     router.push('/admin')
     return
   }
-  errorMessage.value = 'Identifiants invalides. Réessayez.'
+  errorMessage.value = 'Invalid credentials. Please try again.'
 }
 
 onMounted(() => {
@@ -44,19 +44,19 @@ onMounted(() => {
     </NuxtLink>
     <div class="login-card">
       <p class="eyebrow">Back Office</p>
-      <h1>Connexion</h1>
-      <p class="subtitle">Accès réservé à l’équipe Puerta Dubai.</p>
+      <h1>Sign In</h1>
+      <p class="subtitle">Access reserved for the Puerta Dubai team.</p>
       <form class="login-form" @submit.prevent="handleSubmit">
         <label class="field">
           <span>Email</span>
           <input v-model.trim="email" type="email" autocomplete="username" required />
         </label>
         <label class="field">
-          <span>Mot de passe</span>
+          <span>Password</span>
           <input v-model="password" type="password" autocomplete="current-password" required />
         </label>
         <p v-if="errorMessage" class="error">{{ errorMessage }}</p>
-        <button type="submit">Se connecter</button>
+        <button type="submit">Sign In</button>
       </form>
     </div>
   </section>

@@ -84,6 +84,8 @@ onBeforeUnmount(() => {
 .breadcrumb-bar {
   position: absolute;
   top: 190px;
+  left: 0;
+  width: 100%;
   z-index: 10;
   background: transparent;
   transition: opacity 0.35s ease, transform 0.35s ease;
@@ -96,7 +98,9 @@ onBeforeUnmount(() => {
 }
 
 .breadcrumb-inner {
-  padding: 10px 6vw 14px;
+  width: min(100%, calc(1400px + 80px));
+  margin: 0 auto;
+  padding: 10px 40px 14px;
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -143,7 +147,8 @@ onBeforeUnmount(() => {
     top: 160px;
   }
   .breadcrumb-inner {
-    padding: 8px 5vw 12px;
+    width: 100%;
+    padding: 8px 24px 12px;
   }
 }
 </style>
