@@ -1,38 +1,43 @@
 import { gsap } from 'gsap'
-import ScrollTrigger from 'gsap/ScrollTrigger'
 
 export const initFounderAnimation = (root: HTMLElement) => {
+  let observer: IntersectionObserver | null = null
+
   const ctx = gsap.context(() => {
     const content = root.querySelector('.content')
 
     if (!content) return
 
-    gsap.fromTo(
-      content,
-      {
-        opacity: 0,
-        y: 50
-      },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 1.2,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: content,
-          start: 'top 85%',
-          once: true
-        }
+    gsap.set(content, {
+      opacity: 0,
+      y: 50
+    })
+
+    observer = new IntersectionObserver(
+      (entries) => {
+        const [entry] = entries
+        if (!entry?.isIntersecting) return
+
+        root.classList.add('visible')
+
+        gsap.to(content, {
+          opacity: 1,
+          y: 0,
+          duration: 1.2,
+          ease: 'power3.out'
+        })
+
+        observer?.disconnect()
       }
+      ,
+      { threshold: 0.15 }
     )
 
-    ScrollTrigger.create({
-      trigger: root,
-      start: 'top 90%',
-      once: true,
-      onEnter: () => root.classList.add('visible')
-    })
+    observer.observe(root)
   }, root)
 
-  return () => ctx.revert()
+  return () => {
+    observer?.disconnect()
+    ctx.revert()
+  }
 }

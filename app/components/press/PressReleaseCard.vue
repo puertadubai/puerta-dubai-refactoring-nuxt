@@ -41,7 +41,7 @@ const coverUrl = computed(() => getPressImageUrl(props.article.coverImage, 'card
 <style scoped>
 .press-card {
   background: #383434;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: none;
   display: grid;
   overflow: hidden;
   transition: transform 0.3s ease, box-shadow 0.3s ease;

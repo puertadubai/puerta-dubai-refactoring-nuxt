@@ -1,10 +1,9 @@
 import { gsap } from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-
-gsap.registerPlugin(ScrollTrigger)
 
 export const initFeaturedProjectsAnimation = (el: HTMLElement) => {
   if (!import.meta.client) return
+
+  let observer: IntersectionObserver | null = null
 
   const ctx = gsap.context(() => {
     const header = el.querySelector('.projects-header')
@@ -17,36 +16,47 @@ export const initFeaturedProjectsAnimation = (el: HTMLElement) => {
     gsap.set(cards, { opacity: 0, y: 60 })
     gsap.set(cta, { opacity: 0, y: 40 })
 
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: el,
-        start: 'top 75%',
-        once: true
-      },
-      defaults: {
-        ease: 'power3.out'
+    observer = new IntersectionObserver(
+      (entries) => {
+        const [entry] = entries
+        if (!entry?.isIntersecting) return
+
+        const tl = gsap.timeline({
+          defaults: {
+            ease: 'power3.out'
+          }
+        })
+
+        tl.to(header, {
+          opacity: 1,
+          y: 0,
+          duration: 0.9
+        })
+
+        tl.to(cards, {
+          opacity: 1,
+          y: 0,
+          duration: 1,
+          stagger: 0.15
+        }, '-=0.3')
+
+        tl.to(cta, {
+          opacity: 1,
+          y: 0,
+          duration: 0.8
+        }, '-=0.4')
+
+        observer?.disconnect()
       }
-    })
+      ,
+      { threshold: 0.18 }
+    )
 
-    tl.to(header, {
-      opacity: 1,
-      y: 0,
-      duration: 0.9
-    })
-
-    tl.to(cards, {
-      opacity: 1,
-      y: 0,
-      duration: 1,
-      stagger: 0.15
-    }, '-=0.3')
-
-    tl.to(cta, {
-      opacity: 1,
-      y: 0,
-      duration: 0.8
-    }, '-=0.4')
+    observer.observe(el)
   }, el)
 
-  return () => ctx.revert()
+  return () => {
+    observer?.disconnect()
+    ctx.revert()
+  }
 }

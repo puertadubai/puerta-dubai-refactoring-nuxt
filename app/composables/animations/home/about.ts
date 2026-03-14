@@ -1,10 +1,9 @@
 import { gsap } from 'gsap'
-import ScrollTrigger from 'gsap/ScrollTrigger'
-
-gsap.registerPlugin(ScrollTrigger)
 
 export const initAboutAnimation = (el: HTMLElement) => {
   if (!import.meta.client) return
+
+  let observer: IntersectionObserver | null = null
 
   const ctx = gsap.context(() => {
     const targets = el.querySelectorAll(
@@ -16,19 +15,30 @@ export const initAboutAnimation = (el: HTMLElement) => {
       y: 40
     })
 
-    gsap.to(targets, {
-      opacity: 1,
-      y: 0,
-      duration: 1,
-      ease: 'power3.out',
-      stagger: 0.15,
-      scrollTrigger: {
-        trigger: el,
-        start: 'top 80%',
-        once: true
+    observer = new IntersectionObserver(
+      (entries) => {
+        const [entry] = entries
+        if (!entry?.isIntersecting) return
+
+        gsap.to(targets, {
+          opacity: 1,
+          y: 0,
+          duration: 1,
+          ease: 'power3.out',
+          stagger: 0.15
+        })
+
+        observer?.disconnect()
       }
-    })
+      ,
+      { threshold: 0.2 }
+    )
+
+    observer.observe(el)
   }, el)
 
-  return () => ctx.revert()
+  return () => {
+    observer?.disconnect()
+    ctx.revert()
+  }
 }
