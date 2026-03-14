@@ -113,14 +113,14 @@ onMounted(() => {
 <style scoped>
 .main-footer {
   background:
-    linear-gradient(180deg, #000000 0%, #161414 38%, #302d2d 100%);
+    linear-gradient(180deg, #262222 0%, #2b2626 42%, #302d2d 100%);
   color: #f6f2eb;
   padding: 88px 40px 42px;
   border-top:none;
 }
 
 .footer-shell {
-  max-width: 1400px;
+  max-width: 1260px;
   margin: 0 auto;
   display: grid;
   grid-template-columns: 1fr auto;
@@ -137,7 +137,7 @@ onMounted(() => {
   width: 124px;
   height: auto;
   opacity: 0.95;
-  filter: contrast(0.92) brightness(1.08);
+  filter: contrast(0.92) brightness(0.7);
 }
 
 .footer-contact {
@@ -179,7 +179,7 @@ onMounted(() => {
 }
 
 .footer-bottom {
-  max-width: 1400px;
+  max-width: 1260px;
   margin: 30px auto 0;
   padding-top: 16px;
   border-top: 1px solid rgba(220, 198, 184, 0.14);

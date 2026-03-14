@@ -72,6 +72,7 @@ onBeforeUnmount(() => {
         >
           <span></span>
           <span></span>
+          <span></span>
         </button>
         <span class="menu-label" translate="no">MENU</span>
       </div>

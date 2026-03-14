@@ -49,8 +49,16 @@ useHead({
 
 <style scoped>
 .press-list-page {
-  padding: 210px 8vw 100px;
-  background: #302d2d;
+  padding: 260px 8vw 100px;
+  background:
+    repeating-linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.018) 0,
+      rgba(255, 255, 255, 0.018) 1px,
+      transparent 1px,
+      transparent 11px
+    ),
+    #302d2d;
 }
 
 .press-list-shell {
@@ -96,7 +104,7 @@ useHead({
 
 @media (max-width: 720px) {
   .press-list-page {
-    padding-top: 170px;
+    padding-top: 190px;
   }
 
   .press-grid {

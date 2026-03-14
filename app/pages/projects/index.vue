@@ -379,6 +379,17 @@ onBeforeUnmount(() => {
 
 .projects-map-header {
   width: 100%;
+  position: relative;
+}
+.projects-map-header:after{
+  content:"";
+  display: block;
+background: #FFF;
+background: linear-gradient(0deg,rgb(255, 255, 255) 50%, rgba(255, 255, 255, 0) 100%);
+  height: 30px;
+  bottom: 0;
+  position: absolute;
+  width: 100%;
 }
 
 .projects-map {

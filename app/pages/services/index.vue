@@ -165,3 +165,19 @@ onMounted(() => {
   }, 300)
 })
 </script>
+
+<style scoped>
+.services-page {
+  position: relative;
+  overflow: hidden;
+  background:
+    repeating-linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.018) 0,
+      rgba(255, 255, 255, 0.018) 1px,
+      transparent 1px,
+      transparent 11px
+    ),
+    #302d2d;
+}
+</style>

@@ -51,6 +51,7 @@ const linkHref = (id: string) => (isHome.value ? `#${id}` : `/#${id}`)
 
 const getActiveMenuKey = () => {
   if (route.path.startsWith('/admin')) return 'admin-login'
+  if (route.path.startsWith('/press-releases')) return 'press-releases'
   if (route.path.startsWith('/services')) return 'services'
   if (route.path.startsWith('/projects')) return 'projects'
   if (route.path === '/' || route.path === '') {
@@ -116,6 +117,16 @@ const goTo = (id: string) => {
 
   if (id === 'projects') {
     router.push('/projects')
+    return
+  }
+
+  if (id === 'services') {
+    router.push('/services')
+    return
+  }
+
+  if (id === 'press-releases') {
+    router.push('/press-releases')
     return
   }
 
@@ -189,10 +200,12 @@ onBeforeUnmount(() => {
     >
       <button
         id="menu-close"
+        class="menu-close-btn"
         aria-label="Close menu"
         @click="close"
       >
-        ×
+        <span></span>
+        <span></span>
       </button>
 
       <div class="side-nav-wrap">
@@ -248,7 +261,7 @@ onBeforeUnmount(() => {
           Founder
         </a>
         <a
-          :href="linkHref('services')"
+          href="/services"
           class="menu-link"
           data-menu-key="services"
           @click.prevent="goTo('services')"
@@ -256,6 +269,16 @@ onBeforeUnmount(() => {
           @focus="onLinkEnter"
         >
           Services
+        </a>
+        <a
+          href="/press-releases"
+          class="menu-link"
+          data-menu-key="press-releases"
+          @click.prevent="goTo('press-releases')"
+          @mouseenter="onLinkEnter"
+          @focus="onLinkEnter"
+        >
+          Press Releases
         </a>
         <a
           :href="linkHref('golden-visa')"

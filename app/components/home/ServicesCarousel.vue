@@ -321,6 +321,24 @@ const toggle = (index: number) => {
   }
 }
 
+@media (min-width: 1280px) {
+  #services .services-backdrop {
+    background-attachment: fixed;
+    background-position: center center;
+  }
+
+  #services .services-content {
+    padding-left: max(40px, calc((100vw - 1260px) / 2));
+    padding-right: max(40px, calc((100vw - 1260px) / 2));
+    gap: 32px;
+  }
+
+  #services .services-accordion {
+    width: 100%;
+    max-width: 820px;
+  }
+}
+
 @media (max-width: 820px) {
   #services.services-accordion-section {
     padding: 56px 0;

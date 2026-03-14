@@ -13,7 +13,7 @@
           :key="i"
           :src="logo.src"
           :alt="logo.alt"
-          loading="lazy"
+          loading="eager"
         />
       </div>
     </div>
