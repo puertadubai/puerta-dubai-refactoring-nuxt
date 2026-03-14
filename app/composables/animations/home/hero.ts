@@ -9,48 +9,51 @@ export const initHeroAnimation = (el: HTMLElement) => {
   const ctx = gsap.context(() => {
     const video = el.querySelector('.hero-video')
     const overlay = el.querySelector('.hero-overlay')
+    const titleFrame = el.querySelector('.hero-title-frame')
     const title = el.querySelector('.hero-title')
     const button = el.querySelector('.btn')
-    const letters = el.querySelectorAll('.hero-letter')
 
-    if (!video || !overlay || !title || !button || !letters.length) return
+    if (!video || !overlay || !titleFrame || !title || !button) return
 
-    gsap.set(video, { scale: 1.1 })
-    gsap.set(overlay, { opacity: 1 })
-    gsap.set(title, { opacity: 1, y: 20 })
-    gsap.set(letters, { opacity: 0, y: 18, filter: 'blur(3px)' })
+    gsap.set(video, { scale: 1.14 })
+    gsap.set(overlay, { opacity: 0.78 })
+    gsap.set(titleFrame, { autoAlpha: 1 })
+    gsap.set(title, {
+      opacity: 0.38,
+      y: 18,
+      filter: 'blur(8px)',
+      '--title-reveal': '-18%'
+    })
     gsap.set(button, { opacity: 0, y: 24 })
 
-    const tl = gsap.timeline({ defaults: { ease: 'power3.out' } })
+    const tl = gsap.timeline({ defaults: { ease: 'power2.out' } })
 
     tl.to(video, {
-      scale: 1,
-      duration: 1.8
+      scale: 1.03,
+      duration: 3.2,
+      ease: 'none'
     })
 
     tl.to(overlay, {
-      opacity: 0.35,
-      duration: 1.2
+      opacity: 0.5,
+      duration: 2.8,
+      ease: 'sine.out'
     }, 0)
 
-    tl.to(letters, {
+    tl.to(title, {
       opacity: 1,
       y: 0,
       filter: 'blur(0px)',
-      duration: 0.95,
-      stagger: 0.04
-    }, '-=1')
-
-    tl.to(title, {
-      y: 0,
-      duration: 0.9
-    }, '<')
+      '--title-reveal': '100%',
+      duration: 2.6
+    }, 0.2)
 
     tl.to(button, {
       opacity: 1,
       y: 0,
-      duration: 0.8
-    }, '-=0.35')
+      duration: 1.1,
+      ease: 'power3.out'
+    }, 1.7)
   }, el)
 
   return () => {

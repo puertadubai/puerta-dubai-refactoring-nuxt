@@ -47,8 +47,7 @@
         View More Projects
       </NuxtLink>
     </div>
-  </section>
-</template>
+  </section></template>
 
 <script setup lang="ts">
 import { ref, onBeforeUnmount, onMounted } from 'vue'

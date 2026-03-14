@@ -23,29 +23,11 @@
 
     <!-- contenu -->
     <div class="hero-content reveal">
-      <h1 class="hero-title">
-        <template v-for="(token, index) in heroTokens" :key="`${token.text}-${index}`">
-          <span
-            v-if="token.type === 'space'"
-            class="hero-space"
-            aria-hidden="true"
-          >&nbsp;</span>
-          <strong v-else-if="token.type === 'strong'" class="hero-word">
-            <span
-              v-for="(letter, letterIndex) in token.text.split('')"
-              :key="`${token.text}-${letterIndex}`"
-              class="hero-letter"
-            >{{ letter }}</span>
-          </strong>
-          <span v-else class="hero-word">
-            <span
-              v-for="(letter, letterIndex) in token.text.split('')"
-              :key="`${token.text}-${letterIndex}`"
-              class="hero-letter"
-            >{{ letter }}</span>
-          </span>
-        </template>
-      </h1>
+      <div class="hero-title-frame">
+        <h1 class="hero-title">
+          Invest in the <strong>vision</strong> of UAE
+        </h1>
+      </div>
 
       <button class="btn leadForm">
         Get Early Access
@@ -63,19 +45,6 @@ import { initHeroAnimation } from '~/composables/animations/home/hero'
 
 const root = ref<HTMLElement | null>(null)
 let cleanupAnimation: (() => void) | undefined
-const heroTokens = [
-  { type: 'word', text: 'Invest' },
-  { type: 'space', text: ' ' },
-  { type: 'word', text: 'in' },
-  { type: 'space', text: ' ' },
-  { type: 'word', text: 'the' },
-  { type: 'space', text: ' ' },
-  { type: 'strong', text: 'vision' },
-  { type: 'space', text: ' ' },
-  { type: 'word', text: 'of' },
-  { type: 'space', text: ' ' },
-  { type: 'word', text: 'UAE' }
-] as const
 
 onMounted(() => {
   if (!root.value) return
