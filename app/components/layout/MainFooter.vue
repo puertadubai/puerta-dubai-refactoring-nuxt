@@ -116,7 +116,7 @@ onMounted(() => {
     linear-gradient(180deg, #000000 0%, #161414 38%, #302d2d 100%);
   color: #f6f2eb;
   padding: 88px 40px 42px;
-  border-top: 1px solid rgba(220, 198, 184, 0.18);
+  border-top:none;
 }
 
 .footer-shell {

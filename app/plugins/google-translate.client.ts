@@ -1,68 +1,72 @@
 export default defineNuxtPlugin(() => {
   if (!import.meta.client) return
 
-  const SUPPORTED_LANGS = ['en', 'fr', 'es', 'pt']
+  const SUPPORTED_LANGS = ['en', 'fr', 'es', 'pt'] as const
+  const DEFAULT_LANG = 'en'
+  const STORAGE_KEY = 'site_lang'
   const GOOGLE_DIV_ID = 'google_translate_element'
   const LANG_SELECT_ID = 'language'
-  const ROUTE_LANG_PREFIX = 'site_lang:'
+  const RESET_FLAG = 'site_lang:english_reset'
 
   let pendingLang: string | null = null
   let loadingTimer: number | null = null
 
-  const getRouteLangKey = (path: string) => `${ROUTE_LANG_PREFIX}${path}`
-  const getCurrentRoutePath = () => {
-    try {
-      const router = useRouter()
-      return router.currentRoute.value.path || '/'
-    } catch {
-      return window.location.pathname || '/'
-    }
+  const sanitizeLang = (value: string | null) =>
+    SUPPORTED_LANGS.includes((value || '') as (typeof SUPPORTED_LANGS)[number])
+      ? value || DEFAULT_LANG
+      : DEFAULT_LANG
+
+  const getSavedLang = () => sanitizeLang(localStorage.getItem(STORAGE_KEY))
+
+  const setSavedLang = (lang: string) => {
+    localStorage.setItem(STORAGE_KEY, sanitizeLang(lang))
   }
 
-  ;(window as any).googleTranslateElementInit = () => {
-    // @ts-ignore
-    new google.translate.TranslateElement(
-      {
-        pageLanguage: 'en',
-        includedLanguages: SUPPORTED_LANGS.join(','),
-        autoDisplay: false
-      },
-      GOOGLE_DIV_ID
-    )
-
-    const routeKey = getRouteLangKey(getCurrentRoutePath())
-    const savedRouteLang = localStorage.getItem(routeKey)
-    const savedGlobalLang = localStorage.getItem('site_lang')
-    const saved = savedRouteLang || savedGlobalLang
-    if (saved && saved !== 'en') {
-      applyLanguage(saved)
-    } else if (pendingLang) {
-      applyLanguage(pendingLang)
+  const setSelectValue = (lang: string, attempts = 8) => {
+    const select = document.getElementById(LANG_SELECT_ID) as HTMLSelectElement | null
+    if (!select) {
+      if (attempts > 0) {
+        window.setTimeout(() => setSelectValue(lang, attempts - 1), 120)
+      }
+      return
     }
+    select.value = sanitizeLang(lang)
   }
 
-  function setLoading(isLoading: boolean) {
+  const setLoading = (isLoading: boolean) => {
     const select = document.getElementById(LANG_SELECT_ID)
     const container = select?.closest('.lang-select')
     if (!container) return
     container.classList.toggle('is-loading', isLoading)
   }
 
-  function getGoogTransCookie() {
+  const getGoogTransCookie = () => {
     const match = document.cookie.match(/(?:^|; )googtrans=([^;]+)/)
     return match ? decodeURIComponent(match[1]) : null
   }
 
-  function isLangApplied(lang: string) {
+  const clearGoogTransCookie = () => {
+    const expires = 'Thu, 01 Jan 1970 00:00:00 GMT'
+    const hostname = window.location.hostname
+    const domains = Array.from(new Set([hostname, `.${hostname}`]))
+
+    for (const domain of domains) {
+      document.cookie = `googtrans=; expires=${expires}; path=/`
+      document.cookie = `googtrans=; expires=${expires}; path=/; domain=${domain}`
+    }
+  }
+
+  const isLangApplied = (lang: string) => {
     const htmlLang = document.documentElement.lang
     if (htmlLang && htmlLang.startsWith(lang)) return true
     const cookie = getGoogTransCookie()
     return Boolean(cookie && cookie.endsWith(`/${lang}`))
   }
 
-  function waitForLangApplied(lang: string) {
+  const waitForLangApplied = (lang: string) => {
     if (loadingTimer) window.clearInterval(loadingTimer)
     let tries = 0
+
     loadingTimer = window.setInterval(() => {
       tries += 1
       if (isLangApplied(lang) || tries >= 20) {
@@ -73,12 +77,12 @@ export default defineNuxtPlugin(() => {
     }, 150)
   }
 
-  function applyLanguage(lang: string) {
+  const applyGoogleLanguage = (lang: string) => {
     const combo = document.querySelector<HTMLSelectElement>('.goog-te-combo')
 
     if (!combo) {
       pendingLang = lang
-      setTimeout(() => applyLanguage(lang), 400)
+      window.setTimeout(() => applyGoogleLanguage(lang), 400)
       return
     }
 
@@ -88,26 +92,86 @@ export default defineNuxtPlugin(() => {
     waitForLangApplied(lang)
   }
 
-  function setSelectValue(lang: string) {
-    const select = document.getElementById(LANG_SELECT_ID) as
-      | HTMLSelectElement
-      | null
-    if (!select) return
-    select.value = lang
+  const enforceEnglish = (forceReload = false) => {
+    pendingLang = null
+    clearGoogTransCookie()
+    document.documentElement.lang = DEFAULT_LANG
+    document.documentElement.removeAttribute('translate')
+    setSelectValue(DEFAULT_LANG)
+    setLoading(false)
+
+    if (!forceReload) {
+      sessionStorage.removeItem(RESET_FLAG)
+      return
+    }
+
+    if (sessionStorage.getItem(RESET_FLAG) === '1') {
+      sessionStorage.removeItem(RESET_FLAG)
+      return
+    }
+
+    sessionStorage.setItem(RESET_FLAG, '1')
+    window.location.reload()
   }
+
+  const syncLanguage = (lang: string, options?: { allowReload?: boolean }) => {
+    const nextLang = sanitizeLang(lang)
+    setSavedLang(nextLang)
+    setSelectValue(nextLang)
+
+    if (nextLang === DEFAULT_LANG) {
+      const cookie = getGoogTransCookie()
+      const shouldReload =
+        options?.allowReload !== false &&
+        Boolean(cookie && !cookie.endsWith(`/${DEFAULT_LANG}`))
+      enforceEnglish(shouldReload)
+      return
+    }
+
+    sessionStorage.removeItem(RESET_FLAG)
+    applyGoogleLanguage(nextLang)
+  }
+
+  const removeLegacyRouteLangKeys = () => {
+    const keysToDelete: string[] = []
+    for (let i = 0; i < localStorage.length; i += 1) {
+      const key = localStorage.key(i)
+      if (key?.startsWith('site_lang:')) keysToDelete.push(key)
+    }
+    keysToDelete.forEach((key) => localStorage.removeItem(key))
+  }
+
+  ;(window as typeof window & { googleTranslateElementInit?: () => void }).googleTranslateElementInit = () => {
+    // @ts-ignore
+    new google.translate.TranslateElement(
+      {
+        pageLanguage: DEFAULT_LANG,
+        includedLanguages: SUPPORTED_LANGS.join(','),
+        autoDisplay: false
+      },
+      GOOGLE_DIV_ID
+    )
+
+    const initialLang = getSavedLang()
+    if (initialLang === DEFAULT_LANG) {
+      enforceEnglish(false)
+      return
+    }
+
+    applyGoogleLanguage(initialLang)
+  }
+
+  removeLegacyRouteLangKeys()
+  const initialLang = getSavedLang()
+  setSelectValue(initialLang)
 
   document.addEventListener('change', (event) => {
     const target = event.target as HTMLElement | null
     if (!target || target.id !== LANG_SELECT_ID) return
     const select = target as HTMLSelectElement
-    const lang = select.value
-    localStorage.setItem('site_lang', lang)
-    const routeKey = getRouteLangKey(getCurrentRoutePath())
-    localStorage.setItem(routeKey, lang)
-    applyLanguage(lang)
+    syncLanguage(select.value)
   })
 
-  // Création du container caché
   if (!document.getElementById(GOOGLE_DIV_ID)) {
     const div = document.createElement('div')
     div.id = GOOGLE_DIV_ID
@@ -115,33 +179,18 @@ export default defineNuxtPlugin(() => {
     document.body.appendChild(div)
   }
 
-  // Chargement du script Google
   const script = document.createElement('script')
-  script.src =
-    '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit'
+  script.src = '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit'
   document.head.appendChild(script)
 
-  const initialRouteKey = getRouteLangKey(getCurrentRoutePath())
-  const savedRouteLang = localStorage.getItem(initialRouteKey)
-  const initialGlobalLang = localStorage.getItem('site_lang')
-  const initialLang = savedRouteLang || initialGlobalLang
-  if (initialLang) setSelectValue(initialLang)
+  if (initialLang === DEFAULT_LANG) {
+    enforceEnglish(false)
+  }
 
   try {
     const router = useRouter()
-    router.afterEach((to) => {
-      const routeKey = getRouteLangKey(to.path || '/')
-      const routeLang = localStorage.getItem(routeKey)
-      if (routeLang) {
-        setSelectValue(routeLang)
-        applyLanguage(routeLang)
-        return
-      }
-      const currentGlobalLang = localStorage.getItem('site_lang')
-      if (currentGlobalLang) {
-        setSelectValue(currentGlobalLang)
-        applyLanguage(currentGlobalLang)
-      }
+    router.afterEach(() => {
+      syncLanguage(getSavedLang(), { allowReload: false })
     })
   } catch {
     // no-op: router not available
