@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>UAE Golden Visa — Interactive Guide</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
+  <link href="css/guide.css" rel="stylesheet">
+</head>
+<body>
+  <div class="topbar">
+    <div class="container" style="display:flex; align-items:center; justify-content:space-between; gap:16px;">
+      <div class="brand">
+        <div class="brand-logo" aria-hidden="true"></div>
+      </div>
+      <div class="toolbar">
+        <select id="lang" class="select" aria-label="Language"></select>
+        <button class="btn btn-ghost" id="themeBtn" aria-pressed="false">🌗 <span data-i18n="toggleTheme">Toggle theme</span></button>
+        <button class="btn" id="downloadBtn">⬇️ <span data-i18n="download">Download PDF</span></button>
+      </div>
+    </div>
+  </div>
+
+  <main class="container">        <h1>The UAE Golden Visa <span>Interactive Guide</span></h1>
+
+    <!-- Hero -->
+    <section class="hero">
+      <div class="hero-card">
+        <div class="hero-media" role="img" aria-label="Dubai skyline"></div>
+        <div class="hero-body">
+          <div class="eyebrow" data-i18n="eyebrow">Residency • Investment • Talent</div>
+          <h2 class="title" data-i18n="heroTitle">The UAE Golden Visa — What it is, who it's for, and how to apply</h2>
+          <p class="subtitle" data-i18n="heroSub">A premium, Multilingual, up-to-date (2024–2025) guide to long‑term residence pathways in the United Arab Emirates. </p>
+          <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap">
+            <span class="badge" data-i18n="fact1">10-year residence</span>
+            <span class="badge" data-i18n="fact2">No sponsor required</span>
+            <span class="badge" data-i18n="fact3">Family inclusion</span>
+            <span class="badge" data-i18n="fact4">Real estate route ≥ AED 2m</span>
+          </div>
+        </div>
+      </div>
+      <div class="hero-card" style="display:flex; flex-direction:column;">
+        <div class="card-media" style="height:180px; background-image:url('https://images.pexels.com/photos/2280165/pexels-photo-2280165.jpeg');" role="img" aria-label="UAE desert"></div>
+        <div class="hero-body">
+          <h3 class="card-title" style="margin:0 0 8px" data-i18n="quickCTA">Quick actions</h3>
+          <div class="accordion" id="quick-acc"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section grid -->
+    <section class="grid" id="sections">
+      <!-- Sections will be injected here by JS using the translations JSON -->
+    </section>
+
+    <footer>
+      <p data-i18n="disclaimer">This guide is informational and summarises official criteria. Always file via ICP/GDRFA/ADRO and verify your category at the time of application.</p>
+    </footer>
+  </main>
+
+  <script>
+  // ===== Translations JSON =====
+const T = {
+  en: {
+    langName: "English",
+    toggleTheme: "Toggle theme",
+    download: "Download PDF",
+    eyebrow: "Residency • Investment • Talent",
+    heroTitle: "What it is, who it's for, and how to apply",
+    heroSub: "A premium, multilingual, up-to-date (2024–2025) guide to long-term residence pathways in the United Arab Emirates.",
+    fact1: "10-year residence",
+    fact2: "No sponsor required",
+    fact3: "Family inclusion",
+    fact4: "Real estate route ≥ AED 2m",
+    quickCTA: "Quick actions",
+    quickAcc: [
+      { title: "Am I eligible?", body: "Check the categories: Investors (incl. real estate), Entrepreneurs, Exceptional Talents, Scientists/Professionals, Students/Graduates, Humanitarian/Frontline." },
+      { title: "What does it cost?", body: "Government fees typically ~AED 2,500–7,000 depending on route, plus medical fitness and Emirates ID issuance." },
+      { title: "How to apply?", body: "Apply via ICP Smart Services or relevant emirate portals (GDRFA Dubai / ADRO Abu Dhabi). Prepare documents and complete medical + biometrics." },
+    ],
+    sections: [
+      {
+        id: "what",
+        title: "What is the Golden Visa?",
+        image: "https://png.pngtree.com/thumb_back/fh260/background/20250323/pngtree-red-question-mark-symbol-illustrates-uncertainty-and-indecision-photo-photo-image_69460392.webp",
+        accordions: [
+          { h: "Definition & purpose", p: "A long-term UAE residence permit that allows foreign talent, investors and entrepreneurs to live, work and study in the UAE without a local sponsor; designed to attract and retain human capital and investment." },
+          { h: "Origin & legal basis", p: "Grounded in the Executive Regulations of the Federal Decree-Law on Entry and Residence of Foreigners (expanded in 2022) and implemented by ICP/GDRFA across the emirates." },
+          { h: "Authorities", p: "Federal ICP oversees residence services; GDRFA runs Dubai implementation; Abu Dhabi investor routes run via ADRO/ADDED." },
+        ]
+      },
+      {
+        id: "use",
+        title: "What is it used for?",
+        image: "https://images.pexels.com/photos/19920920/pexels-photo-19920920.jpeg",
+        accordions: [
+          { h: "Long-term residency", p: "Hold a 10-year (or 5-year for select tracks) renewable residence with freedom to live in the UAE." },
+          { h: "Investment & relocation", p: "Popular via real estate ≥ AED 2m or capital deposits; enables relocation and asset ownership." },
+          { h: "Business setup & work", p: "Self-sponsored residence enables company ownership and employment without an external sponsor." },
+          { h: "Family sponsorship", p: "Sponsor spouse and children; many holders can also sponsor parents and domestic workers (subject to emirate rules)." },
+        ]
+      },
+      {
+        id: "who",
+        title: "Who is it for? (Eligibility)",
+        image: "https://images.pexels.com/photos/3183197/pexels-photo-3183197.jpeg?auto=compress&cs=tinysrgb&w=1600&h=900&dpr=1",
+        accordions: [
+          { h: "Investors", p: "General and real-estate investors (property value ≥ AED 2,000,000; mortgages allowed per emirate conditions)." },
+          { h: "Entrepreneurs", p: "Founders with approved ventures, incubators or funding thresholds (emirate-specific)." },
+          { h: "Exceptional talents", p: "Recognised achievers in culture, arts, tech, sports, innovation; nomination/attestation often required." },
+          { h: "Scientists & professionals", p: "Specialised workers with qualifications, contracts and salary criteria." },
+          { h: "Students & graduates", p: "Outstanding students and top graduates of UAE or leading global universities." },
+          { h: "Humanitarian/frontline", p: "Notable humanitarian work or frontline service as designated." }
+        ]
+      },
+      {
+        id: "validity",
+        title: "Validity & renewal",
+        image: "https://images.pexels.com/photos/1559709/pexels-photo-1559709.jpeg?auto=compress&cs=tinysrgb&w=1600&h=900&dpr=1",
+        table: {
+          head: ["Track","Typical validity","Renewal"],
+          rows: [
+            ["Golden Residence","10 years","Renewable if criteria maintained"],
+            ["Select categories (e.g., entrepreneurs/students)","5 years","Renewable if criteria maintained"],
+          ]
+        },
+        accordions: [
+          { h: "Travel flexibility", p: "Golden Visa holders are generally exempt from the usual 6-month outside-UAE rule, enabling extended travel." }
+        ]
+      },
+      {
+        id: "costs",
+        title: "Costs & investment thresholds",
+        image: "https://images.pexels.com/photos/373912/pexels-photo-373912.jpeg?auto=compress&cs=tinysrgb&w=1600&h=900&dpr=1",
+        table: {
+          head: ["Component","Typical 2024–25 figures"],
+          rows: [
+            ["Real estate minimum (federal baseline)","AED 2,000,000"],
+            ["Capital deposit (Abu Dhabi)","AED 2,000,000 (≥ 2 years)"],
+            ["Government fees (application/issuance)","≈ AED 2,500–7,000 (varies by route)"],
+            ["Medical fitness","≈ AED 260–360"],
+            ["Emirates ID (10-year)","≈ AED 1,075"],
+          ]
+        },
+        accordions: [
+          { h: "Mortgages & equity", p: "Mortgages are accepted subject to emirate rules. Abu Dhabi requires investor equity ≥ AED 2m when mortgaged; Dubai typically accepts bank letters confirming paid amount." },
+          { h: "Payments", p: "Official fees are paid through ICP/GDRFA portals; installment features may apply to ICP service fees." }
+        ]
+      },
+      {
+        id: "legal",
+        title: "Legal aspects & rights",
+        image: "https://images.pexels.com/photos/4427614/pexels-photo-4427614.jpeg?auto=compress&cs=tinysrgb&w=1600&h=900&dpr=1",
+        accordions: [
+          { h: "Rights", p: "Live, work and study; self-sponsor; own businesses and property; sponsor family and domestic workers (subject to rules)." },
+          { h: "Obligations", p: "Maintain qualifying investment/criteria; complete medical fitness, biometrics and Emirates ID; hold valid health insurance." },
+          { h: "Family rules", p: "Spouse and children eligible; many emirates allow parents on long-term residency with proof and insurance." }
+        ]
+      },
+      {
+        id: "advantages",
+        title: "Advantages",
+        image: "https://images.pexels.com/photos/707676/pexels-photo-707676.jpeg?auto=compress&cs=tinysrgb&w=1600&h=900&dpr=1",
+        accordions: [
+          { h: "No sponsor required", p: "Freedom from employer sponsorship and greater mobility." },
+          { h: "Family inclusion", p: "Bring spouse and children; flexibility for dependents." },
+          { h: "Property & business ownership", p: "Acquire real estate and own/operate companies." },
+          { h: "Global mobility extras", p: "Digital services, longer travel flexibility, and improved consular support (2025)." }
+        ]
+      },
+      {
+        id: "alternatives",
+        title: "Alternatives (comparison)",
+        image: "https://images.pexels.com/photos/3184451/pexels-photo-3184451.jpeg?auto=compress&cs=tinysrgb&w=1600&h=900&dpr=1",
+        table: {
+          head: ["Option","Validity","Sponsor?","Use case","Notes"],
+          rows: [
+            ["Green Visa","5 years","No","Skilled workers & freelancers","Different salary/permit criteria via MOHRE"],
+            ["Standard Work Residence","1–2(–3) years","Yes (employer)","Employees","Tied to employer sponsorship"],
+            ["2-year Property Investor Visa","~2 years","Property-linked","Lower-value property owners","Thresholds/benefits differ from Golden"],
+            ["Freelance Permit + Residence","1–2 years","Self via free zone","Solo professionals","Costs depend on free zone package"],
+            ["Retirement Visa","5 years","Self","55+ meeting income/savings/property","Dubai and federal criteria variants"],
+          ]
+        }
+      },
+      {
+        id: "risks",
+        title: "Risks & constraints",
+        image: "https://images.pexels.com/photos/669619/pexels-photo-669619.jpeg?auto=compress&cs=tinysrgb&w=1600&h=900&dpr=1",
+        accordions: [
+          { h: "Investment & renewal risk", p: "Market movements may reduce property value or equity, affecting renewal eligibility." },
+          { h: "Regulatory change", p: "Categories, thresholds and benefits can evolve; always check official portals before filing." },
+          { h: "Compliance", p: "Ensure on-time medicals, EID, insurance and documentation for dependents." },
+          { h: "Due diligence", p: "Background checks and nomination vetting may apply in talent/entrepreneur tracks." }
+        ]
+      },
+      {
+        id: "timeline",
+        title: "Timeline & process",
+        image: "https://images.pexels.com/photos/2058138/pexels-photo-2058138.jpeg?auto=compress&cs=tinysrgb&w=1600&h=900&dpr=1",
+        accordions: [
+          { h: "1) Choose your route", p: "Select investor (incl. real estate), entrepreneur, talent, professional, student, etc." },
+          { h: "2) Online application (ICP/GDRFA/ADRO)", p: "Submit documents through the relevant portal and await pre-approval." },
+          { h: "3) Medical fitness", p: "Complete medical tests (often 24h issuance)." },
+          { h: "4) Biometrics & Emirates ID", p: "Provide fingerprints/biometrics; EID card issued." },
+          { h: "5) Residence issuance", p: "Permit is issued and linked to your EID." },
+          { h: "6) Renewal", p: "Re-evidence eligibility (e.g., property value/equity or deposit tenure)." }
+        ]
+      },
+      {
+        id: "special",
+        title: "Special cases & nationalities",
+        image: "https://images.pexels.com/photos/1559709/pexels-photo-1559709.jpeg?auto=compress&cs=tinysrgb&w=1600&h=900&dpr=1",
+        accordions: [
+          { h: "Criteria-based, not quota-based", p: "No nationality quotas; decisions follow category rules and clearances." },
+          { h: "Consular support (2025)", p: "Improved services while abroad, including rapid electronic return documents if passports are lost." },
+          { h: "Treaties", p: "Extensive UAE tax treaty network; always apply the specific DTA rules of your home country." }
+        ]
+      },
+      {
+        id: "tax",
+        title: "Tax & fiscal notes",
+        image: "https://images.pexels.com/photos/669615/pexels-photo-669615.jpeg?auto=compress&cs=tinysrgb&w=1600&h=900&dpr=1",
+        accordions: [
+          { h: "Personal taxes", p: "No UAE personal income tax on employment income; 5% VAT applies to most goods/services." },
+          { h: "Corporate tax", p: "9% federal corporate tax from 2023 for business profits; 2025 top-up for large multinationals under OECD Pillar Two." },
+          { h: "Tax Residency Certificate (TRC)", p: "Available via FTA/EmaraTax for treaty benefits; domestic tax residency rules apply." }
+        ]
+      },
+      {
+        id: "facts",
+        title: "Quick facts",
+        image: "https://images.pexels.com/photos/280229/pexels-photo-280229.jpeg?auto=compress&cs=tinysrgb&w=1600&h=900&dpr=1",
+        table: {
+          head: ["Item","Data"],
+          rows: [
+            ["Visa type","Long-term residence (no sponsor)"],
+            ["Validity","10 years (some 5-year tracks)"],
+            ["Real estate threshold","AED 2,000,000 (mortgage permitted with conditions)"],
+            ["Family","Spouse & children; parents possible; domestic workers allowed"],
+            ["Travel","> 6 months abroad permitted without invalidating residency"],
+            ["Apply via","ICP Smart Services / GDRFA (Dubai) / ADRO (Abu Dhabi)"],
+          ]
+        }
+      }
+    ],
+    disclaimer: "This guide is informational and summarises official criteria. Always file via ICP/GDRFA/ADRO and verify your category at the time of application.",
+  },
+    fr: {
+      langName: "Français",
+      toggleTheme: "Basculer le thème",
+      download: "Télécharger en PDF",
+      eyebrow: "Résidence • Investissement • Talents",
+      heroTitle: "Le Golden Visa des EAU — Définition, publics visés et mode d’emploi",
+      heroSub: "Un guide premium et à jour (2024–2025) des voies de résidence de longue durée aux Émirats arabes unis. Multilingue et prêt à télécharger.",
+      fact1: "Résidence de 10 ans",
+      fact2: "Sans sponsor local",
+      fact3: "Famille incluse",
+      fact4: "Immobilier ≥ 2 M AED",
+      quickCTA: "Actions rapides",
+      quickAcc: [
+        { title: "Suis‑je éligible ?", body: "Catégories : investisseurs (dont immobilier), entrepreneurs, talents, scientifiques/professionnels, étudiants/diplômés, humanitaire/frontline." },
+        { title: "Quel coût ?", body: "Frais administratifs ≈ 2 500–7 000 AED selon la voie + visite médicale et carte d’identité (Emirates ID)." },
+        { title: "Comment postuler ?", body: "Via ICP Smart Services ou les portails d’émirat (GDRFA Dubaï / ADRO Abou Dhabi). Préparez les pièces, puis médical + biométrie." },
+      ],
+      sections: [], // will be copied from EN then localized below
+      disclaimer: "Ce guide est informatif et résume des critères officiels. Déposez toujours via ICP/GDRFA/ADRO et vérifiez votre catégorie au moment du dépôt.",
+    },
+
+    es: {
+      langName: "Español",
+      toggleTheme: "Cambiar tema",
+      download: "Descargar PDF",
+      eyebrow: "Residencia • Inversión • Talento",
+      heroTitle: "Golden Visa de EAU — Qué es, para quién y cómo solicitarlo",
+      heroSub: "Guía premium y actualizada (2024–2025) de residencia a largo plazo en Emiratos Árabes Unidos. Multilingüe y lista para descargar.",
+      fact1: "Residencia de 10 años",
+      fact2: "Sin patrocinador",
+      fact3: "Incluye familia",
+      fact4: "Inmueble ≥ 2 M AED",
+      quickCTA: "Acciones rápidas",
+      quickAcc: [
+        { title: "¿Soy elegible?", body: "Categorías: inversores (incl. inmobiliario), emprendedores, talentos, científicos/profesionales, estudiantes/graduados, humanitario/frontline." },
+        { title: "¿Cuánto cuesta?", body: "Tasas gubernamentales ≈ 2.500–7.000 AED según la ruta + exámenes médicos y Emirates ID." },
+        { title: "¿Cómo aplicar?", body: "A través de ICP Smart Services o portales del emirato (GDRFA Dubái / ADRO Abu Dabi). Documentos + exámenes + biometría." },
+      ],
+      sections: [],
+      disclaimer: "Esta guía es informativa y resume criterios oficiales. Presente siempre por ICP/GDRFA/ADRO y verifique su categoría al solicitar.",
+    },
+
+    pt: {
+      langName: "Português (Brasil)",
+      toggleTheme: "Alternar tema",
+      download: "Baixar PDF",
+      eyebrow: "Residência • Investimento • Talento",
+      heroTitle: "Golden Visa dos EAU — O que é, para quem e como solicitar",
+      heroSub: "Guia premium e atualizado (2024–2025) de residência de longo prazo nos Emirados Árabes Unidos. Multilíngue e pronto para baixar.",
+      fact1: "Residência de 10 anos",
+      fact2: "Sem patrocinador",
+      fact3: "Família incluída",
+      fact4: "Imóvel ≥ 2 Mi AED",
+      quickCTA: "Ações rápidas",
+      quickAcc: [
+        { title: "Sou elegível?", body: "Categorias: investidores (incl. imobiliário), empreendedores, talentos, cientistas/profissionais, estudantes/formados, humanitário/frontline." },
+        { title: "Quanto custa?", body: "Taxas governamentais ≈ 2.500–7.000 AED conforme a rota + exame médico e Emirates ID." },
+        { title: "Como aplicar?", body: "Pelo ICP Smart Services ou portais do emirado (GDRFA Dubai / ADRO Abu Dhabi). Documentos + exames + biometria." },
+      ],
+      sections: [],
+      disclaimer: "Este guia é informativo e resume critérios oficiais. Solicite sempre via ICP/GDRFA/ADRO e confirme sua categoria ao aplicar.",
+    }
+  };
+
+  // Clone EN sections into FR/ES/PT, then localize section titles (keep fine-grained body text in English for brevity; you can localize more deeply later).
+  ['fr','es','pt'].forEach(l => { T[l].sections = JSON.parse(JSON.stringify(T.en.sections)); });
+  // Localize section titles for FR/ES/PT quickly
+  const secMap = {
+    fr: [
+      "Qu’est‑ce que le Golden Visa ?","À quoi sert‑il ?","Pour qui ? (Éligibilité)","Durée & renouvellement","Coûts & seuils d’investissement","Aspects juridiques & droits","Avantages","Alternatives (comparatif)","Risques & contraintes","Calendrier & démarche","Cas particuliers & nationalités","Fiscalité","Repères rapides"
+    ],
+    es: [
+      "¿Qué es el Golden Visa?","¿Para qué sirve?","¿Para quién es? (Elegibilidad)","Vigencia y renovación","Costes y umbrales de inversión","Aspectos legales y derechos","Ventajas","Alternativas (comparativa)","Riesgos y limitaciones","Cronograma y proceso","Casos especiales y nacionalidades","Impuestos","Datos rápidos"
+    ],
+    pt: [
+      "O que é o Golden Visa?","Para que serve?","Para quem é? (Elegibilidade)","Validade e renovação","Custos e valores mínimos","Aspectos legais e direitos","Vantagens","Alternativas (comparação)","Riscos e restrições","Etapas e prazos","Casos especiais e nacionalidades","Tributos","Dados rápidos"
+    ]
+  };
+  ['fr','es','pt'].forEach((l)=>{ T[l].sections.forEach((s,i)=> s.title = secMap[l][i]); });
+
+  // ===== Rendering =====
+  const sectionsRoot = document.getElementById('sections');
+  const langSelect = document.getElementById('lang');
+
+  function createAccordions(items){
+    const wrap = document.createElement('div');
+    wrap.className = 'accordion';
+    items.forEach((it, idx) => {
+      const item = document.createElement('div');
+      item.className = 'acc-item';
+      const btn = document.createElement('button');
+      btn.className = 'acc-btn';
+      btn.setAttribute('aria-expanded','false');
+      btn.innerHTML = `<span>${it.title || it.h}</span><svg class="acc-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>`;
+      const panel = document.createElement('div');
+      panel.className = 'acc-panel';
+      const inner = document.createElement('div');
+      inner.className = 'acc-panel-inner';
+      inner.innerHTML = `<p class="muted">${it.body || it.p}</p>`;
+      panel.appendChild(inner);
+      btn.addEventListener('click', ()=>{
+        const open = item.classList.toggle('open');
+        btn.setAttribute('aria-expanded', open ? 'true':'false');
+      });
+      item.appendChild(btn); item.appendChild(panel);
+      wrap.appendChild(item);
+      if(idx===0){ // open first by default
+        setTimeout(()=>item.classList.add('open'), 10);
+      }
+    });
+    return wrap;
+  }
+
+  function createTable(tbl){
+    if(!tbl) return null;
+    const table = document.createElement('table');
+    const thead = document.createElement('thead');
+    const trh = document.createElement('tr');
+    tbl.head.forEach(h=>{ const th=document.createElement('th'); th.textContent=h; trh.appendChild(th); });
+    thead.appendChild(trh); table.appendChild(thead);
+    const tbody = document.createElement('tbody');
+    tbl.rows.forEach(r=>{ const tr=document.createElement('tr'); r.forEach((c,i)=>{ const td=document.createElement('td'); td.textContent=c; tr.appendChild(td); }); tbody.appendChild(tr); });
+    table.appendChild(tbody);
+    return table;
+  }
+
+  function render(lang){
+    const L = T[lang];
+    // Language selector UI text
+    document.querySelectorAll('[data-i18n="toggleTheme"]').forEach(el=> el.textContent = L.toggleTheme);
+    document.querySelectorAll('[data-i18n="download"]').forEach(el=> el.textContent = L.download);
+    document.querySelectorAll('[data-i18n="eyebrow"]').forEach(el=> el.textContent = L.eyebrow);
+    document.querySelectorAll('[data-i18n="heroTitle"]').forEach(el=> el.textContent = L.heroTitle);
+    document.querySelectorAll('[data-i18n="heroSub"]').forEach(el=> el.textContent = L.heroSub);
+    document.querySelectorAll('[data-i18n="fact1"]').forEach(el=> el.textContent = L.fact1);
+    document.querySelectorAll('[data-i18n="fact2"]').forEach(el=> el.textContent = L.fact2);
+    document.querySelectorAll('[data-i18n="fact3"]').forEach(el=> el.textContent = L.fact3);
+    document.querySelectorAll('[data-i18n="fact4"]').forEach(el=> el.textContent = L.fact4);
+    document.querySelectorAll('[data-i18n="quickCTA"]').forEach(el=> el.textContent = L.quickCTA);
+    document.querySelectorAll('[data-i18n="disclaimer"]').forEach(el=> el.textContent = L.disclaimer);
+
+    // Quick actions accordion
+    const quickAcc = document.getElementById('quick-acc');
+    quickAcc.innerHTML = ''; quickAcc.appendChild(createAccordions(L.quickAcc));
+
+    // Sections
+    sectionsRoot.innerHTML = '';
+    L.sections.forEach(sec => {
+      const card = document.createElement('article');
+      card.className = 'card';
+      // media
+      const media = document.createElement('div');
+      media.className = 'card-media';
+      media.style.backgroundImage = `url('${sec.image}')`;
+      media.setAttribute('role','img');
+      media.setAttribute('aria-label', sec.title);
+      card.appendChild(media);
+      // header
+      const header = document.createElement('div');
+      header.className = 'card-header';
+      const h = document.createElement('h3'); h.className='card-title'; h.textContent = sec.title; header.appendChild(h);
+      const badge = document.createElement('span'); badge.className='badge'; badge.textContent = '#'+sec.id; header.appendChild(badge);
+      card.appendChild(header);
+      // content
+      const content = document.createElement('div'); content.className = 'card-content';
+      if(sec.table){ content.appendChild(createTable(sec.table)); }
+      if(sec.accordions){ content.appendChild(createAccordions(sec.accordions)); }
+      card.appendChild(content);
+      sectionsRoot.appendChild(card);
+    });
+  }
+
+  // Populate language dropdown
+  Object.entries(T).forEach(([k,v])=>{
+    const opt = document.createElement('option'); opt.value=k; opt.textContent=v.langName; langSelect.appendChild(opt);
+  });
+
+  // Theme / Download
+  const themeBtn = document.getElementById('themeBtn');
+  themeBtn.addEventListener('click', ()=>{
+    const isLight = document.body.classList.toggle('light');
+    themeBtn.setAttribute('aria-pressed', isLight ? 'true' : 'false');
+  });
+  document.getElementById('downloadBtn').addEventListener('click', ()=>{
+    // Print to PDF keeps this single page layout neat
+    window.print();
+  });
+
+  // Language switching
+  langSelect.addEventListener('change', (e)=>{
+    const lang = e.target.value; localStorage.setItem('gv_lang', lang); render(lang);
+  });
+
+  // Init
+  const initial = localStorage.getItem('gv_lang') || (navigator.language||'en').slice(0,2);
+  const chosen = ['en','fr','es','pt'].includes(initial) ? initial : 'en';
+  langSelect.value = chosen; render(chosen);
+
+  </script>
+</body>
+</html>

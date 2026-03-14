@@ -4,7 +4,7 @@
 }
 .services-page {
   color: #fff;
-  padding: 160px 10%;
+  padding: calc(var(--site-header-offset, 210px) + 104px) 10% 160px;
   min-height: 100vh;
 }
 
@@ -13,7 +13,7 @@
   font-weight: 100;
   letter-spacing: -2px;
   text-align: center;
-   margin: 100px auto;
+  margin: 0 auto 100px;
   color: white;
 }
 
@@ -102,8 +102,13 @@
 }
 
 @media (max-width: 700px) {
+  .services-page {
+    padding-top: calc(var(--site-header-offset, 124px) + 92px);
+  }
+
   .services-heading {
     font-size: 3rem;
+    margin-bottom: 56px;
   }
   .accordion-header {
     font-size: 1.1rem;

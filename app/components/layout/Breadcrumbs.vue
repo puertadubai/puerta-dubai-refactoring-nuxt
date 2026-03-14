@@ -83,7 +83,7 @@ onBeforeUnmount(() => {
 <style scoped>
 .breadcrumb-bar {
   position: absolute;
-  top: 190px;
+  top: calc(var(--site-header-offset, 160px) + 12px);
   left: 0;
   width: 100%;
   z-index: 10;
@@ -144,7 +144,7 @@ onBeforeUnmount(() => {
 
 @media (max-width: 900px) {
   .breadcrumb-bar {
-    top: 160px;
+    top: calc(var(--site-header-offset, 124px) + 8px);
   }
   .breadcrumb-inner {
     width: 100%;

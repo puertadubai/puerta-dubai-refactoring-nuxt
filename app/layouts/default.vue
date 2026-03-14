@@ -67,6 +67,7 @@ const isAdmin = computed(() => route.path.startsWith('/admin'))
 const isAdminLogin = computed(() => route.path === '/admin/login')
 const showBreadcrumbs = computed(() => {
   if (route.path === '/') return false
+  if (/^\/press-releases\/[^/]+$/.test(route.path)) return false
   return !route.path.startsWith('/admin')
 })
 

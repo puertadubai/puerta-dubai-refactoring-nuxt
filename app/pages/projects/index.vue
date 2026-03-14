@@ -348,7 +348,7 @@ onBeforeUnmount(() => {
 .projects-hero-content {
   position: relative;
   z-index: 1;
-  padding-top: clamp(112px, 17vh, 190px);
+  padding-top: max(112px, calc(var(--site-header-offset, 210px) + 12px));
 }
 
 .projects-list-page .luxury-project .project-info,
@@ -522,7 +522,7 @@ background: linear-gradient(0deg,rgb(255, 255, 255) 50%, rgba(255, 255, 255, 0) 
 
 @media (max-width: 900px) {
   .projects-hero-content {
-    padding-top: 172px;
+    padding-top: calc(var(--site-header-offset, 124px) + 20px);
   }
 
   .projects-list-page .project-card {

@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>The UAE Golden Visa — Comprehensive Interactive Guide</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
+  <link href="css/golden.css" rel="stylesheet">
+
+
+</head>
+<body>
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <div class="brand-logo">Golden&nbsp;Visa</div>
+      </div>
+      <div class="toolbar">
+        <button class="btn btn-ghost" id="themeBtn" aria-pressed="false">
+          🌗 <span class="label">Toggle theme</span>
+        </button>
+        <button class="btn" id="downloadBtn">
+          ⬇️ <span class="label">Download PDF</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <main class="container">
+    <section class="hero">
+      <div class="hero-card">
+        <div class="hero-card-media" aria-hidden="true"></div>
+        <div class="hero-card-body">
+          <div class="hero-eyebrow">Residency • Investment • Talent</div>
+          <h1>The UAE Golden Visa <span>Interactive Guide</span></h1>
+          <p class="hero-lead">
+            A premium, practitioner-level guide to long-term residence in the United Arab Emirates: how the Golden Visa works,
+            who it is for, key numbers you should know, and what to expect at each step of the process.
+          </p>
+          <div class="hero-stats">
+            <span class="badge">10-year residence</span>
+            <span class="badge">No sponsor required</span>
+            <span class="badge">Family inclusion</span>
+            <span class="badge">Real estate ≥ AED 2m</span>
+          </div>
+        </div>
+      </div>
+
+      <aside class="side-card">
+        <div class="side-card-media" role="img" aria-label="UAE desert and skyline"></div>
+        <div class="side-card-body">
+          <div class="side-card-title">Quick actions</div>
+          <div class="side-card-sub">Use these shortcuts to orient yourself in under 60 seconds.</div>
+          <div id="quick-accordion" class="accordion"></div>
+        </div>
+      </aside>
+    </section>
+
+    <section class="grid" id="sections"></section>
+
+    <footer>
+      This guide is for information only and summarises official UAE criteria in plain language. Always file through ICP, GDRFA
+      or ADRO, and verify the applicable category, documents and fees at the time of your application.
+    </footer>
+  </main>
+
+<script>
+  const DATA = {
+    quickAcc: [
+      {
+        title: "Am I eligible?",
+        hint: "Understand which track you fit.",
+        body:
+          "Most applicants qualify under one of six umbrellas: investors (including real estate), entrepreneurs, exceptional talents, scientists and professionals, outstanding students and graduates, or special humanitarian/frontline cases. If you hold property of at least AED 2m, a solid employment contract, or a recognised achievement, you likely have a viable route."
+      },
+      {
+        title: "What does it cost?",
+        hint: "Government fees + investment.",
+        body:
+          "Beyond the qualifying investment or property value, expect government fees, medical fitness tests and a 10-year Emirates ID card. For most main applicants, end-to-end government costs cluster in an approximate range of AED 2,500–7,000, excluding advisory or bank charges."
+      },
+      {
+        title: "How do I apply?",
+        hint: "Where to actually click.",
+        body:
+          "Golden Visa applications are lodged via UAE federal and emirate portals: ICP Smart Services for most federal processes, GDRFA for Dubai, and ADRO/ADDED for select Abu Dhabi investor and entrepreneur tracks. You will typically pass through pre-approval, medical fitness, biometrics and Emirates ID issuance."
+      }
+    ],
+    sections: [
+      {
+        id: "what",
+        tag: "Overview",
+        title: "What is the Golden Visa?",
+        kicker: "A long-term residence framework for people who anchor value in the UAE.",
+        image:
+          "https://png.pngtree.com/thumb_back/fh260/background/20250323/pngtree-red-question-mark-symbol-illustrates-uncertainty-and-indecision-photo-photo-image_69460392.webp",
+        accordions: [
+          {
+            h: "Definition & purpose",
+            hint: "What the Golden Visa actually gives you.",
+            p:
+              "The UAE Golden Visa is a long-term residence permit — typically 10 years, renewable — granted to investors, entrepreneurs, highly skilled professionals, exceptional talents and top students. It allows you to live, work and study in the UAE without being tied to a traditional employer sponsor, and is designed to attract and retain capital, skills and innovation."
+          },
+          {
+            h: "Legal framework",
+            hint: "Where the rules come from.",
+            p:
+              "The program is grounded in the Executive Regulations of the Federal Decree-Law on the Entry and Residence of Foreigners, significantly expanded in 2022. Implementation runs through the federal identity and residency system (ICP) with emirate-level authorities such as GDRFA (Dubai) and ADRO/ADDED (Abu Dhabi) applying the federal rules to local routes."
+          },
+          {
+            h: "Key authorities",
+            hint: "Who you will actually interact with.",
+            p:
+              "In practical terms, you engage with: (1) ICP Smart Services for the federal backbone of residency, (2) GDRFA for Dubai-specific applications and renewals, and (3) Abu Dhabi entities like ADRO and ADDED for investor and entrepreneur programs. Free zones and banks may also issue supporting letters or attestations as part of your file."
+          }
+        ]
+      },
+      {
+        id: "use",
+        tag: "Use cases",
+        title: "What is the Golden Visa used for?",
+        kicker: "Beyond a residence sticker — how people actually use it.",
+        image: "https://images.pexels.com/photos/19920920/pexels-photo-19920920.jpeg",
+        accordions: [
+          {
+            h: "Long-term relocation",
+            hint: "Build a durable base in the UAE.",
+            p:
+              "The Golden Visa is the backbone for families and individuals who wish to treat the UAE as a long-term or permanent residence base. It removes the 1–2 year renewal cycle of standard visas and gives you visibility over the next decade for schooling, real estate and professional planning."
+          },
+          {
+            h: "Investment & diversification",
+            hint: "Real estate, portfolio and business planning.",
+            p:
+              "Property and capital investors often use the Golden Visa to align residence with asset allocation. Acquiring AED 2m+ in qualifying real estate, or maintaining significant deposits or business equity, can unlock residence benefits while supporting a broader diversification strategy across currencies and jurisdictions."
+          },
+          {
+            h: "Business setup & employment flexibility",
+            hint: "Operate as an owner, consultant or employee.",
+            p:
+              "Because the visa is not tied to a single employer, you can own and manage companies, hold board roles, freelance under the correct permits, or accept employment in different entities without changing your underlying residence sponsor each time. This is particularly valuable for founders, consultants and portfolio professionals."
+          },
+          {
+            h: "Family planning",
+            hint: "Bring close family under one structure.",
+            p:
+              "Golden Visa holders can usually sponsor their spouse and children, and in many cases parents and domestic workers, subject to emirate-level criteria and income thresholds. The result is a simple, unified residence solution instead of fragmented short-term visas for each family member."
+          }
+        ]
+      },
+      {
+        id: "who",
+        tag: "Eligibility",
+        title: "Who is it for? Main eligibility routes",
+        kicker: "The program is category-based, not nationality-based.",
+        image: "https://images.pexels.com/photos/3183197/pexels-photo-3183197.jpeg?auto=compress&cs=tinysrgb&w=1600&h=900&dpr=1",
+        accordions: [
+          {
+            h: "Property & capital investors",
+            hint: "Real estate of at least AED 2m.",
+            p:
+              "The most widely known route is real estate: one or more properties with a total value of at least AED 2,000,000. Mortgaged assets are accepted where specific equity conditions are met. Separate investor streams exist for cash deposits, business equity and listed securities, especially in Abu Dhabi."
+          },
+          {
+            h: "Entrepreneurs & founders",
+            hint: "High-potential or high-impact ventures.",
+            p:
+              "Entrepreneur tracks focus on founders and owners of innovative, scalable or high-impact businesses. Criteria may look at company valuation, revenue, funding from accredited funds, participation in recognised incubators or approvals from emirate-level economic departments."
+          },
+          {
+            h: "Exceptional talents",
+            hint: "People whose work speaks for itself.",
+            p:
+              "Artists, athletes, creators, technologists and other talents can qualify based on internationally recognised achievements — such as major awards, rankings, patents, significant portfolios or critical contributions to their field. These routes often involve nomination or endorsement by a relevant UAE body."
+          },
+          {
+            h: "Scientists, researchers & professionals",
+            hint: "Advanced qualifications + recognised roles.",
+            p:
+              "Doctors, engineers, scientists, academics and senior professionals may qualify where they hold accredited degrees, work in strategic fields and meet salary or contract thresholds. Evidence typically includes academic credentials, professional licenses, employment contracts and recommendation letters."
+          },
+          {
+            h: "Outstanding students and graduates",
+            hint: "Top performers at UAE or global universities.",
+            p:
+              "High-achieving students and graduates can obtain 5-year residence, easing the transition from university to the labour market. Provisions cover top-ranked local universities and selected leading global institutions, with GPA/class ranking and graduation recency often forming key criteria."
+          },
+          {
+            h: "Humanitarian & frontline categories",
+            hint: "Extraordinary contributions to society.",
+            p:
+              "Certain tracks recognise notable humanitarian work, philanthropy and frontline contributions, including medical and emergency response roles. These are generally accessed via nomination or clear documentary evidence, assessed on a case-by-case basis."
+          }
+        ]
+      },
+      {
+        id: "validity",
+        tag: "Duration",
+        title: "Validity, renewal & travel rules",
+        kicker: "How long it lasts and what happens if you travel.",
+        image: "https://images.pexels.com/photos/1559709/pexels-photo-1559709.jpeg?auto=compress&cs=tinysrgb&w=1600&h=900&dpr=1",
+        table: {
+          head: ["Track", "Typical validity", "Renewal logic"],
+          rows: [
+            ["Golden Residence (most routes)", "10 years", "Renewable while core criteria (e.g. investment, role or achievement) are maintained."],
+            ["Select entrepreneur / student tracks", "5 years", "Renewable upon updated evidence such as business continuity, new role or academic progression."]
+          ]
+        },
+        accordions: [
+          {
+            h: "Travel flexibility",
+            hint: "The 6-month rule and how it changes.",
+            p:
+              "Unlike standard UAE residence visas, Golden Visa holders are generally not subject to the classic 6‑month outside-UAE cancellation rule. This makes it easier to manage global travel, commuting arrangements and split residency patterns while keeping your UAE status intact."
+          },
+          {
+            h: "Renewal in practice",
+            hint: "What you will be asked for at renewal.",
+            p:
+              "At renewal, you are effectively asked to re-prove that you still fit your original category: maintaining qualifying property value or equity, business ownership, professional role and salary, or ongoing achievement in the case of talents. Updated medical fitness and Emirates ID issuance also apply."
+          }
+        ]
+      },
+      {
+        id: "costs",
+        tag: "Numbers",
+        title: "Costs & investment thresholds",
+        kicker: "The headline investment and the real-world add-ons.",
+        image: "https://images.pexels.com/photos/373912/pexels-photo-373912.jpeg?auto=compress&cs=tinysrgb&w=1600&h=900&dpr=1",
+        table: {
+          head: ["Component", "Typical 2024–2025 figures"],
+          rows: [
+            ["Real estate minimum (federal baseline)", "AED 2,000,000 in qualifying property value."],
+            ["Capital deposit (Abu Dhabi investor routes)", "From AED 2,000,000 locked for a minimum period (often ≥ 2 years)."],
+            ["Government fees (file, entry, stamping)", "Approx. AED 2,500–7,000 per main applicant, depending on emirate and route."],
+            ["Medical fitness screening", "Roughly AED 260–360 per person, depending on service type and emirate."],
+            ["Emirates ID (10-year)", "Around AED 1,075 for a 10-year card, separate from medical and visa charges."]
+          ]
+        },
+        accordions: [
+          {
+            h: "Mortgages, equity & bank letters",
+            hint: "How financed property is treated.",
+            p:
+              "Mortgaged properties can qualify, provided your equity or paid-up value meets the threshold set by each emirate. In practice, banks issue confirmation letters showing the amount paid and current valuation. Abu Dhabi often focuses on minimum investor equity, while Dubai emphasises verified property value and paid portion."
+          },
+          {
+            h: "Fee payment & extras",
+            hint: "What sits outside the official fee tables.",
+            p:
+              "Official fees are settled through government portals or authorised typing centres. Additional costs may arise from translation, legalisation, bank charges, real estate transfer fees, advisory retainers and optional premium services such as fast-track processing or VIP medical screening."
+          }
+        ]
+      },
+      {
+        id: "legal",
+        tag: "Rights",
+        title: "Legal aspects & rights",
+        kicker: "What the Golden Visa allows you to do — and your obligations.",
+        image: "https://images.pexels.com/photos/4427614/pexels-photo-4427614.jpeg?auto=compress&cs=tinysrgb&w=1600&h=900&dpr=1",
+        accordions: [
+          {
+            h: "Core rights",
+            hint: "Residence, work, study and ownership.",
+            p:
+              "Golden Visa holders can live, work and study in the UAE, sponsor eligible family members and, where permitted, employ domestic workers. You may own 100% of mainland companies in many sectors, hold free zone companies and acquire real estate in designated areas, subject to each emirate's regulations."
+          },
+          {
+            h: "Obligations & compliance",
+            hint: "What you must keep up to date.",
+            p:
+              "You must maintain your qualifying status (e.g. property value, investment, professional role), keep valid health insurance where required, complete medical screenings, attend biometrics appointments and update Emirates ID and passport details when they change. Non-compliance can lead to non-renewal or cancellation."
+          },
+          {
+            h: "Family sponsorship rules",
+            hint: "Who can be added under your file.",
+            p:
+              "Most Golden Visa holders can sponsor their spouse and children, with upper age limits for sons relaxed compared to some standard visas. Many categories also allow sponsoring parents, subject to minimum salary thresholds, accommodation standards and medical insurance."
+          }
+        ]
+      },
+      {
+        id: "advantages",
+        tag: "Benefits",
+        title: "Advantages of the Golden Visa",
+        kicker: "Why applicants choose it over short-term residence.",
+        image: "https://images.pexels.com/photos/707676/pexels-photo-707676.jpeg?auto=compress&cs=tinysrgb&w=1600&h=900&dpr=1",
+        accordions: [
+          {
+            h: "No traditional sponsor",
+            hint: "You are not tied to one employer.",
+            p:
+              "With a Golden Visa, your residency is anchored in your category — not in a single employer. You can change jobs, set up your own business or pause your employment without risking immediate loss of residency, as long as you still meet the underlying criteria."
+          },
+          {
+            h: "Stability & planning horizon",
+            hint: "Ten-year visibility for big decisions.",
+            p:
+              "A 10-year residence horizon supports long-term decisions: multi-year school enrolments, real estate ownership, business expansion, and relocation of family and staff. This stability is a major differentiator from 1–2 year visas dependent on employer sponsorship."
+          },
+          {
+            h: "Access to UAE services",
+            hint: "Digital identity, banking and more.",
+            p:
+              "Golden Visa holders benefit from Emirates ID-based access to government portals, banking, telecoms, utility setup and a wide range of digital services. As the UAE expands its e-government ecosystem, long-term residents are often first to benefit from new features."
+          }
+        ]
+      },
+      {
+        id: "alternatives",
+        tag: "Alternatives",
+        title: "Alternatives to the Golden Visa",
+        kicker: "Other residence options and when they might make sense.",
+        image: "https://images.pexels.com/photos/3184451/pexels-photo-3184451.jpeg?auto=compress&cs=tinysrgb&w=1600&h=900&dpr=1",
+        table: {
+          head: ["Option", "Validity", "Sponsor?", "Best for", "Notes"],
+          rows: [
+            [
+              "Green Visa",
+              "5 years",
+              "No traditional sponsor",
+              "Skilled employees and freelancers",
+              "Focuses on skilled employment and self-sponsorship with different salary and contract criteria via MOHRE."
+            ],
+            [
+              "Standard work residence",
+              "1–3 years",
+              "Yes — employer",
+              "Employees not seeking long-term base",
+              "Classic UAE work visa tied to a specific employer; simpler upfront but less flexible over the long term."
+            ],
+            [
+              "2-year property investor visa",
+              "~2 years",
+              "Property-linked",
+              "Lower-value property owners",
+              "Offered in some emirates for properties below the Golden Visa threshold; shorter validity and narrower benefits."
+            ],
+            [
+              "Freelance permit + residence",
+              "1–2 years",
+              "Self via free zone",
+              "Solo consultants and creatives",
+              "Free zones provide packages combining a freelance license, establishment card and residence visa, often at lower initial cost."
+            ],
+            [
+              "Retirement visa",
+              "5 years",
+              "Self",
+              "Applicants 55+ meeting criteria",
+              "Available under specific income/savings/property criteria, particularly in Dubai and select federal schemes."
+            ]
+          ]
+        }
+      },
+      {
+        id: "risks",
+        tag: "Risks",
+        title: "Risks, constraints & practical watchpoints",
+        kicker: "Where applicants need to be cautious.",
+        image: "https://images.pexels.com/photos/669619/pexels-photo-669619.jpeg?auto=compress&cs=tinysrgb&w=1600&h=900&dpr=1",
+        accordions: [
+          {
+            h: "Market & renewal risk",
+            hint: "What if your property falls below the threshold?",
+            p:
+              "Real estate-based applicants face market risk: if values or equity fall below required levels at renewal time, your eligibility may be questioned. It is wise to build a buffer above the minimum and to document valuations, payments and equity clearly."
+          },
+          {
+            h: "Regulatory change",
+            hint: "Programs evolve over time.",
+            p:
+              "Categories, thresholds and benefits can change, sometimes rapidly. A route available at the time of reading may have different parameters later. Always check the latest criteria on official portals or with a qualified advisor before committing to a transaction purely for immigration purposes."
+          },
+          {
+            h: "Documentation & timing",
+            hint: "Missing documents can slow or derail a file.",
+            p:
+              "Golden Visa applications are documentation-heavy: translated and legalised certificates, bank letters, attestations, valuation reports and corporate records may all be required. Plan for lead times and keep expiry dates in mind, especially for police clearances and medicals."
+          },
+          {
+            h: "Due diligence & background checks",
+            hint: "Particularly for talents and entrepreneurs.",
+            p:
+              "Enhanced due diligence can apply for certain categories and nationalities, especially in talent, entrepreneur and high-profile investor routes. Past issues, sanctions or inconsistencies in documentation can affect the outcome, even if the investment threshold is met."
+          }
+        ]
+      },
+      {
+        id: "timeline",
+        tag: "Process",
+        title: "Typical timeline & process flow",
+        kicker: "From first idea to Emirates ID in hand.",
+        image: "https://images.pexels.com/photos/2058138/pexels-photo-2058138.jpeg?auto=compress&cs=tinysrgb&w=1600&h=900&dpr=1",
+        accordions: [
+          {
+            h: "1) Choose your route",
+            hint: "Match your profile to a category.",
+            p:
+              "Start with a clear mapping exercise: property investor, entrepreneur, talent, professional or student/graduate. Identify which emirate and which sub-track (for example, Dubai real estate vs Abu Dhabi investor deposit) suits your situation logically — not just theoretically."
+          },
+          {
+            h: "2) Prepare structure & documents",
+            hint: "Investment, company or employment first.",
+            p:
+              "For investors, this may mean closing a property transaction or placing a qualifying deposit. For professionals, it is often securing the right employment contract. In parallel, collect and legalise degrees, corporate documents, bank letters and any endorsements or recommendation letters."
+          },
+          {
+            h: "3) Online application & pre-approval",
+            hint: "ICP/GDRFA/ADRO portals.",
+            p:
+              "Your file is then lodged via the relevant e-portal. During pre-approval, authorities verify your documents, run security checks and may request clarifications or additional evidence. Once approved, you proceed to entry permit issuance (if applying from outside the UAE) or status change (if inside)."
+          },
+          {
+            h: "4) Medical fitness & biometrics",
+            hint: "Standard UAE residence steps.",
+            p:
+              "All adult applicants pass through medical fitness testing in licensed centres and provide fingerprints/biometrics for Emirates ID. Expedited or VIP channels may be available for an additional fee, especially in major cities."
+          },
+          {
+            h: "5) Visa stamping & Emirates ID",
+            hint: "Your status goes live.",
+            p:
+              "Once the medical and security checks clear, the residence permit is issued and linked to your Emirates ID. Physical visa stickers are being phased out in favour of Emirates ID and digital records, but the legal effect remains the same."
+          },
+          {
+            h: "6) Renewal and ongoing maintenance",
+            hint: "Every 5 or 10 years, depending on your track.",
+            p:
+              "Renewal essentially repeats the last steps with updated evidence: property valuations, bank letters, salary slips, corporate records or academic transcripts. Planning ahead and keeping a clean documentary file makes renewal straightforward."
+          }
+        ]
+      },
+      {
+        id: "special",
+        tag: "Special cases",
+        title: "Special cases & nationalities",
+        kicker: "How the program treats different passports and situations.",
+        image: "https://images.pexels.com/photos/1559709/pexels-photo-1559709.jpeg?auto=compress&cs=tinysrgb&w=1600&h=900&dpr=1",
+        accordions: [
+          {
+            h: "Criteria-driven, not quota-driven",
+            hint: "No public nationality quotas.",
+            p:
+              "The Golden Visa framework is formally criteria-driven. Publicly, there are no nationality quotas: if you meet the category criteria, pass security checks and clear due diligence, you are broadly evaluated on that basis. Nonetheless, background checks and risk-based scrutiny can differ between profiles."
+          },
+          {
+            h: "Consular and travel support",
+            hint: "Residence <> citizenship clarification.",
+            p:
+              "Golden Visa holders remain nationals of their home countries, but benefit from UAE residence and its ecosystem of services while in the country. For travel emergencies or lost passports, assistance is coordinated primarily via your home country’s consulate, complemented by UAE digital return-document solutions where applicable."
+          },
+          {
+            h: "Treaties & cross-border planning",
+            hint: "Residence is not the same as tax domicile.",
+            p:
+              "The UAE maintains an extensive network of double tax treaties, but how those treaties apply to you depends on your tax residency status under both UAE rules and the rules of your home country. Professional cross-border advice is highly recommended where significant income, business or assets are involved."
+          }
+        ]
+      },
+      {
+        id: "tax",
+        tag: "Tax",
+        title: "Tax & fiscal considerations (high-level)",
+        kicker: "How the UAE tax environment interacts with Golden Visa status.",
+        image: "https://images.pexels.com/photos/669615/pexels-photo-669615.jpeg?auto=compress&cs=tinysrgb&w=1600&h=900&dpr=1",
+        accordions: [
+          {
+            h: "Personal taxation in the UAE",
+            hint: "Employment income and daily life.",
+            p:
+              "The UAE does not levy federal personal income tax on employment income. Residents instead encounter indirect taxation such as 5% VAT on most goods and services, municipality charges on utilities and accommodation, and specific fees for government services."
+          },
+          {
+            h: "Corporate tax & business structures",
+            hint: "From 0% to 9% and beyond.",
+            p:
+              "From 2023, a 9% federal corporate tax applies on business profits above defined thresholds, with special regimes for free zones and large multinational groups under OECD Pillar Two rules. Corporate tax applies to companies — not to individuals directly — but your choice of structure, jurisdiction and accounting treatment matters significantly."
+          },
+          {
+            h: "Tax Residency Certificates (TRC)",
+            hint: "When you can rely on UAE treaties.",
+            p:
+              "Golden Visa holders who meet domestic criteria (typically days of presence plus other substance factors) can apply for a Tax Residency Certificate from the UAE Federal Tax Authority. This certificate may be used to claim treaty benefits with compatible countries, always subject to the other state’s rules and anti‑abuse provisions."
+          },
+          {
+            h: "Important disclaimer",
+            hint: "This is not tax advice.",
+            p:
+              "Tax is highly fact-specific. Two people with identical visas can face very different tax outcomes depending on where they spend time, keep assets and remain connected. Always seek personalised advice from a qualified tax professional before relying on any residency program for tax planning."
+          }
+        ]
+      },
+      {
+        id: "facts",
+        tag: "Snapshot",
+        title: "Golden Visa – quick reference sheet",
+        kicker: "Key facts you can screenshot and keep.",
+        image: "https://images.pexels.com/photos/280229/pexels-photo-280229.jpeg?auto=compress&cs=tinysrgb&w=1600&h=900&dpr=1",
+        table: {
+          head: ["Item", "Summary"],
+          rows: [
+            ["Visa type", "Long-term residence (generally 10 years) independent from a single employer sponsor."],
+            ["Main user profiles", "Property and capital investors, entrepreneurs, exceptional talents, scientists/professionals and top students/graduates."],
+            ["Real estate threshold", "From AED 2,000,000 in qualifying property value (mortgages allowed with conditions)."],
+            ["Family scope", "Spouse and children as standard, with many routes allowing parents and domestic workers, subject to rules."],
+            ["Travel rule", "More than 6 months outside the UAE generally permitted without automatic cancellation."],
+            ["Application portals", "ICP Smart Services (federal), GDRFA (Dubai), and ADRO/ADDED (Abu Dhabi investor/entrepreneur routes)."]
+          ]
+        }
+      }
+    ]
+  };
+
+  function createAccordion(items) {
+    const wrap = document.createElement('div');
+    wrap.className = 'accordion';
+
+    items.forEach((it) => {
+      const item = document.createElement('div');
+      item.className = 'acc-item';
+
+      const btn = document.createElement('button');
+      btn.className = 'acc-btn';
+      btn.setAttribute('type', 'button');
+      btn.setAttribute('aria-expanded', 'false');
+
+      const main = document.createElement('div');
+      main.className = 'acc-btn-main';
+
+      const title = document.createElement('div');
+      title.className = 'acc-btn-title';
+      title.textContent = it.title || it.h;
+
+      const hint = document.createElement('div');
+      hint.className = 'acc-btn-hint';
+      hint.textContent = it.hint || '';
+
+      main.appendChild(title);
+      if (hint.textContent.trim()) main.appendChild(hint);
+
+      const icon = document.createElement('div');
+      icon.className = 'acc-icon';
+      icon.innerHTML = 'V';
+
+      btn.appendChild(main);
+      btn.appendChild(icon);
+
+      const panel = document.createElement('div');
+      panel.className = 'acc-panel';
+      const inner = document.createElement('div');
+      inner.className = 'acc-panel-inner';
+      inner.innerHTML = `<p>${it.body || it.p}</p>`;
+      panel.appendChild(inner);
+
+      btn.addEventListener('click', () => {
+        const isOpen = item.classList.toggle('open');
+        btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        if (isOpen) {
+          panel.style.maxHeight = panel.scrollHeight + 'px';
+        } else {
+          panel.style.maxHeight = '0px';
+        }
+      });
+
+      item.appendChild(btn);
+      item.appendChild(panel);
+      wrap.appendChild(item);
+    });
+
+    return wrap;
+  }
+
+  function renderQuick() {
+    const root = document.getElementById('quick-accordion');
+    root.innerHTML = '';
+    root.appendChild(createAccordion(DATA.quickAcc));
+  }
+
+  function renderSections() {
+    const root = document.getElementById('sections');
+    root.innerHTML = '';
+
+    DATA.sections.forEach((sec) => {
+      const card = document.createElement('article');
+      card.className = 'card';
+
+      const media = document.createElement('div');
+      media.className = 'card-media';
+      media.style.backgroundImage = `url('${sec.image}')`;
+      media.setAttribute('role', 'img');
+      media.setAttribute('aria-label', sec.title);
+
+      const mediaTag = document.createElement('div');
+      mediaTag.className = 'card-media-tag';
+      mediaTag.textContent = sec.tag || '#' + sec.id;
+      media.appendChild(mediaTag);
+
+      const inner = document.createElement('div');
+      inner.className = 'card-inner';
+
+      const header = document.createElement('div');
+      header.className = 'card-header';
+      const title = document.createElement('h3');
+      title.className = 'card-title';
+      title.textContent = sec.title;
+      const tag = document.createElement('span');
+      tag.className = 'card-tag';
+      tag.textContent = '#' + sec.id;
+      header.appendChild(title);
+      header.appendChild(tag);
+
+      inner.appendChild(header);
+
+      if (sec.kicker) {
+        const kicker = document.createElement('div');
+        kicker.className = 'card-kicker';
+        kicker.textContent = sec.kicker;
+        inner.appendChild(kicker);
+      }
+
+      if (sec.table) {
+        const tbl = document.createElement('table');
+        const thead = document.createElement('thead');
+        const trh = document.createElement('tr');
+        sec.table.head.forEach((h) => {
+          const th = document.createElement('th');
+          th.textContent = h;
+          trh.appendChild(th);
+        });
+        thead.appendChild(trh);
+        tbl.appendChild(thead);
+
+        const tbody = document.createElement('tbody');
+        sec.table.rows.forEach((row) => {
+          const tr = document.createElement('tr');
+          row.forEach((cell) => {
+            const td = document.createElement('td');
+            td.textContent = cell;
+            tr.appendChild(td);
+          });
+          tbody.appendChild(tr);
+        });
+        tbl.appendChild(tbody);
+        inner.appendChild(tbl);
+      }
+
+      if (sec.accordions) {
+        inner.appendChild(createAccordion(sec.accordions));
+      }
+
+      card.appendChild(media);
+      card.appendChild(inner);
+      root.appendChild(card);
+    });
+  }
+
+  document.getElementById('themeBtn').addEventListener('click', () => {
+    const body = document.body;
+    const isLight = body.classList.toggle('light');
+    document.getElementById('themeBtn').setAttribute('aria-pressed', isLight ? 'true' : 'false');
+  });
+
+  document.getElementById('downloadBtn').addEventListener('click', () => {
+    window.print();
+  });
+
+  renderQuick();
+  renderSections();
+</script>
+</body>
+</html>

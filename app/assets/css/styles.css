@@ -1628,6 +1628,11 @@ margin: auto;
 body.loaded #preloader{ pointer-events:none; }
 
 /* ==== HEADER / NAVBAR ==== */
+:root {
+  --site-header-height: 190px;
+  --site-header-offset: 210px;
+}
+
 .main-header {
   position: fixed;
   top: 0;
@@ -1892,8 +1897,34 @@ body.menu-open section {
   .main-header {
     padding: 16px 24px;
   }
+  .main-header.is-internal {
+    padding: 10px 18px;
+    background-color: rgba(48, 45, 45, 0.82);
+  }
+  .main-header.is-internal .nav-container {
+    align-items: center;
+  }
+  .main-header.is-internal .nav-center a {
+    min-width: 112px;
+    min-height: 76px;
+  }
+  .main-header.is-internal .nav-logo {
+    height: 76px;
+  }
+  .main-header.is-internal .nav-left,
+  .main-header.is-internal .nav-right {
+    bottom: 0;
+    padding-right: 0;
+  }
+  .main-header.is-internal .whatsapp-icon img {
+    width: 25px;
+    height: 25px;
+  }
   header.main-header.scrolled {
     padding: 10px 24px;
+  }
+  header.main-header.is-internal.scrolled {
+    padding: 10px 18px;
   }
   header.main-header.scrolled .nav-center a {
     min-height: 42px;

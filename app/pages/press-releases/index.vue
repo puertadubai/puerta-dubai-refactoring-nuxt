@@ -49,7 +49,7 @@ useHead({
 
 <style scoped>
 .press-list-page {
-  padding: 260px 8vw 100px;
+  padding: calc(var(--site-header-offset, 210px) + 72px) 8vw 100px;
   background:
     repeating-linear-gradient(
       135deg,
@@ -104,7 +104,16 @@ useHead({
 
 @media (max-width: 720px) {
   .press-list-page {
-    padding-top: 190px;
+    padding-top: calc(var(--site-header-offset, 124px) + 88px);
+  }
+
+  .press-list-header {
+    margin-bottom: 32px;
+  }
+
+  .press-list-header h1 {
+    font-size: clamp(56px, 18vw, 88px);
+    line-height: 0.9;
   }
 
   .press-grid {

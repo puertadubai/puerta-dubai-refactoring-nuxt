@@ -210,3 +210,118 @@ contraintes:
 
 validation attendue:
 - ecris `valide 13` pour autoriser le passage a la tache suivante
+
+---
+## Task 14
+
+status: approved
+instructions:
+- sur mobile Android, le header fixe recouvre trop souvent le contenu des pages internes: hero, fil d'ariane, titres et parfois même les premiers paragraphes passent sous la barre du haut
+- je veux que tu recalibres la hauteur du header mobile, la safe area et surtout l'offset vertical des premières sections pour que rien ne soit masqué au chargement ni pendant le scroll
+- voir captures :
+  ![Mobile header overlap](./tasks-assets/mobile/Screenshot_20260312_195614_Chrome.jpg)
+  ![Mobile header overlap](./tasks-assets/mobile/Screenshot_20260312_195622_Chrome.jpg)
+  ![Mobile header overlap](./tasks-assets/mobile/Screenshot_20260314_101728_Chrome.jpg)
+  ![Mobile header overlap](./tasks-assets/mobile/Screenshot_20260314_101906_Chrome.jpg)
+  ![Mobile header overlap](./tasks-assets/mobile/Screenshot_20260314_102009_Chrome.jpg)
+
+contraintes:
+- ne demarrer qu'apres validation de la tache precedente
+
+validation attendue:
+- ecris `valide 14` pour autoriser le passage a la tache suivante
+
+---
+## Task 15
+
+status: pending
+instructions:
+- sur la page "press releases" en mobile, le fil d'ariane et le titre principal se superposent et on voit un doublon visuel de "PRESS RELEASES"
+- je veux une version mobile propre, avec une hierarchie lisible entre breadcrumb, separateur et titre de page, sans texte fantome ni chevauchement
+- voir captures :
+  ![Press releases mobile](./tasks-assets/mobile/IMG-20260314-WA0001.jpg)
+  ![Press releases mobile](./tasks-assets/mobile/Screenshot_20260314_101753_Chrome.jpg)
+
+contraintes:
+- ne demarrer qu'apres validation de la tache precedente
+
+validation attendue:
+- ecris `valide 15` pour autoriser le passage a la tache suivante
+
+---
+## Task 16
+
+status: pending
+instructions:
+- sur la home mobile, la section Golden Visa manque de rythme: il y a beaucoup trop d'espace vide, le bouton est trop dissocie du visuel, et la transition avec la zone des logos manque de cohesion
+- je veux une composition mobile plus compacte et mieux hiérarchisée, sans casser l'esthétique premium de la section
+- voir captures :
+  ![Golden Visa mobile](./tasks-assets/mobile/Screenshot_20260312_195750_Chrome.jpg)
+  ![Golden Visa mobile](./tasks-assets/mobile/Screenshot_20260314_070619_Chrome.jpg)
+  ![Golden Visa mobile](./tasks-assets/mobile/Screenshot_20260314_101728_Chrome.jpg)
+
+contraintes:
+- ne demarrer qu'apres validation de la tache precedente
+
+validation attendue:
+- ecris `valide 16` pour autoriser le passage a la tache suivante
+
+---
+## Task 17
+
+status: pending
+instructions:
+- sur les pages d'articles du blog en mobile, le hero est trop agressif: le grand titre se chevauche lui-meme, remonte sous le logo et rend la lecture confuse dès l'arrivée sur la page
+- je veux une vraie version mobile du hero article, avec une typographie plus maîtrisée, un bloc titre lisible et une meilleure respiration entre image, titre et introduction
+- voir capture :
+  ![Blog hero mobile](./tasks-assets/mobile/Screenshot_20260314_101906_Chrome.jpg)
+
+contraintes:
+- ne demarrer qu'apres validation de la tache precedente
+
+validation attendue:
+- ecris `valide 17` pour autoriser le passage a la tache suivante
+
+---
+## Task 18
+
+status: pending
+instructions:
+- sur les pages detail projet en mobile, plusieurs sections ont un rythme vertical bancal: grands vides avant le contenu utile, blocs "highlights" qui arrivent trop bas, et certains visuels/cartes qui paraissent mal cadres ou mal enchaines
+- je veux une passe d'optimisation mobile sur l'espacement et l'enchainement de ces sections pour rendre la lecture plus fluide et plus dense
+- voir captures :
+  ![Project detail mobile](./tasks-assets/mobile/Screenshot_20260314_101947_Chrome.jpg)
+  ![Project detail mobile](./tasks-assets/mobile/Screenshot_20260314_102018_Chrome.jpg)
+
+contraintes:
+- ne demarrer qu'apres validation de la tache precedente
+
+validation attendue:
+- ecris `valide 18` pour autoriser le passage a la tache suivante
+
+---
+## Task 19
+
+status: pending
+instructions:
+- sur la version mobile, le selecteur de langue disparait de la barre de navigation du haut
+- je veux que, lorsqu'il n'est plus affiche dans le header mobile, il soit reintegre proprement dans le menu lateral ouvert, avec une presentation coherente avec le reste de la navigation
+
+contraintes:
+- ne demarrer qu'apres validation de la tache precedente
+
+validation attendue:
+- ecris `valide 19` pour autoriser le passage a la tache suivante
+
+---
+## Task 20
+
+status: pending
+instructions:
+- dans les pages details de projets, sur la version mobile, il faut desactiver le deplacement de la carte OpenStreetMap au balayage pour ne pas perturber le scroll utilisateur dans la page
+
+contraintes:
+- ne demarrer qu'apres validation de la tache precedente
+
+validation attendue:
+- ecris `valide 20` pour autoriser le passage a la tache suivante

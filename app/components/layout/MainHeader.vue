@@ -1,18 +1,35 @@
 <script setup lang="ts">
-import { onMounted, onBeforeUnmount, ref } from 'vue'
+import { computed, nextTick, onMounted, onBeforeUnmount, ref, watch } from 'vue'
+import { useRoute } from '#imports'
 import { useSideMenu } from '~/composables/useSideMenu'
 
 const { toggle, close } = useSideMenu()
+const route = useRoute()
 
 const headerRef = ref<HTMLElement | null>(null)
+const isScrolled = ref(false)
 let scrollRafId = 0
+let headerResizeObserver: ResizeObserver | null = null
+
+const isHome = computed(() => route.path === '/' || route.path === '')
+const isInternal = computed(() => !isHome.value)
 
 /* ======================
    Scroll effect navbar
 ====================== */
 const syncHeaderState = () => {
-  if (!headerRef.value) return
-  headerRef.value.classList.toggle('scrolled', window.scrollY > 20)
+  isScrolled.value = window.scrollY > 20
+}
+
+const syncHeaderMetrics = () => {
+  if (!import.meta.client) return
+
+  const root = document.documentElement
+  const headerHeight = Math.round(headerRef.value?.offsetHeight || 0)
+  const headerOffset = headerHeight ? headerHeight + 20 : 120
+
+  root.style.setProperty('--site-header-height', `${headerHeight}px`)
+  root.style.setProperty('--site-header-offset', `${headerOffset}px`)
 }
 
 const onScroll = () => {
@@ -20,6 +37,7 @@ const onScroll = () => {
   scrollRafId = window.requestAnimationFrame(() => {
     scrollRafId = 0
     syncHeaderState()
+    syncHeaderMetrics()
   })
 }
 
@@ -44,13 +62,34 @@ const onLogoClick = (e: MouseEvent) => {
 onMounted(() => {
   if (!import.meta.client) return
   syncHeaderState()
+  nextTick(() => {
+    syncHeaderMetrics()
+  })
+  if (window.ResizeObserver) {
+    headerResizeObserver = new window.ResizeObserver(() => {
+      syncHeaderMetrics()
+    })
+    if (headerRef.value) headerResizeObserver.observe(headerRef.value)
+  }
   window.addEventListener('scroll', onScroll, { passive: true })
+  window.addEventListener('resize', syncHeaderMetrics, { passive: true })
 })
 
 onBeforeUnmount(() => {
   window.removeEventListener('scroll', onScroll)
+  window.removeEventListener('resize', syncHeaderMetrics)
   if (scrollRafId) window.cancelAnimationFrame(scrollRafId)
+  headerResizeObserver?.disconnect()
 })
+
+watch(
+  () => route.fullPath,
+  async () => {
+    await nextTick()
+    syncHeaderState()
+    syncHeaderMetrics()
+  }
+)
 </script>
 
 <template>
@@ -58,6 +97,10 @@ onBeforeUnmount(() => {
   <header
     ref="headerRef"
     class="main-header"
+    :class="{
+      scrolled: isScrolled,
+      'is-internal': isInternal
+    }"
     translate="no"
   >
     <div class="nav-container">
