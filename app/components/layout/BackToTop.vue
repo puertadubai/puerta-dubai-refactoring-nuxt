@@ -6,7 +6,24 @@
     @click="scrollToTop"
     aria-label="Back to top"
   >
-    ↑
+    <span class="back-to-top-icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none">
+        <path
+          d="M12 18V6M12 6L6.75 11.25M12 6L17.25 11.25"
+          stroke="currentColor"
+          stroke-width="3.2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+        <path
+          d="M12 18V6M12 6L6.75 11.25M12 6L17.25 11.25"
+          stroke="currentColor"
+          stroke-width="1.8"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
+    </span>
   </button>
 </template>
 

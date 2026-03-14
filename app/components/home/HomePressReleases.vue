@@ -38,11 +38,28 @@ const articles = computed(() => (pressData.value ?? []).slice(0, 3))
 
 <style scoped>
 .home-press {
+  position: relative;
   padding: 110px 8vw 120px;
-  background: #000;
+  overflow: hidden;
+  background: #302d2d;
+}
+
+.home-press::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to bottom, rgba(48, 45, 45, 0.76) 0%, rgba(48, 45, 45, 0.36) 100%),
+    url('/img/pattern.png');
+  background-size: auto, 240px 240px;
+  background-position: center, center;
+  opacity: 0.55;
+  pointer-events: none;
 }
 
 .home-press-shell {
+  position: relative;
+  z-index: 1;
   max-width: 1260px;
   margin: 0 auto;
 }
