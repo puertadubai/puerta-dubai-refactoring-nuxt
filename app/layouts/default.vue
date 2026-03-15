@@ -39,9 +39,9 @@
     >
       <div class="lead-modal" role="dialog" aria-modal="true">
         <button class="close-btn" type="button" aria-label="Close" @click="closeLead">
-          x
+          <span aria-hidden="true">×</span>
         </button>
-        <LeadForm />
+        <LeadForm :context="leadContext" />
       </div>
     </div>
   </div>
@@ -61,22 +61,28 @@ import LeadForm from '~/components/LeadForm.vue'
 import Breadcrumbs from '~/components/layout/Breadcrumbs.vue'
 import AdminBreadcrumbs from '~/components/admin/AdminBreadcrumbs.vue'
 
+type LeadContext = 'default' | 'golden-visa'
+
 const isLeadOpen = ref(false)
+const leadContext = ref<LeadContext>('default')
 const route = useRoute()
 const isAdmin = computed(() => route.path.startsWith('/admin'))
 const isAdminLogin = computed(() => route.path === '/admin/login')
 const showBreadcrumbs = computed(() => {
   if (route.path === '/') return false
   if (/^\/press-releases\/[^/]+$/.test(route.path)) return false
+  if (route.path.startsWith('/golden-visa')) return false
   return !route.path.startsWith('/admin')
 })
 
-const openLead = () => {
+const openLead = (context: LeadContext = 'default') => {
+  leadContext.value = context
   isLeadOpen.value = true
 }
 
 const closeLead = () => {
   isLeadOpen.value = false
+  leadContext.value = 'default'
 }
 
 const onDocumentClick = (event: MouseEvent) => {
@@ -92,8 +98,9 @@ const onKeyDown = (event: KeyboardEvent) => {
   if (event.key === 'Escape') closeLead()
 }
 
-const onOpenLeadForm = () => {
-  openLead()
+const onOpenLeadForm = (event: Event) => {
+  const detail = (event as CustomEvent<{ context?: LeadContext }>).detail
+  openLead(detail?.context === 'golden-visa' ? 'golden-visa' : 'default')
 }
 
 onMounted(() => {

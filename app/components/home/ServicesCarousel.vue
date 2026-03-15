@@ -6,7 +6,10 @@
 
       <div class="services-content">
         <header class="services-heading-block">
-          <h2 class="services-title">Our Services</h2>
+          <h2 class="services-title">
+            <span>Our</span>
+            <span>Services</span>
+          </h2>
         </header>
 
         <div class="services-accordion" role="list">
@@ -158,6 +161,8 @@ const toggle = (index: number) => {
   margin: 0;
   color: #fff;
   font-family: "Serrif Condensed Regular", serif;
+  display: inline-flex;
+  gap: 0.16em;
   font-size: clamp(32px, 4vw, 48px);
   line-height: 0.92;
   font-weight: 400;
@@ -165,6 +170,11 @@ const toggle = (index: number) => {
   letter-spacing: -0.018em;
   max-width: none;
   white-space: nowrap;
+  text-align: left;
+}
+
+#services .services-title span {
+  display: inline;
 }
 
 #services .services-accordion {
@@ -345,13 +355,14 @@ const toggle = (index: number) => {
   }
 
   #services .services-shell {
-    width: calc(100vw - 24px);
+    width: 100%;
     min-height: auto;
   }
 
   #services .services-backdrop {
     background-attachment: scroll;
     background-position: center left 24%;
+    background-size: cover;
   }
 
   #services .services-gradient {
@@ -372,10 +383,16 @@ const toggle = (index: number) => {
   }
 
   #services .services-title {
+    display: inline-grid;
+    gap: 2px;
     font-size: clamp(32px, 8vw, 40px);
-    max-width: 5ch;
+    max-width: none;
     white-space: normal;
     line-height: 0.96;
+  }
+
+  #services .services-title span {
+    display: block;
   }
 
   #services .services-accordion {

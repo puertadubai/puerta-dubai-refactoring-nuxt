@@ -1,7 +1,8 @@
 <template>
   <div class="lang-select notranslate">
     <select
-      id="language"
+      :id="selectId"
+      data-language-select="true"
       aria-label="Language"
       class="notranslate"
     >
@@ -15,6 +16,10 @@
 </template>
 
 <script setup>
-// volontairement vide
-// la logique est gérée par translations.js (client only)
+defineProps({
+  selectId: {
+    type: String,
+    default: undefined
+  }
+})
 </script>

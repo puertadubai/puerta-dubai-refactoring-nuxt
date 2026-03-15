@@ -29,7 +29,10 @@ useHead({
     <div class="press-list-shell">
       <header class="press-list-header">
         <p class="eyebrow">PRESS</p>
-        <h1>RELEASES</h1>
+        <h1>
+          
+          <span>RELEASES</span>
+        </h1>
       </header>
 
       <div v-if="pending" class="status">Loading articles...</div>
@@ -82,6 +85,13 @@ useHead({
 .press-list-header h1 {
   margin: 0;
   color: #ffffff;
+  display: grid;
+  gap: 6px;
+  line-height: 0.88;
+}
+
+.press-list-header h1 span {
+  display: block;
 }
 
 .press-grid {
@@ -104,20 +114,46 @@ useHead({
 
 @media (max-width: 720px) {
   .press-list-page {
-    padding-top: calc(var(--site-header-offset, 124px) + 88px);
+    padding-top: calc(var(--site-header-offset, 124px) + 132px);
   }
 
   .press-list-header {
-    margin-bottom: 32px;
+    margin-bottom: 36px;
   }
 
   .press-list-header h1 {
-    font-size: clamp(56px, 18vw, 88px);
-    line-height: 0.9;
+    font-size: clamp(46px, 15vw, 76px);
+    gap: 2px;
+  }
+
+  .eyebrow {
+    margin-bottom: 14px;
+    font-size: 11px;
+    letter-spacing: 0.3em;
   }
 
   .press-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+:global(.page-press-releases .breadcrumb-bar) {
+  z-index: 9;
+}
+
+@media (max-width: 720px) {
+  :global(.page-press-releases .breadcrumb-bar) {
+    top: calc(var(--site-header-offset, 124px) + 12px);
+  }
+
+  :global(.page-press-releases .breadcrumb-inner) {
+    padding-bottom: 8px;
+    gap: 8px;
+  }
+
+  :global(.page-press-releases .breadcrumb) {
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
   }
 }
 </style>

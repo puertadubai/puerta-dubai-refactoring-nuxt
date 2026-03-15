@@ -234,7 +234,7 @@ validation attendue:
 ---
 ## Task 15
 
-status: pending
+status: approved
 instructions:
 - sur la page "press releases" en mobile, le fil d'ariane et le titre principal se superposent et on voit un doublon visuel de "PRESS RELEASES"
 - je veux une version mobile propre, avec une hierarchie lisible entre breadcrumb, separateur et titre de page, sans texte fantome ni chevauchement
@@ -251,7 +251,7 @@ validation attendue:
 ---
 ## Task 16
 
-status: pending
+status: approved
 instructions:
 - sur la home mobile, la section Golden Visa manque de rythme: il y a beaucoup trop d'espace vide, le bouton est trop dissocie du visuel, et la transition avec la zone des logos manque de cohesion
 - je veux une composition mobile plus compacte et mieux hiérarchisée, sans casser l'esthétique premium de la section
@@ -269,7 +269,7 @@ validation attendue:
 ---
 ## Task 17
 
-status: pending
+status: approved
 instructions:
 - sur les pages d'articles du blog en mobile, le hero est trop agressif: le grand titre se chevauche lui-meme, remonte sous le logo et rend la lecture confuse dès l'arrivée sur la page
 - je veux une vraie version mobile du hero article, avec une typographie plus maîtrisée, un bloc titre lisible et une meilleure respiration entre image, titre et introduction
@@ -285,7 +285,7 @@ validation attendue:
 ---
 ## Task 18
 
-status: pending
+status: approved
 instructions:
 - sur les pages detail projet en mobile, plusieurs sections ont un rythme vertical bancal: grands vides avant le contenu utile, blocs "highlights" qui arrivent trop bas, et certains visuels/cartes qui paraissent mal cadres ou mal enchaines
 - je veux une passe d'optimisation mobile sur l'espacement et l'enchainement de ces sections pour rendre la lecture plus fluide et plus dense
@@ -302,7 +302,7 @@ validation attendue:
 ---
 ## Task 19
 
-status: pending
+status: approved
 instructions:
 - sur la version mobile, le selecteur de langue disparait de la barre de navigation du haut
 - je veux que, lorsqu'il n'est plus affiche dans le header mobile, il soit reintegre proprement dans le menu lateral ouvert, avec une presentation coherente avec le reste de la navigation
@@ -316,7 +316,7 @@ validation attendue:
 ---
 ## Task 20
 
-status: pending
+status: approved
 instructions:
 - dans les pages details de projets, sur la version mobile, il faut desactiver le deplacement de la carte OpenStreetMap au balayage pour ne pas perturber le scroll utilisateur dans la page
 
@@ -325,3 +325,122 @@ contraintes:
 
 validation attendue:
 - ecris `valide 20` pour autoriser le passage a la tache suivante
+
+---
+## Task 21
+
+status: approved
+instructions:
+- dans `tasks-assets/golden-visa`, deux versions HTML du guide ont ete deposees : `golden-visa.html` et `golden-visa--.html`
+- je veux que tu les analyses, que tu fusionnes leurs points forts en un seul refactoring propre et que tu identifies une structure cible claire pour une future integration Nuxt
+- le resultat doit reprendre le contenu riche, la logique d'accordeons / sections / tableaux du guide, ainsi que les elements utiles deja prevus pour les actions rapides, le telechargement et la dimension multilingue
+- avant de coder la route finale, il faut donc produire une version unifiee, coherente et propre a integrer au projet
+- voir fichiers sources :
+  ![Golden Visa source](./tasks-assets/golden-visa/golden-visa.html)
+  ![Golden Visa source](./tasks-assets/golden-visa/golden-visa--.html)
+
+contraintes:
+- ne demarrer qu'apres validation de la tache precedente
+- ne pas exposer ce guide depuis le menu principal du site
+
+validation attendue:
+- ecris `valide 21` pour autoriser le passage a la tache suivante
+
+---
+## Task 22
+
+status: approved
+instructions:
+- je veux que le guide Golden Visa soit integre au projet Nuxt dans une route dediee, separee du site public principal et non accessible depuis le menu principal
+- cette page doit reprendre le design system du site Puerta Dubai: couleurs, typos, niveau de finition, composants visuels, ambiance premium et coherence avec le reste du front
+- le guide doit etre refactorise comme une vraie page du projet, pas comme un bloc HTML isole colle tel quel
+- il doit aussi embarquer le selecteur de langues de traduction deja gere avec Google Translate, avec une integration propre a cette page
+
+contraintes:
+- ne demarrer qu'apres validation de la tache precedente
+- la route ne doit pas etre indexee ni rendue visible dans la navigation principale
+
+validation attendue:
+- ecris `valide 22` pour autoriser le passage a la tache suivante
+
+---
+## Task 23
+
+status: approved
+instructions:
+- lorsqu'un utilisateur s'inscrit sur le site via le formulaire prevu pour acceder au guide, il doit recevoir un email de confirmation HTML
+- cet email doit reprendre l'identite Puerta Dubai, avec le logo, une confirmation claire de son inscription, un recapitulatif des informations qu'il a renseignees, et un lien permettant d'acceder au guide Golden Visa
+- je veux un vrai template email HTML propre, pas un email purement technique ou minimaliste
+
+contraintes:
+- ne demarrer qu'apres validation de la tache precedente
+- le lien envoye par email doit pointer vers la route privee du guide et s'inserer dans le parcours d'acces final
+
+validation attendue:
+- ecris `valide 23` pour autoriser le passage a la tache suivante
+
+---
+## Task 24
+
+status: approved
+instructions:
+- lorsqu'un utilisateur clique sur le lien recu par email, il arrive sur la route du guide Golden Visa mais ne doit pas acceder directement au contenu
+- je veux un ecran de verification simple ou il doit renseigner son adresse email pour acceder au guide
+- a ce moment-la, il faut verifier que cet email existe bien dans la table des leads; si l'email est reconnu, la consultation du guide s'ouvre, sinon l'acces est refuse proprement
+- le guide ne doit donc pas etre public: l'acces doit etre reserve aux leads enregistres
+
+contraintes:
+- ne demarrer qu'apres validation de la tache precedente
+- l'experience doit rester fluide et premium, meme si l'utilisateur n'est pas reconnu
+
+validation attendue:
+- ecris `valide 24` pour autoriser le passage a la tache suivante
+
+---
+## Task 25
+
+status: approved
+instructions:
+- une fois la route privee et le controle d'acces en place, je veux une passe de finition sur l'experience complete du guide Golden Visa
+- cela inclut la coherence entre la page d'accroche sur la home, le formulaire, l'email de confirmation, l'arrivee sur la route du guide, l'etape de verification par email, puis la consultation du guide lui-meme
+- il faut aussi verifier que la traduction via Google Translate, les textes systeme, les messages d'erreur, les CTA et les retours utilisateur restent coherents sur tout ce parcours
+
+contraintes:
+- ne demarrer qu'apres validation de la tache precedente
+- conserver une logique non publique et premium de bout en bout
+
+validation attendue:
+- ecris `valide 25` pour autoriser le passage a la tache suivante
+
+---
+## Task 26
+
+status: approved
+instructions:
+- sur la version mobile de la section "our services" de l'accueil, je veux une meilleure tenue de la composition
+- l'image de fond doit rester collee a la fenetre uniquement pour cette section, sans impacter le reste de la mise en page ou de la grille globale
+- pour le titre "our services", le mot "our" ne doit pas se decaler visuellement
+
+contraintes:
+- ne demarrer qu'apres validation de la tache precedente
+- le comportement specifique du fond doit rester limite a cette section uniquement
+
+validation attendue:
+- ecris `valide 26` pour autoriser le passage a la tache suivante
+
+---
+## Task 27
+
+status: in_progress
+instructions:
+- je veux une optimisation de la popup de preinscription pour qu'elle paraisse plus premium
+- il faut fixer le bouton `close` en haut a droite de la fenetre de popup
+- il faut aussi revoir la couleur du texte au survol du bouton de validation du formulaire pour que cela reste lisible
+- plus globalement, je veux une passe de design plus haut de gamme sur cette popup
+
+contraintes:
+- ne demarrer qu'apres validation de la tache precedente
+- conserver une ergonomie correcte sur mobile et desktop
+
+validation attendue:
+- ecris `valide 27` pour autoriser le passage a la tache suivante

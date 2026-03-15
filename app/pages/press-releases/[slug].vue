@@ -317,29 +317,45 @@ useHead(() => {
 
 @media (max-width: 720px) {
   .press-hero {
-    min-height: 62vh;
+    min-height: 56vh;
+    align-items: flex-end;
+  }
+
+  .press-hero-overlay {
+    background:
+      linear-gradient(180deg, rgba(48, 45, 45, 0.58) 0%, rgba(48, 45, 45, 0.32) 20%, rgba(48, 45, 45, 0.9) 100%);
   }
 
   .press-hero-content {
     width: min(100%, calc(100% - 48px));
-    padding-top: calc(var(--site-header-offset, 124px) + 36px);
-    padding-bottom: 48px;
+    padding-top: calc(var(--site-header-offset, 124px) + 28px);
+    padding-bottom: 32px;
+    display: grid;
+    gap: 10px;
   }
 
   .eyebrow {
-    margin-bottom: 8px;
+    margin-bottom: 0;
     font-size: 11px;
+    letter-spacing: 0.28em;
+    opacity: 0.9;
   }
 
   .press-hero-content h1 {
-    max-width: min(100%, 7.2em);
-    font-size: clamp(38px, 11.5vw, 66px);
-    line-height: 0.9;
-    letter-spacing: -0.03em;
+    max-width: min(100%, 7.8em);
+    font-size: clamp(34px, 10.2vw, 54px);
+    line-height: 0.92;
+    letter-spacing: -0.022em;
   }
 
   .press-article-shell {
-    padding-top: 64px;
+    padding-top: 52px;
+  }
+
+  .press-excerpt {
+    font-size: 1.3rem;
+    line-height: 1.45;
+    margin-bottom: 24px;
   }
 
   .related-grid {

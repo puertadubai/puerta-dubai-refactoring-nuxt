@@ -66,6 +66,7 @@ const initMap = async (project: Project) => {
   if (!mapEl.value || map) return
 
   const L = await import('leaflet')
+  const isMobile = window.matchMedia('(max-width: 900px)').matches
   const projectMarkerIcon = L.icon({
     iconUrl: '/img/marker-icon-2x.png',
     iconRetinaUrl: '/img/marker-icon-2x.png',
@@ -78,10 +79,20 @@ const initMap = async (project: Project) => {
     scrollWheelZoom: false,
     doubleClickZoom: false,
     touchZoom: false,
+    dragging: !isMobile,
     keyboard: false,
-    boxZoom: false
+    boxZoom: false,
+    tap: !isMobile
   })
   map.scrollWheelZoom.disable()
+  map.doubleClickZoom.disable()
+  map.boxZoom.disable()
+
+  if (isMobile) {
+    map.dragging.disable()
+    map.touchZoom.disable()
+    map.tap?.disable()
+  }
 
   L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
     attribution: '&copy; OpenStreetMap &copy; CARTO',

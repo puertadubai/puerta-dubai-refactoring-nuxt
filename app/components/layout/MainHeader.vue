@@ -2,6 +2,7 @@
 import { computed, nextTick, onMounted, onBeforeUnmount, ref, watch } from 'vue'
 import { useRoute } from '#imports'
 import { useSideMenu } from '~/composables/useSideMenu'
+import LanguageSelect from '~/components/layout/LanguageSelect.vue'
 
 const { toggle, close } = useSideMenu()
 const route = useRoute()
@@ -131,19 +132,7 @@ watch(
       <!-- RIGHT -->
       <div class="nav-right" translate="no">
         <!-- Language selector -->
-        <div class="lang-select">
-          <select
-            id="language"
-            aria-label="Language"
-            translate="no"
-          >
-            <option value="en">EN</option>
-            <option value="fr">FR</option>
-            <option value="es">ES</option>
-            <option value="pt">PT</option>
-          </select>
-          <span class="lang-loader" aria-hidden="true"></span>
-        </div>
+        <LanguageSelect select-id="language" />
 
         <a
           href="https://wa.me/971544402792"

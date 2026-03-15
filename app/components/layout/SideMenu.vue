@@ -4,6 +4,7 @@ import { gsap } from 'gsap'
 import { useRoute, useRouter } from '#imports'
 import { useSideMenu } from '~/composables/useSideMenu'
 import { useMenuAnimation } from '~/composables/useMenuAnimation'
+import LanguageSelect from '~/components/layout/LanguageSelect.vue'
 
 const { isOpen, close } = useSideMenu()
 const route = useRoute()
@@ -321,6 +322,11 @@ onBeforeUnmount(() => {
           Connexion
         </NuxtLink>
         </nav>
+
+        <div class="side-menu-language" aria-label="Language selector">
+          <p class="side-menu-language-label">Language</p>
+          <LanguageSelect select-id="menu-language" />
+        </div>
       </div>
     </div>
   </Teleport>

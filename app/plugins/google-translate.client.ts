@@ -5,11 +5,14 @@ export default defineNuxtPlugin(() => {
   const DEFAULT_LANG = 'en'
   const STORAGE_KEY = 'site_lang'
   const GOOGLE_DIV_ID = 'google_translate_element'
-  const LANG_SELECT_ID = 'language'
+  const LANG_SELECT_SELECTOR = '[data-language-select="true"]'
   const RESET_FLAG = 'site_lang:english_reset'
 
   let pendingLang: string | null = null
   let loadingTimer: number | null = null
+
+  const getLanguageSelects = () =>
+    Array.from(document.querySelectorAll<HTMLSelectElement>(LANG_SELECT_SELECTOR))
 
   const sanitizeLang = (value: string | null) =>
     SUPPORTED_LANGS.includes((value || '') as (typeof SUPPORTED_LANGS)[number])
@@ -23,21 +26,25 @@ export default defineNuxtPlugin(() => {
   }
 
   const setSelectValue = (lang: string, attempts = 8) => {
-    const select = document.getElementById(LANG_SELECT_ID) as HTMLSelectElement | null
-    if (!select) {
+    const selects = getLanguageSelects()
+    if (!selects.length) {
       if (attempts > 0) {
         window.setTimeout(() => setSelectValue(lang, attempts - 1), 120)
       }
       return
     }
-    select.value = sanitizeLang(lang)
+    const nextLang = sanitizeLang(lang)
+    selects.forEach((select) => {
+      select.value = nextLang
+    })
   }
 
   const setLoading = (isLoading: boolean) => {
-    const select = document.getElementById(LANG_SELECT_ID)
-    const container = select?.closest('.lang-select')
-    if (!container) return
-    container.classList.toggle('is-loading', isLoading)
+    getLanguageSelects().forEach((select) => {
+      const container = select.closest('.lang-select')
+      if (!container) return
+      container.classList.toggle('is-loading', isLoading)
+    })
   }
 
   const getGoogTransCookie = () => {
@@ -167,7 +174,7 @@ export default defineNuxtPlugin(() => {
 
   document.addEventListener('change', (event) => {
     const target = event.target as HTMLElement | null
-    if (!target || target.id !== LANG_SELECT_ID) return
+    if (!(target instanceof HTMLSelectElement) || !target.matches(LANG_SELECT_SELECTOR)) return
     const select = target as HTMLSelectElement
     syncLanguage(select.value)
   })
