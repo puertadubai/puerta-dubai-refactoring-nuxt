@@ -1,8 +1,11 @@
 <script setup lang="ts">
-import { ref, onMounted, onBeforeUnmount } from 'vue'
+import { ref, onMounted, onBeforeUnmount, nextTick, watch } from 'vue'
+import { useRoute } from '#imports'
 
 const cursor = ref<HTMLElement | null>(null)
+const cross = ref<HTMLElement | null>(null)
 const circle = ref<HTMLElement | null>(null)
+const route = useRoute()
 
 /* ======================
    Config
@@ -21,12 +24,17 @@ let rafId = 0
 let magneticTarget: HTMLElement | null = null
 let isTouchDevice = false
 let isAnimating = false
+let clickTimeout = 0
 
 /* ======================
    Helpers
 ====================== */
+const isIgnored = (el: Element | null) =>
+  el?.closest('[data-language-select="true"], [data-cursor="ignore"]')
+
 const isInteractive = (el: Element | null) =>
-  el?.closest('a, button, .btn, .project-card, [data-cursor="hover"]')
+  !isIgnored(el) &&
+  Boolean(el?.closest('a, button, summary, .btn, .project-card, [data-cursor="hover"]'))
 
 const isMagnetic = (el: Element | null) =>
   el?.closest('.btn, [data-cursor="magnetic"]')
@@ -37,31 +45,21 @@ const isMagnetic = (el: Element | null) =>
 const onMouseMove = (e: MouseEvent) => {
   mouseX = e.clientX
   mouseY = e.clientY
+
+  if (cursor.value) {
+    const target = e.target as Element | null
+    const interactive = isInteractive(target)
+
+    cursor.value.classList.toggle('is-hover', Boolean(interactive))
+    magneticTarget = interactive
+      ? ((isMagnetic(target) as HTMLElement | null) ?? null)
+      : null
+  }
+
   if (!isAnimating) {
     isAnimating = true
     animate()
   }
-}
-
-/* ======================
-   Hover detection
-====================== */
-const onPointerOver = (e: PointerEvent) => {
-  if (!cursor.value) return
-
-  const target = e.target as Element
-
-  if (isInteractive(target)) {
-    cursor.value.classList.add('is-hover')
-  }
-
-  const magnetic = isMagnetic(target)
-  if (magnetic) magneticTarget = magnetic as HTMLElement
-}
-
-const onPointerOut = () => {
-  cursor.value?.classList.remove('is-hover')
-  magneticTarget = null
 }
 
 /* ======================
@@ -72,6 +70,44 @@ const onClick = () => {
   cursor.value.classList.remove('is-click')
   void cursor.value.offsetWidth // force reflow
   cursor.value.classList.add('is-click')
+
+  window.clearTimeout(clickTimeout)
+  clickTimeout = window.setTimeout(() => {
+    cursor.value?.classList.remove('is-click')
+  }, 220)
+}
+
+const resetHoverState = () => {
+  cursor.value?.classList.remove('is-hover')
+  magneticTarget = null
+}
+
+const syncHoverStateFromPoint = () => {
+  if (!import.meta.client || !cursor.value) return
+
+  const target = document.elementFromPoint(mouseX, mouseY)
+  const interactive = isInteractive(target)
+
+  cursor.value.classList.toggle('is-hover', Boolean(interactive))
+  magneticTarget = interactive
+    ? ((isMagnetic(target) as HTMLElement | null) ?? null)
+    : null
+}
+
+const onFocusIn = (e: FocusEvent) => {
+  const target = e.target as Element | null
+  if (isIgnored(target)) {
+    resetHoverState()
+  }
+}
+
+const onFocusOut = () => {
+  resetHoverState()
+}
+
+const resetCursorState = () => {
+  resetHoverState()
+  cursor.value?.classList.remove('is-click')
 }
 
 /* ======================
@@ -96,10 +132,16 @@ const animate = () => {
   const deltaX = Math.abs(targetX - currentX)
   const deltaY = Math.abs(targetY - currentY)
 
+  if (cross.value) {
+    cross.value.style.setProperty('--cursor-x', `${currentX}px`)
+    cross.value.style.setProperty('--cursor-y', `${currentY}px`)
+    cross.value.style.transform = `translate3d(${currentX}px, ${currentY}px, 0) translate(-50%, -50%) scale(var(--cursor-scale, 1))`
+  }
+
   if (circle.value) {
     circle.value.style.setProperty('--cursor-x', `${currentX}px`)
     circle.value.style.setProperty('--cursor-y', `${currentY}px`)
-    circle.value.style.transform = `translate3d(${currentX}px, ${currentY}px, 0) translate(-50%, -50%) scale(var(--cursor-scale, 0.2))`
+    circle.value.style.transform = `translate3d(${currentX}px, ${currentY}px, 0) translate(-50%, -50%) scale(var(--circle-scale, 0.2))`
   }
 
   if (deltaX < 0.1 && deltaY < 0.1 && !magneticTarget) {
@@ -124,9 +166,10 @@ onMounted(() => {
   if (isTouchDevice) return
 
   document.addEventListener('mousemove', onMouseMove)
-  document.addEventListener('pointerover', onPointerOver)
-  document.addEventListener('pointerout', onPointerOut)
   document.addEventListener('mousedown', onClick)
+  document.addEventListener('focusin', onFocusIn)
+  document.addEventListener('focusout', onFocusOut)
+  window.addEventListener('blur', resetCursorState)
 
   isAnimating = true
   animate()
@@ -134,11 +177,22 @@ onMounted(() => {
 
 onBeforeUnmount(() => {
   document.removeEventListener('mousemove', onMouseMove)
-  document.removeEventListener('pointerover', onPointerOver)
-  document.removeEventListener('pointerout', onPointerOut)
   document.removeEventListener('mousedown', onClick)
+  document.removeEventListener('focusin', onFocusIn)
+  document.removeEventListener('focusout', onFocusOut)
+  window.removeEventListener('blur', resetCursorState)
+  window.clearTimeout(clickTimeout)
   cancelAnimationFrame(rafId)
 })
+
+watch(
+  () => route.fullPath,
+  async () => {
+    resetCursorState()
+    await nextTick()
+    syncHoverStateFromPoint()
+  }
+)
 </script>
 
 <template>
@@ -147,15 +201,15 @@ onBeforeUnmount(() => {
     ref="cursor"
     class="custom-cursor"
   >
-    <!-- CIRCLE -->
     <div ref="circle" class="cursor-circle"></div>
+    <div ref="cross" class="cursor-cross">
+      <span class="cursor-cross__line cursor-cross__line--vertical"></span>
+      <span class="cursor-cross__line cursor-cross__line--horizontal"></span>
+    </div>
   </div>
 </template>
 
 <style scoped>
-/* ======================
-   Base
-====================== */
 .custom-cursor {
   position: fixed;
   inset: 0;
@@ -163,19 +217,25 @@ onBeforeUnmount(() => {
   z-index: 999999999;
 }
 
-/* ======================
-   Circle
-====================== */
 .cursor-circle {
   position: absolute;
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  transform: translate3d(0, 0, 0) translate(-50%, -50%) scale(var(--cursor-scale, 0.2));
   opacity: 0;
-
   background: rgba(255, 255, 255, 0.78);
   border: 1px solid rgba(255, 255, 255, 0.48);
+  will-change: transform, opacity;
+  transition:
+    opacity 0.25s ease,
+    transform 0.35s cubic-bezier(.19,1,.22,1);
+}
+
+.cursor-cross {
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  opacity: 0.72;
   will-change: transform, opacity;
 
   transition:
@@ -183,29 +243,51 @@ onBeforeUnmount(() => {
     transform 0.35s cubic-bezier(.19,1,.22,1);
 }
 
-/* ======================
-   Hover state
-====================== */
+.cursor-cross__line {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  display: block;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: invert(1) saturate(1.2);
+  -webkit-backdrop-filter: invert(1) saturate(1.2);
+  transform: translate(-50%, -50%);
+}
+
+.cursor-cross__line--vertical {
+  width: 0.5px;
+  height: 28px;
+}
+
+.cursor-cross__line--horizontal {
+  width: 28px;
+  height: 0.5px;
+}
+
 .custom-cursor.is-hover .cursor-circle {
-  --cursor-scale: 1;
+  --circle-scale: 1.08;
   opacity: 1;
 }
 
-/* ======================
-   Click pulse
-====================== */
-.custom-cursor.is-click .cursor-circle {
-  animation: pulse 0.45s ease-out;
+.custom-cursor.is-hover .cursor-cross {
+  --cursor-scale: 0.8;
+  opacity: 0;
 }
 
-@keyframes pulse {
-  0% {
-    transform: translate3d(var(--cursor-x, 0), var(--cursor-y, 0), 0) translate(-50%, -50%) scale(1);
-    opacity: 1;
-  }
-  100% {
-    transform: translate3d(var(--cursor-x, 0), var(--cursor-y, 0), 0) translate(-50%, -50%) scale(1.6);
-    opacity: 0;
+.custom-cursor.is-click .cursor-circle {
+  --circle-scale: 0.92;
+  opacity: 0.9;
+}
+
+.custom-cursor.is-click .cursor-cross {
+  --cursor-scale: 0.9;
+  opacity: 0.95;
+}
+
+@media (max-width: 768px), (pointer: coarse) {
+  .custom-cursor {
+    display: none;
   }
 }
 </style>

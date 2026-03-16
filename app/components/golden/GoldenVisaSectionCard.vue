@@ -182,4 +182,54 @@ defineProps<{
     font-size: clamp(1.85rem, 9vw, 2.5rem);
   }
 }
+
+@media print {
+  .gv-card {
+    display: block;
+    background: transparent;
+    border: 1px solid #000;
+    box-shadow: none;
+    overflow: visible;
+    break-inside: avoid;
+    page-break-inside: avoid;
+    margin-bottom: 14pt;
+  }
+
+  .gv-card-media,
+  .gv-card-tag-inline {
+    display: none;
+  }
+
+  .gv-card-body,
+  .gv-card.is-text-only .gv-card-body {
+    display: block;
+    padding: 12pt;
+  }
+
+  .gv-card-header,
+  .gv-card-meta {
+    display: block;
+  }
+
+  .gv-card-id {
+    margin-bottom: 4pt;
+    color: #000;
+    font-size: 8pt;
+  }
+
+  .gv-card-header h2 {
+    color: #000;
+    font-size: 16pt;
+    line-height: 1.1;
+    text-wrap: initial;
+  }
+
+  .gv-card-kicker {
+    margin: 8pt 0 10pt;
+    color: #000;
+    font-size: 10pt;
+    line-height: 1.45;
+    max-width: none;
+  }
+}
 </style>

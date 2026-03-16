@@ -531,4 +531,127 @@ async function submitAccess() {
     padding: 24px 0 0;
   }
 }
+
+@page {
+  size: A4;
+  margin: 12mm;
+}
+
+@media print {
+  :global(.main-header),
+  :global(#side-menu),
+  :global(.main-footer),
+  :global(#preloader),
+  :global(#scroll-progress),
+  :global(.custom-cursor),
+  :global(.back-to-top),
+  :global(.lead-modal-backdrop) {
+    display: none !important;
+  }
+
+  .gv-page {
+    min-height: auto;
+    background: #fff;
+    color: #000;
+  }
+
+  .gv-shell {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .gv-toolbar,
+  .gv-badges {
+    display: none !important;
+  }
+
+  .gv-access {
+    display: none !important;
+  }
+
+  .gv-hero {
+    padding: 0 0 10pt;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .gv-hero-card {
+    display: block;
+  }
+
+  .gv-hero-copy,
+  .gv-hero-aside,
+  .gv-footer {
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+    color: #000;
+  }
+
+  .gv-hero-copy {
+    min-height: auto;
+    padding: 0;
+    background: none !important;
+  }
+
+  .gv-eyebrow,
+  .gv-verified-tag {
+    color: #000;
+    margin-bottom: 6pt;
+    font-size: 8pt;
+  }
+
+  .gv-hero-copy h1 {
+    max-width: none;
+    color: #000;
+    font-size: 24pt;
+    line-height: 0.98;
+  }
+
+  .gv-hero-copy h1 span {
+    color: #000;
+    font-size: 9pt;
+    margin-top: 6pt;
+  }
+
+  .gv-description {
+    width: 100%;
+    margin-top: 10pt;
+    color: #000;
+    font-size: 10pt;
+    line-height: 1.45;
+  }
+
+  .gv-hero-aside {
+    padding: 10pt 0 0;
+  }
+
+  .gv-hero-aside::before {
+    display: none;
+  }
+
+  .gv-hero-aside h2 {
+    color: #000;
+    font-size: 14pt;
+    margin: 0 0 8pt;
+  }
+
+  .gv-grid {
+    gap: 0;
+  }
+
+  .gv-footer {
+    margin-top: 10pt;
+    padding: 10pt 0 0;
+    border-top: 1px solid #000;
+  }
+
+  .gv-footer p {
+    color: #000;
+    font-size: 8.5pt;
+    line-height: 1.35;
+  }
+}
 </style>

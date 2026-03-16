@@ -431,7 +431,7 @@ validation attendue:
 ---
 ## Task 27
 
-status: in_progress
+status: approved
 instructions:
 - je veux une optimisation de la popup de preinscription pour qu'elle paraisse plus premium
 - il faut fixer le bouton `close` en haut a droite de la fenetre de popup
@@ -444,3 +444,26 @@ contraintes:
 
 validation attendue:
 - ecris `valide 27` pour autoriser le passage a la tache suivante
+
+---
+## Task 28
+
+status: pending
+instructions:
+- integrer proprement les nouveaux elements de charte dans la section `visual identity` du back office a partir de `tasks-assets/charte`
+- afficher l'image `cover-charte.jpg` sous le texte `A premium identity system for Puerta Dubai: unified branding across digital and print.`
+- dans le tiroir des logos, utiliser `logo-full-black.png` et `logo-text-black.png` comme apercus, puis proposer en telechargement les fichiers `full-logo-black.svg`, `full-logo-white.svg`, `text-logo-black.svg` et `text-logo-white.svg`
+- afficher `typo.jpg` dans le tiroir typographie
+- dans le tiroir business cards, utiliser `mockup-carte-horizontale.jpg` et `mockup-carte-verticale.jpg` comme apercus, puis proposer `business-card-v1.ai` et `business-cardai.ai` en telechargement
+- integrer aussi `colors.jpg` dans la section la plus pertinente de `visual identity` pour exposer la palette de la charte
+- ajouter un bloc dedie a la signature email Gmail, en s'appuyant sur les livrables prepares dans `tasks-assets/charte/email-signature-gmail`
+- verifier que les apercus sont bien separes des fichiers telechargeables, avec des libelles clairs et une presentation premium et coherente avec le reste du back office
+
+contraintes:
+- ne demarrer qu'apres validation de la tache precedente
+- ne pas casser la structure existante du back office `visual identity`
+- conserver une logique de contenus ranges par tiroir avec apercus visibles et telechargements explicites
+- pour la signature email Gmail, privilegier une integration simple, fiable et compatible avec les contraintes HTML email
+
+validation attendue:
+- ecris `valide 28` pour autoriser le passage a la tache suivante

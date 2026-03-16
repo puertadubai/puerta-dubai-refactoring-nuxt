@@ -3,6 +3,19 @@ definePageMeta({
   middleware: 'admin-auth',
 })
 
+type PreviewAsset = {
+  title: string
+  caption: string
+  src: string
+  alt: string
+}
+
+type DownloadAsset = {
+  label: string
+  href: string
+  meta: string
+}
+
 type Chapter = {
   id: string
   title: string
@@ -18,22 +31,110 @@ const chapters: Chapter[] = [
   {
     id: 'colors',
     title: 'Color Codes',
-    subtitle: 'Brand palette with HEX + RGB'
+    subtitle: 'Brand palette with supporting references'
   },
   {
     id: 'type',
     title: 'Typography',
-    subtitle: 'Editorial hierarchy and samples'
+    subtitle: 'Editorial hierarchy and charter board'
   },
   {
     id: 'business-card',
     title: 'Business Card',
-    subtitle: 'Front and back layout'
+    subtitle: 'Mockups and downloadable source files'
   },
   {
     id: 'email',
     title: 'Email Signature',
-    subtitle: 'Professional client signature block'
+    subtitle: 'Professional Gmail-ready signature block'
+  }
+]
+
+const assetBase = '/visual-identity/charte'
+
+const coverImage = `${assetBase}/cover-charte.jpg`
+const typographyImage = `${assetBase}/typo.jpg`
+const colorsImage = `${assetBase}/colors.jpg`
+const emailSignatureHtml = `${assetBase}/email-signature-gmail/dayan-signature-gmail.html`
+
+const logoPreviews: PreviewAsset[] = [
+  {
+    title: 'Full Logo Preview',
+    caption: 'Primary composition for premium brand applications.',
+    src: `${assetBase}/logo-full-black.png`,
+    alt: 'Puerta Dubai full logo preview'
+  },
+  {
+    title: 'Text Logo Preview',
+    caption: 'Secondary wordmark preview for restrained placements.',
+    src: `${assetBase}/logo-text-black.png`,
+    alt: 'Puerta Dubai text logo preview'
+  }
+]
+
+const logoDownloads: DownloadAsset[] = [
+  {
+    label: 'Full logo black',
+    href: `${assetBase}/full-logo-black.svg`,
+    meta: 'SVG download'
+  },
+  {
+    label: 'Full logo white',
+    href: `${assetBase}/full-logo-white.svg`,
+    meta: 'SVG download'
+  },
+  {
+    label: 'Text logo black',
+    href: `${assetBase}/text-logo-black.svg`,
+    meta: 'SVG download'
+  },
+  {
+    label: 'Text logo white',
+    href: `${assetBase}/text-logo-white.svg`,
+    meta: 'SVG download'
+  }
+]
+
+const brandColors = [
+  { name: 'Carbon', hex: '#302d2d', rgb: '48, 45, 45' },
+  { name: 'Champagne Rose', hex: '#dcc6b8', rgb: '220, 198, 184' },
+  { name: 'Warm Ivory', hex: '#e7e6e1', rgb: '231, 230, 225' },
+  { name: 'Accent Gold', hex: '#a38b68', rgb: '163, 139, 104' }
+]
+
+const businessCardPreviews: PreviewAsset[] = [
+  {
+    title: 'Horizontal Mockup',
+    caption: 'Presentation mockup for the horizontal card system.',
+    src: `${assetBase}/mockup-carte-horizontale.jpg`,
+    alt: 'Puerta Dubai horizontal business card mockup'
+  },
+  {
+    title: 'Vertical Mockup',
+    caption: 'Presentation mockup for the vertical card system.',
+    src: `${assetBase}/mockup-carte-verticale.jpg`,
+    alt: 'Puerta Dubai vertical business card mockup'
+  }
+]
+
+const businessCardDownloads: DownloadAsset[] = [
+  {
+    label: 'Business card source v1',
+    href: `${assetBase}/business-card-v1.ai`,
+    meta: 'Adobe Illustrator source'
+  },
+  {
+    label: 'Business card source alternate',
+    href: `${assetBase}/business-cardai.ai`,
+    meta: 'Adobe Illustrator source'
+  }
+]
+
+const emailAssets: DownloadAsset[] = [
+  {
+    label: 'Gmail signature HTML',
+    href: emailSignatureHtml,
+    meta: 'HTML file'
   }
 ]
 
@@ -58,6 +159,9 @@ const isOpen = (id: string) => openSections.value.has(id)
       <p class="subtitle">
         A premium identity system for Puerta Dubai: unified branding across digital and print.
       </p>
+      <div class="hero-cover">
+        <img :src="coverImage" alt="Puerta Dubai visual identity cover" />
+      </div>
     </header>
 
     <div class="drawer-list">
@@ -70,10 +174,197 @@ const isOpen = (id: string) => openSections.value.has(id)
           </div>
           <span class="drawer-indicator" :class="{ open: isOpen(chapter.id) }">+</span>
         </button>
+
         <transition name="drawer">
           <div v-show="isOpen(chapter.id)" class="drawer-content">
-            <div class="construction-note">
-              under construction
+            <div v-if="chapter.id === 'logo'" class="section-stack">
+              <div class="content-grid preview-grid">
+                <article
+                  v-for="item in logoPreviews"
+                  :key="item.title"
+                  class="content-card preview-card"
+                >
+                  <div class="asset-preview">
+                    <img :src="item.src" :alt="item.alt" />
+                  </div>
+                  <h3>{{ item.title }}</h3>
+                  <p>{{ item.caption }}</p>
+                </article>
+              </div>
+
+              <div class="content-card highlight">
+                <div class="section-header">
+                  <div>
+                    <p class="section-label">Downloads</p>
+                    <h3>Logo Source Files</h3>
+                  </div>
+                  <p class="section-note">The PNGs above are previews only. Use the SVG files below for downloads.</p>
+                </div>
+                <div class="download-list">
+                  <a
+                    v-for="file in logoDownloads"
+                    :key="file.href"
+                    class="download-card"
+                    :href="file.href"
+                    download
+                    target="_blank"
+                    rel="noopener"
+                  >
+                    <strong>{{ file.label }}</strong>
+                    <span>{{ file.meta }}</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div v-else-if="chapter.id === 'colors'" class="section-stack">
+              <div class="content-grid two-col">
+                <article class="content-card highlight">
+                  <div class="section-header">
+                    <div>
+                      <p class="section-label">Palette</p>
+                      <h3>Brand Color Codes</h3>
+                    </div>
+                    <p class="section-note">Core tones used across digital and print assets.</p>
+                  </div>
+                  <div class="color-grid">
+                    <div
+                      v-for="color in brandColors"
+                      :key="color.hex"
+                      class="color-swatch"
+                    >
+                      <span :style="{ background: color.hex }"></span>
+                      <div>
+                        <strong>{{ color.name }}</strong>
+                        <small>{{ color.hex }}</small>
+                        <small>RGB {{ color.rgb }}</small>
+                      </div>
+                    </div>
+                  </div>
+                </article>
+
+                <article class="content-card preview-card">
+                  <div class="section-header">
+                    <div>
+                      <p class="section-label">Reference</p>
+                      <h3>Color Board</h3>
+                    </div>
+                  </div>
+                  <div class="asset-preview tall">
+                    <img :src="colorsImage" alt="Puerta Dubai color board" />
+                  </div>
+                </article>
+              </div>
+            </div>
+
+            <div v-else-if="chapter.id === 'type'" class="section-stack">
+              <div class="content-grid">
+                <article class="content-card preview-card">
+                  <div class="section-header">
+                    <div>
+                      <p class="section-label">Reference</p>
+                      <h3>Typography Board</h3>
+                    </div>
+                  </div>
+                  <div class="asset-preview tall">
+                    <img :src="typographyImage" alt="Puerta Dubai typography board" />
+                  </div>
+                </article>
+              </div>
+            </div>
+
+            <div v-else-if="chapter.id === 'business-card'" class="section-stack">
+              <div class="content-grid preview-grid">
+                <article
+                  v-for="item in businessCardPreviews"
+                  :key="item.title"
+                  class="content-card preview-card"
+                >
+                  <div class="asset-preview tall">
+                    <img :src="item.src" :alt="item.alt" />
+                  </div>
+                  <h3>{{ item.title }}</h3>
+                  <p>{{ item.caption }}</p>
+                </article>
+              </div>
+
+              <div class="content-card highlight">
+                <div class="section-header">
+                  <div>
+                    <p class="section-label">Downloads</p>
+                    <h3>Business Card Source Files</h3>
+                  </div>
+                  <p class="section-note">The mockups above are previews. The AI files below are the downloadable sources.</p>
+                </div>
+                <div class="download-list">
+                  <a
+                    v-for="file in businessCardDownloads"
+                    :key="file.href"
+                    class="download-card"
+                    :href="file.href"
+                    download
+                    target="_blank"
+                    rel="noopener"
+                  >
+                    <strong>{{ file.label }}</strong>
+                    <span>{{ file.meta }}</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div v-else-if="chapter.id === 'email'" class="section-stack">
+              <div class="content-grid two-col">
+                <article class="content-card highlight">
+                  <div class="section-header">
+                    <div>
+                      <p class="section-label">Gmail Signature</p>
+                      <h3>Dayan Candamil</h3>
+                    </div>
+                    <p class="section-note">Simple, premium and aligned with the printed business card.</p>
+                  </div>
+
+                  <div class="email-signature-preview">
+                    <div class="email-signature-mark">
+                      <img :src="`${assetBase}/logo-full-black.png`" alt="Puerta Dubai logo" />
+                    </div>
+                    <div class="email-signature-copy">
+                      <strong>Dayan Candamil</strong>
+                      <em>CEO &amp; Founder</em>
+                      <span>+971 54 440 2792</span>
+                      <span>dayancandamil@gmail.com</span>
+                      <span>www.puertadubai.com</span>
+                    </div>
+                  </div>
+
+                  <p class="signature-note">
+                    For real Gmail usage, the logo should later be served from a public URL before final insertion.
+                  </p>
+                </article>
+
+                <article class="content-card">
+                  <div class="section-header">
+                    <div>
+                      <p class="section-label">Download</p>
+                      <h3>Signature Assets</h3>
+                    </div>
+                  </div>
+                  <div class="download-list">
+                    <a
+                      v-for="file in emailAssets"
+                      :key="file.href"
+                      class="download-card"
+                      :href="file.href"
+                      download
+                      target="_blank"
+                      rel="noopener"
+                    >
+                      <strong>{{ file.label }}</strong>
+                      <span>{{ file.meta }}</span>
+                    </a>
+                  </div>
+                </article>
+              </div>
             </div>
           </div>
         </transition>
@@ -112,6 +403,22 @@ h1 {
   max-width: 760px;
   color: #5a5046;
   font-size: 16px;
+}
+
+.hero-cover {
+  margin-top: 28px;
+  border-radius: 24px;
+  overflow: hidden;
+  border: 1px solid rgba(48, 45, 45, 0.08);
+  box-shadow: 0 24px 50px rgba(21, 17, 12, 0.08);
+}
+
+.hero-cover img {
+  width: 100%;
+  height: auto;
+  max-height: none;
+  object-fit: contain;
+  display: block;
 }
 
 .drawer-list {
@@ -178,23 +485,22 @@ h1 {
   padding: 0 28px 28px;
 }
 
-.construction-note {
-  min-height: 120px;
-  border-radius: 14px;
-  border: 1px dashed rgba(48, 45, 45, 0.2);
-  background: rgba(246, 239, 230, 0.45);
-  color: #6d6257;
-  font-size: 14px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+.section-stack {
   display: grid;
-  place-items: center;
+  gap: 18px;
 }
 
 .content-grid {
   display: grid;
   gap: 18px;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+.two-col {
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.preview-grid {
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
 }
 
 .content-card {
@@ -213,46 +519,65 @@ h1 {
   font-size: 18px;
 }
 
-.content-card ul {
-  margin: 0;
-  padding-left: 18px;
-  display: grid;
-  gap: 6px;
-  color: #50463c;
-  font-size: 14px;
-}
-
 .content-card p {
   margin: 0;
   color: #50463c;
   font-size: 14px;
 }
 
-.logo-sample {
-  border-radius: 12px;
-  background: #fff;
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.section-label {
+  margin: 0 0 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 11px;
+  color: #a38b68;
+}
+
+.section-note {
+  max-width: 320px;
+  text-align: right;
+  font-size: 13px;
+  color: #6d6257;
+}
+
+.preview-card h3 {
+  margin-bottom: 8px;
+}
+
+.asset-preview {
+  border-radius: 16px;
+  background: linear-gradient(180deg, #fff 0%, #f6efe6 100%);
   border: 1px solid rgba(48, 45, 45, 0.08);
-  padding: 16px;
+  padding: 18px;
   display: grid;
   place-items: center;
-  margin-bottom: 12px;
+  min-height: 220px;
+  margin-bottom: 14px;
+  overflow: hidden;
 }
 
-.logo-sample img {
-  width: 200px;
-  max-width: 100%;
+.asset-preview.tall {
+  min-height: 320px;
 }
 
-.logo-row {
-  display: grid;
-  gap: 12px;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  align-items: center;
-}
-
-.logo-row img {
+.asset-preview img {
   width: 100%;
-  max-width: 160px;
+  max-width: 100%;
+  display: block;
+  object-fit: contain;
+}
+
+.preview-grid .asset-preview img {
+  width: auto;
+  max-width: 220px;
 }
 
 .color-grid {
@@ -284,117 +609,84 @@ h1 {
   color: #6e6357;
 }
 
-.type-sample {
-  padding: 14px 16px;
-  border-radius: 12px;
-  background: #fff;
-  border: 1px solid rgba(48, 45, 45, 0.08);
-  margin-bottom: 10px;
+.download-list {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
 }
 
-.type-sample.headline {
-  font-size: 22px;
+.download-card {
+  display: grid;
+  gap: 6px;
+  padding: 16px 18px;
+  border-radius: 14px;
+  background: #fff;
+  border: 1px solid rgba(48, 45, 45, 0.08);
+  text-decoration: none;
+  color: #302d2d;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.download-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(163, 139, 104, 0.45);
+  box-shadow: 0 12px 24px rgba(21, 17, 12, 0.08);
+}
+
+.download-card span {
+  font-size: 13px;
+  color: #6d6257;
+}
+
+.email-signature-preview {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 18px;
+  align-items: center;
+  padding: 18px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #fff 0%, #f6efe6 100%);
+  border: 1px solid rgba(48, 45, 45, 0.08);
+}
+
+.email-signature-mark {
+  width: 96px;
+  min-width: 96px;
+  border-right: 3px solid #dcc6b8;
+  padding-right: 16px;
+}
+
+.email-signature-mark img {
+  width: 76px;
+  display: block;
+}
+
+.email-signature-copy {
+  display: grid;
+  gap: 4px;
+}
+
+.email-signature-copy strong {
+  font-size: 24px;
   font-weight: 600;
 }
 
-.type-sample.body {
-  font-size: 15px;
-  line-height: 1.5;
-}
-
-.type-sample.accent {
-  font-size: 12px;
-  letter-spacing: 0.2em;
+.email-signature-copy em {
+  font-style: normal;
   text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-size: 12px;
+  color: #a38b68;
 }
 
-.card-mock {
-  padding: 18px;
-  border-radius: 14px;
-  border: 1px solid rgba(48, 45, 45, 0.08);
-  min-height: 160px;
-  display: grid;
-  gap: 8px;
-}
-
-.card-front {
-  background: #fff;
-  place-items: center;
-  text-align: center;
-}
-
-.card-front img {
-  width: 140px;
-}
-
-.card-back {
-  background: #fdfbf9;
+.email-signature-copy span {
+  color: #5d5247;
   font-size: 14px;
 }
 
-.card-back span {
-  color: #5d5247;
-}
-
-.social-mock {
-  border-radius: 16px;
-  border: 1px solid rgba(48, 45, 45, 0.08);
-  background: #fff;
-  padding: 16px;
-  display: grid;
-  gap: 12px;
-}
-
-.social-mock.wide {
-  min-height: 160px;
-}
-
-.social-header {
-  display: flex;
-  gap: 12px;
-  align-items: center;
-}
-
-.social-header img {
-  width: 60px;
-}
-
-.social-body strong {
-  display: block;
-  font-size: 16px;
-  margin-bottom: 6px;
-}
-
-.social-body p {
-  margin: 0;
-  color: #5d5247;
-}
-
-.social-footer {
-  font-size: 12px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: #8a7b6a;
-}
-
-.email-signature {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 16px;
-  align-items: center;
-  padding: 16px;
-  border-radius: 14px;
-  border: 1px solid rgba(48, 45, 45, 0.08);
-  background: #fff;
-}
-
-.email-signature img {
-  width: 100px;
-}
-
-.email-signature span {
-  display: block;
-  color: #5d5247;
+.signature-note {
+  margin-top: 14px !important;
+  color: #6d6257 !important;
 }
 
 .drawer-enter-active,
@@ -410,19 +702,43 @@ h1 {
 
 .drawer-enter-to,
 .drawer-leave-from {
-  max-height: 1200px;
+  max-height: 1600px;
   opacity: 1;
 }
 
 @media (max-width: 640px) {
+  .admin-identity {
+    padding: 28px 5vw 72px;
+  }
+
   .drawer-toggle {
     padding: 20px;
   }
+
   .drawer-content {
     padding: 0 20px 20px;
   }
-  .email-signature {
+
+  .section-header {
+    display: grid;
+  }
+
+  .section-note {
+    text-align: left;
+    max-width: none;
+  }
+
+  .email-signature-preview {
     grid-template-columns: 1fr;
+  }
+
+  .email-signature-mark {
+    width: auto;
+    min-width: 0;
+    border-right: none;
+    border-bottom: 3px solid #dcc6b8;
+    padding-right: 0;
+    padding-bottom: 14px;
   }
 }
 </style>

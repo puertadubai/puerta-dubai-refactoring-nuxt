@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { onBeforeUnmount, onMounted, ref } from 'vue'
 import type { GoldenVisaAccordionItem } from '~/data/goldenVisaGuide'
 
 defineProps<{
@@ -7,10 +7,31 @@ defineProps<{
 }>()
 
 const openIndex = ref(0)
+const isPrintMode = ref(false)
 
 const toggle = (index: number) => {
   openIndex.value = openIndex.value === index ? -1 : index
 }
+
+const enablePrintMode = () => {
+  isPrintMode.value = true
+}
+
+const disablePrintMode = () => {
+  isPrintMode.value = false
+}
+
+onMounted(() => {
+  if (!import.meta.client) return
+  window.addEventListener('beforeprint', enablePrintMode)
+  window.addEventListener('afterprint', disablePrintMode)
+})
+
+onBeforeUnmount(() => {
+  if (!import.meta.client) return
+  window.removeEventListener('beforeprint', enablePrintMode)
+  window.removeEventListener('afterprint', disablePrintMode)
+})
 </script>
 
 <template>
@@ -19,12 +40,12 @@ const toggle = (index: number) => {
       v-for="(item, index) in items"
       :key="`${item.title}-${index}`"
       class="gv-accordion-item"
-      :class="{ 'is-open': openIndex === index }"
+      :class="{ 'is-open': openIndex === index || isPrintMode }"
     >
       <button
         type="button"
         class="gv-accordion-trigger"
-        :aria-expanded="openIndex === index ? 'true' : 'false'"
+        :aria-expanded="openIndex === index || isPrintMode ? 'true' : 'false'"
         @click="toggle(index)"
       >
         <span class="gv-accordion-copy">
@@ -34,7 +55,7 @@ const toggle = (index: number) => {
         <span class="gv-accordion-icon" aria-hidden="true">+</span>
       </button>
 
-      <div v-if="openIndex === index" class="gv-accordion-panel">
+      <div v-if="openIndex === index || isPrintMode" class="gv-accordion-panel">
         <p>{{ item.body }}</p>
       </div>
     </article>
@@ -101,5 +122,48 @@ const toggle = (index: number) => {
   margin: 0;
   color: rgba(247, 243, 238, 0.82);
   line-height: 1.68;
+}
+
+@media print {
+  .gv-accordion {
+    gap: 0;
+  }
+
+  .gv-accordion-item {
+    border: 1px solid #000;
+    background: transparent;
+    break-inside: avoid;
+    page-break-inside: avoid;
+    margin-bottom: 10pt;
+  }
+
+  .gv-accordion-trigger {
+    color: #000;
+    padding: 10pt 12pt 6pt;
+  }
+
+  .gv-accordion-title {
+    font-size: 11pt;
+    font-weight: 700;
+  }
+
+  .gv-accordion-hint {
+    color: #444;
+    font-size: 9pt;
+  }
+
+  .gv-accordion-icon {
+    display: none;
+  }
+
+  .gv-accordion-panel {
+    padding: 0 12pt 10pt;
+  }
+
+  .gv-accordion-panel p {
+    color: #000;
+    font-size: 10pt;
+    line-height: 1.45;
+  }
 }
 </style>

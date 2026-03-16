@@ -108,4 +108,32 @@ defineProps<{
     text-transform: uppercase;
   }
 }
+
+@media print {
+  .gv-table-wrap {
+    border: 1px solid #000;
+    background: transparent;
+    overflow: visible;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .gv-table {
+    table-layout: auto;
+  }
+
+  .gv-table th,
+  .gv-table td {
+    border-bottom: 1px solid #000;
+    color: #000;
+    padding: 7pt 8pt;
+    font-size: 9pt;
+    line-height: 1.35;
+  }
+
+  .gv-table th {
+    color: #000;
+    font-size: 8pt;
+  }
+}
 </style>

@@ -140,7 +140,7 @@ async function submit() {
       <option>Other</option>
     </select>
 
-    <input v-model="form.whatsapp" placeholder="WhatsApp number" />
+    <input v-model="form.whatsapp" placeholder="Tel number" />
 
     <label class="helper">Interest (optional)</label>
     <div class="inline-radios">
