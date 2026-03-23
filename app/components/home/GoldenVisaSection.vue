@@ -8,8 +8,7 @@
       <div class="gv-text">
         <p class="gv-eyebrow">Residency Guide</p>
         <h2>
-          The UAE Golden Visa<br />
-          <span>Interactive Guide</span>
+          The UAE Golden Visa
         </h2>
 
         <p>

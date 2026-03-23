@@ -11,14 +11,16 @@
         </h2>
 
         <p class="about-text">
-          <strong>Puerta Dubai</strong> is a next-generation platform shaping how global investors and residents engage with Dubai’s real estate ecosystem.
+          <strong>Puerta Dubai</strong> is a private gateway for global investors entering the UAE market.
+
         </p>
 
         <p class="about-text">
-          It’s more than listings, it’s a curated hub connecting you with verified developers, exclusive off-plan opportunities,
-          and tailored legal and financial services.
-        </p>
+We provide direct access to prime real estate opportunities, combined with expert advisory, legal structuring, and execution.
 
+        </p><p class="about-text">
+        One platform. Complete access to the UAE.
+</p>
         <div class="about-divider"></div>
 
         <div class="about-cta">

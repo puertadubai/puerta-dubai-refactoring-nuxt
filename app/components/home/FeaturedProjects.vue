@@ -5,10 +5,7 @@
     ref="root"
   >
     <div class="projects-header">
-      <h2>Featured Real Estate Projects</h2>
-      <p>
-        Explore a curated selection of the UAE’s most exclusive developments.
-      </p>
+      <h2>Discover our projects</h2>
     </div>
 
     <div class="projects-grid">

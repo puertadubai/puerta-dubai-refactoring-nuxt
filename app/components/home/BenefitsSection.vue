@@ -14,8 +14,11 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
               d="M12 2l7 4v6c0 5-3.5 9-7 10-3.5-1-7-5-7-10V6l7-4z" />
           </svg>
-          <h3>Stable Framework</h3>
-          <p>Golden Visa, secure investment climate, strong infrastructure.</p>
+          <h3>A Secure Investment Environment</h3>
+          <p>
+            Strong regulatory framework, investor protection, and long-term residency
+            options through the Golden Visa.
+          </p>
         </div>
 
         <div class="card">
@@ -25,8 +28,11 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
               d="M21 21H3" />
           </svg>
-          <h3>Attractive Returns</h3>
-          <p>High rental yields, tax efficiency, and global investor confidence.</p>
+          <h3>Consistent High Returns</h3>
+          <p>
+            Rental yields between 6 and 10%, tax-efficient structures, and strong
+            capital appreciation in key real estate markets.
+          </p>
         </div>
 
         <div class="card">
@@ -36,8 +42,11 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
               d="M2 12h20M12 2a15 15 0 010 20M12 2a15 15 0 000 20" />
           </svg>
-          <h3>Global Connectivity</h3>
-          <p>Hub for business, innovation, and international growth.</p>
+          <h3>Global Business Hub</h3>
+          <p>
+            Strategically located between Europe, Asia, and Africa, Dubai connects
+            capital, talent, and opportunity at a global scale.
+          </p>
         </div>
       </div>
     </article>
@@ -107,5 +116,17 @@ onBeforeUnmount(() => {
   background: transparent;
   box-shadow: none;
   padding: 30px 18px;
+}
+
+@media (min-width: 769px) and (max-width: 1180px) {
+  .cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .card:last-child {
+    grid-column: 1 / -1;
+    max-width: 520px;
+    justify-self: center;
+  }
 }
 </style>
